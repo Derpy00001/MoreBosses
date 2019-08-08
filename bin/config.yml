@@ -1,0 +1,153 @@
+
+# ================================== TRANSLATIONS ==================================
+# Custom languages/variations can be added with ease, just copy and paste a language, change the name, and edit the text such as customizing the "Breach" to wither has ben deded
+# Custom languages will not show up in /blanguage's tab complete, just set the "language" section to the name of your new language EXAMPLE- language: customlanguage
+language: english
+translation:
+  english:
+    breach: The death of the Undead Wither unleashes its raw power into the worlds, breaking the seal between the overworld and nether world.
+    breachsa: A gemstone has been sacrificed to the gods!
+    breachend: The breach between the overworld and nether world has been sealed!
+    magmas: A feiry deity enters the overworld attracted by a dark power
+    cursedlore: Eradicates energy
+    ichorlore: The dryed blood of gods.
+    ichorsticklore: A handle made of solid Ichor
+    ichorswordlore: A sword made of the gods blood.
+    ichorchestlore: A chestplate made of the gods blood.
+    ichorleglore: Leggings made of the gods blood.
+    ichorbootlore: Boots made of the gods blood.
+    ichorhelmlore: A helmet made of the gods blood.
+    booklore0: A mysterious book emitting dark power
+    booklore1: May contain ancient spoils
+    forgelore: An forged based on an ancient design.
+  norsk:
+    breach: Withers død slipper løs sin rå kraft inn i verdenene, og bryter selet mellom oververdenen og den andre verden.
+    booklore0: En mystisk bok som avgir mørk kraft
+    booklore1: Kan inneholde gamle spoils
+    breachsa: En edelsten er blitt ofret til gudene!
+    breachend: Bruddet mellom oververden og  underverden er blitt forseglet!
+    magmas: En brennende guddom kommer inn i oververdenen tiltrukket av en mørk kraft
+    cursedlore: Utretter energi
+    ichorlore: Det tørkede blodet fra guder.
+    ichorsticklore: Et håndtak laget av solid Ichor.
+    ichorswordlore: Et sverd laged av guds blod.
+    ichorchestlore: Et brystplate laged av guds blod.
+    ichorleglore: Beinplater laged av guds blod.
+    ichorbootlore: støvlar laged av guds blod.
+    ichorhelmlore: Et hjelm laged av guds blod.
+    forgelore: An forged based on an ancient design.
+  español:
+    breach: La muerte de Wither libera su fuerza bruta en los mundos, rompiendo el sello entre el mundo y el otro mundo.
+    breachsa: Una piedra preciosa ha sido sacrificada a los dioses!
+    breachend: La brecha entre el mundo superior y el inframundo ha sido sellada!
+    magmas: Una deidad ardiente viene al mundo atraída por una fuerza oscura.
+    cursedlore: Crea energía
+    ichorlore: La sangre seca de los dioses.
+    ichorsticklore: Un mango hecho de Ichor sólido.
+    ichorswordlore: Una espada hecha de la sangre de Dios.
+    ichorchestlore: Un pechera hecha de la sangre de Dios.
+    ichorleglore: Grebas hecha de la sangre de Dios.
+    ichorbootlore: Botas hecha de la sangre de Dios.
+    ichorhelmlore: Yelmo hecha de la sangre de Dios.
+    booklore0: Un libro misterioso que emite fuerza oscura.
+    booklore1: Puede contener Botines viejos.
+    forgelore: An forged based on an ancient design.
+  customlanguage:
+    breach: wither has ben deded
+    booklore0: coolio booko
+    booklore1: masterious
+    breachsa: a cool gem was eaten by a blackhole!
+    breachend: the breach has been fixed with a bandaid!
+    magmas: A big fire thing wants to kill everyone!
+    cursedlore: this thing is cursed! watch out!
+    ichorlore: blud
+    ichorsticklore: bloody stick
+    ichorswordlore: blood sword of yellowness
+
+# ================================== SCALES ==================================
+
+damage_scale:
+  tier0: 1
+  tier1: 1
+  tier2: 1
+  tier3: 1
+  vex: 1
+health_scale:
+  tier0: 1
+  tier1: 1
+  tier2: 1
+  tier3: 1
+  tier4: 1
+  tier5: 1
+  vex: 1
+  raids:
+    ghast: 5
+
+# ================================== SPAWNRATES ==================================
+# Creeper spawnrates do not change
+spawnrates:
+  tier0spawnrate: 0.1
+  tier1spawnrate: 0.01
+  tier2spawnrate: 0.005
+  tier3spawnrate: 0.005
+  fish: 0.01
+
+# ================================== BOSS CONFIG ==================================
+bosses:
+  has_glow: true
+  smite_death: true
+  show_bar: 30
+  show_tier_in_bar: false
+  bar_enabled: true
+
+# ================================== Events ==================================
+
+breach:
+  max: 5
+  amount: 0
+
+ghastevent:
+  active: false
+# Change only if ghastraid does not start when rightclicking gateway block with ghast_totem
+
+raids:
+  ghast_raid:
+    ==: org.bukkit.Location
+    world: MoreBosses-void
+    x: 2.838753226750332
+    y: 28.056962514313714
+    z: 27.891879618370353
+    pitch: 33.835144
+    yaw: -177.85406
+#/bsetspawn to set spawn to players current location Permission: "bosses.raid.ghastspawn"
+# ================================== OTHER ==================================
+
+world:
+  disable_phantoms: false
+  default_world_name: "world"
+
+tier0_bosses:
+  phantomboss_enabled: true
+  fishboss_enabled: true
+
+
+experimental:
+  Gems: true
+
+
+rewards:
+  Spoils: true
+
+tier4_bosses:
+  enabled: true
+  Enderdragon_Killed: false
+  Wither_Killed: false
+  Undeaddragon_Killed: false
+  Undeadwither_Killed: false
+
+
+
+
+
+
+

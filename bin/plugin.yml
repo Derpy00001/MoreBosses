@@ -1,0 +1,32 @@
+name: MoreBosses
+version: r.2.1.0
+author: Derpy
+main: me.Derpy.Bosses.Main
+description: Adds more bosses to your game!
+api-version: 1.14
+
+commands:
+  bspawn:
+    description: Spawns Random Bosses mobs
+    usage: bspawn <Mob>
+  breport:
+    description: report a bug within MoreBosses
+    usage: report <Report>
+  bdebug:
+    description:
+    usage: debug <arg>
+  bevent:
+    description:
+    usage: bevent <arg> <arg>
+  blanguage:
+    description: "Plugin Language (Reloads server)"
+    usage: blanguage <language>
+  barena:
+    description:
+    usage: 
+  bsetspawn:
+    description:
+    usage: 
+  bsaveworld:
+    description:
+    usage: 
