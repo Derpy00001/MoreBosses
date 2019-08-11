@@ -37,6 +37,26 @@ public class setspawn implements CommandExecutor, TabCompleter{
 			plugin.saveDefaultConfig();
 			p.sendMessage("set spawn to current location!");
 			return true;
+		}else if(args[0].equals("ghast_raid.minion.1")) {
+			plugin.getConfig().set("raids.ghast_raid_minion_spawns.1", p.getLocation());
+			plugin.saveConfig();
+			plugin.saveDefaultConfig();
+			p.sendMessage("set spawn to current location!");
+		}else if(args[0].equals("ghast_raid.minion.2")) {
+			plugin.getConfig().set("raids.ghast_raid_minion_spawns.2", p.getLocation());
+			plugin.saveConfig();
+			plugin.saveDefaultConfig();
+			p.sendMessage("set spawn to current location!");
+		}else if(args[0].equals("ghast_raid.minion.3")) {
+			plugin.getConfig().set("raids.ghast_raid_minion_spawns.3", p.getLocation());
+			plugin.saveConfig();
+			plugin.saveDefaultConfig();
+			p.sendMessage("set spawn to current location!");
+		}else if(args[0].equals("ghast_raid.minion.4")) {
+			plugin.getConfig().set("raids.ghast_raid_minion_spawns.4", p.getLocation());
+			plugin.saveConfig();
+			plugin.saveDefaultConfig();
+			p.sendMessage("set spawn to current location!");
 		}
 		return false;
 	}
@@ -46,6 +66,10 @@ public class setspawn implements CommandExecutor, TabCompleter{
 			if (args.length == 1) {
 				ArrayList<String> available = new ArrayList<String>();
 				available.add("ghast_raidboss");
+				available.add("ghast_raid.minion.1");
+				available.add("ghast_raid.minion.2");
+				available.add("ghast_raid.minion.3");
+				available.add("ghast_raid.minion.4");
 				Collections.sort(available);
 				return available;
 			}

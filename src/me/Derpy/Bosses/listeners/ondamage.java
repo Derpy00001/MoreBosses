@@ -13,7 +13,6 @@ import org.bukkit.entity.Creeper;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Fireball;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
@@ -29,7 +28,8 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.projectiles.ProjectileSource;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import me.Derpy.Bosses.Main;
 import me.Derpy.Bosses.events.ghastevent;
@@ -42,6 +42,7 @@ public class ondamage implements Listener{
 
 	public ondamage(Main plugin) {
 		// TODO Auto-generated constructor stub
+		ondamage.plugin = plugin;
 	}
 	@EventHandler
 	public static void onbreak(BlockBreakEvent event) {
@@ -62,7 +63,17 @@ public class ondamage implements Listener{
 	}
 	@SuppressWarnings("deprecation")
 	@EventHandler
-	public static void Ondamage(EntityDamageEvent event) {
+	public static void Ondamage(final EntityDamageEvent event) {
+		if(event.getEntityType()==EntityType.GHAST) {
+			if(event.getEntity().getWorld().getName().contains("MoreBosses")) {
+				new BukkitRunnable(){
+					@Override
+					public void run(){
+						event.getEntity().setVelocity(new Vector(0,0,0));
+					}
+				}.runTaskTimer(ondamage.plugin, 1, 1);
+			}
+		}
 		if(event.getEntityType()==EntityType.PLAYER) {
 			if(event.getEntity().getWorld().getName().startsWith("MoreBosses")) {
 				if(!(event.getEntity().isDead())) {
@@ -118,14 +129,6 @@ public class ondamage implements Listener{
 	
 	@EventHandler
 	public static void Ondamage2(EntityDamageByEntityEvent event) {
-		if(event.getEntity().getType()==EntityType.FIREBALL) {
-			if(event.getDamager().getType()==EntityType.PLAYER) {
-				if(event.getEntity().getLocation().getWorld().toString().startsWith("MoreBosses")) {
-					Fireball fireball = (Fireball) event.getEntity();
-					fireball.setShooter((ProjectileSource) event.getDamager());
-				}
-			}
-		}
 		if(event.getDamager().getType()==EntityType.GUARDIAN||event.getDamager().getType()==EntityType.WITHER_SKELETON||event.getDamager().getType()==EntityType.ELDER_GUARDIAN) {
 			if(event.getDamager().isSilent()) {
 				if(event.getCause()==DamageCause.ENTITY_ATTACK) {
@@ -155,17 +158,6 @@ public class ondamage implements Listener{
 									shooter.getWorld().strikeLightning(event.getEntity().getLocation());
 							}
 						}
-					}
-				}
-			}
-		}else if(event.getEntity().getType()==EntityType.GHAST) {
-			if(event.getEntity().isSilent()&&!((LivingEntity) event.getEntity()).hasAI()) {
-				if(!(event.getDamager().getType()==EntityType.FIREBALL)) {
-					event.setCancelled(true);
-				}else {
-					Fireball fireball = (Fireball) event.getDamager();
-					if((fireball.getShooter().toString().equals("CraftGhast"))) {
-						event.setCancelled(true);
 					}
 				}
 			}

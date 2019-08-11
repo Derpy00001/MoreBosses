@@ -120,4 +120,60 @@ public class recipes {
 		item.setItemMeta(meta);
 		return item;
 	}
+	public static ItemStack ghasthelm() {
+		ItemStack item = new ItemStack(Material.BOOK);
+		ItemMeta meta = item.getItemMeta();
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add(ChatColor.GOLD+"Ghast Helmet");
+		meta.setLore(lore);
+		meta.setDisplayName(ChatColor.LIGHT_PURPLE+"Recipe");
+		meta.setUnbreakable(true);
+		meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+		meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
+		item.setItemMeta(meta);
+		return item;
+	}
+	public static ItemStack ghastchest() {
+		ItemStack item = new ItemStack(Material.BOOK);
+		ItemMeta meta = item.getItemMeta();
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add(ChatColor.GOLD+"Ghast Tunic");
+		meta.setLore(lore);
+		meta.setDisplayName(ChatColor.LIGHT_PURPLE+"Recipe");
+		meta.setUnbreakable(true);
+		meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+		meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
+		item.setItemMeta(meta);
+		return item;
+	}
+	public static ItemStack ghastlegs() {
+		ItemStack item = new ItemStack(Material.BOOK);
+		ItemMeta meta = item.getItemMeta();
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add(ChatColor.GOLD+"Ghast Leggings");
+		meta.setLore(lore);
+		meta.setDisplayName(ChatColor.LIGHT_PURPLE+"Recipe");
+		meta.setUnbreakable(true);
+		meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+		meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
+		item.setItemMeta(meta);
+		return item;
+	}
+	public static ItemStack ghastboots() {
+		ItemStack item = new ItemStack(Material.BOOK);
+		ItemMeta meta = item.getItemMeta();
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add(ChatColor.GOLD+"Ghast Boots");
+		meta.setLore(lore);
+		meta.setDisplayName(ChatColor.LIGHT_PURPLE+"Recipe");
+		meta.setUnbreakable(true);
+		meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+		meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
+		item.setItemMeta(meta);
+		return item;
+	}
 }

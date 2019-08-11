@@ -1,6 +1,5 @@
 package me.Derpy.Bosses.utilities.items;
 
-import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,7 +13,6 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
-import me.Derpy.Bosses.utilities.translate;
 
 public class ghast_totem {
 	private Plugin plugin = me.Derpy.Bosses.Main.getPlugin(me.Derpy.Bosses.Main.class);
@@ -25,9 +23,6 @@ public class ghast_totem {
 		meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
 		meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
 		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(ChatColor.RED+translate.get("ghasttotemlore", plugin));
-		meta.setLore(lore);
 		meta.setDisplayName(ChatColor.RESET+""+ChatColor.DARK_RED+"Totem of the Ghasts");
 		item2.setItemMeta(meta);
 		item2.addUnsafeEnchantment(Enchantment.RIPTIDE, 1);

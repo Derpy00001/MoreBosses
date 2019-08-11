@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import me.Derpy.Bosses.utilities.items.cursed_diamond;
+import me.Derpy.Bosses.utilities.items.ghast;
 import me.Derpy.Bosses.utilities.items.ichor;
 import me.Derpy.Bosses.utilities.items.infused_diamond;
 import me.Derpy.Bosses.utilities.items.soul;
@@ -82,6 +83,50 @@ public class inventories {
 		recipe.setItem(2, ichor.getraw(plugin));
 		recipe.setItem(3, ichor.getraw(plugin));
 		recipe.setItem(6, ichor.getraw(plugin));
+		return recipe;
+	}
+	public static Inventory ghasthelm(Plugin plugin) {
+		Inventory recipe = Bukkit.createInventory(null, InventoryType.WORKBENCH, ChatColor.DARK_RED+"Recipe");
+		recipe.setItem(0, ghast.tissue_armor.helmet());
+		recipe.setItem(4, ghast.tissue(1));
+		recipe.setItem(1, ghast.tissue(1));
+		recipe.setItem(2, ghast.tissue(1));
+		recipe.setItem(3, ghast.tissue(1));
+		recipe.setItem(6, ghast.tissue(1));
+		return recipe;
+	}
+	public static Inventory ghastchest(Plugin plugin) {
+		Inventory recipe = Bukkit.createInventory(null, InventoryType.WORKBENCH, ChatColor.DARK_RED+"Recipe");
+		recipe.setItem(0, ghast.tissue_armor.chestplate());
+		recipe.setItem(1, ghast.tissue(1));
+		recipe.setItem(5, ghast.tissue(1));
+		recipe.setItem(3, ghast.tissue(1));
+		recipe.setItem(4, ghast.tissue(1));
+		recipe.setItem(6, ghast.tissue(1));
+		recipe.setItem(7, ghast.tissue(1));
+		recipe.setItem(8, ghast.tissue(1));
+		recipe.setItem(9, ghast.tissue(1));
+		return recipe;
+	}
+	public static Inventory ghastlegs(Plugin plugin) {
+		Inventory recipe = Bukkit.createInventory(null, InventoryType.WORKBENCH, ChatColor.DARK_RED+"Recipe");
+		recipe.setItem(0, ghast.tissue_armor.pants());
+		recipe.setItem(1, ghast.tissue(1));
+		recipe.setItem(2, ghast.tissue(1));
+		recipe.setItem(3, ghast.tissue(1));
+		recipe.setItem(4, ghast.tissue(1));
+		recipe.setItem(6, ghast.tissue(1));
+		recipe.setItem(7, ghast.tissue(1));
+		recipe.setItem(9, ghast.tissue(1));
+		return recipe;
+	}
+	public static Inventory ghastboots(Plugin plugin) {
+		Inventory recipe = Bukkit.createInventory(null, InventoryType.WORKBENCH, ChatColor.DARK_RED+"Recipe");
+		recipe.setItem(0, ghast.tissue_armor.boots());
+		recipe.setItem(4, ghast.tissue(1));
+		recipe.setItem(6, ghast.tissue(1));
+		recipe.setItem(7, ghast.tissue(1));
+		recipe.setItem(9, ghast.tissue(1));
 		return recipe;
 	}
 	@SuppressWarnings("deprecation")

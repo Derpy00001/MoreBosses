@@ -81,7 +81,8 @@ health_scale:
   tier5: 1
   vex: 1
   raids:
-    ghast: 5
+    ghast: 60
+# raids.ghast is ghasts default health mulitplied by number (Ghasts have low health)
 
 # ================================== SPAWNRATES ==================================
 # Creeper spawnrates do not change
@@ -119,12 +120,44 @@ raids:
     z: 27.891879618370353
     pitch: 33.835144
     yaw: -177.85406
+  ghast_raid_minion_spawns:
+    '1':
+      ==: org.bukkit.Location
+      world: MoreBosses-void
+      x: -12.623019396630566
+      y: 21.0
+      z: 9.00338997944569
+      pitch: 17.303322
+      yaw: -132.46965
+    '2':
+      ==: org.bukkit.Location
+      world: MoreBosses-void
+      x: 5.54167810934034
+      y: 23.0
+      z: -11.984512041280881
+      pitch: 32.33735
+      yaw: -86.516594
+    '3':
+      ==: org.bukkit.Location
+      world: MoreBosses-void
+      x: 26.94475871444182
+      y: 21.0
+      z: -0.454535216266093
+      pitch: 13.332069
+      yaw: 81.69433
+    '4':
+      ==: org.bukkit.Location
+      world: MoreBosses-void
+      x: 1.3693695817785925
+      y: 22.0
+      z: 5.611638838694567
+      pitch: 49.924324
+      yaw: 1.9856083
 #/bsetspawn to set spawn to players current location Permission: "bosses.raid.ghastspawn"
 # ================================== OTHER ==================================
 
 world:
   disable_phantoms: false
-  default_world_name: "world"
 
 tier0_bosses:
   phantomboss_enabled: true

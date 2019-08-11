@@ -30,6 +30,8 @@ import me.Derpy.Bosses.mobs.tier3.ElderGuardian;
 import me.Derpy.Bosses.mobs.tier3.Slime;
 import me.Derpy.Bosses.mobs.tier3.WitherSkeleton;
 import me.Derpy.Bosses.mobs.tier4.EnderDragon;
+import me.Derpy.Bosses.utilities.items.ghast;
+import me.Derpy.Bosses.utilities.items.ghast_totem;
 import me.Derpy.Bosses.utilities.items.ichor;
 
 public class bspawn implements CommandExecutor, TabCompleter{
@@ -121,6 +123,12 @@ public class bspawn implements CommandExecutor, TabCompleter{
 				if(arg.equals("ichor")) {
 					p.getInventory().addItem(ichor.getraw(plugin));
 				}
+				if(arg.equals("ghast_totem")) {
+					p.getInventory().addItem(ghast_totem.get(plugin));
+				}
+				if(arg.equals("tissue_chestplate")) {
+					p.getInventory().addItem(ghast.tissue_armor.chestplate());
+				}
 				if(arg.equals("phantom")) {
 					Entity entity = (Entity) p.getWorld().spawnEntity(p.getLocation(), EntityType.PHANTOM);
 					me.Derpy.Bosses.mobs.tier0.Phantom.newphantom((LivingEntity) entity, plugin);
@@ -159,6 +167,8 @@ public class bspawn implements CommandExecutor, TabCompleter{
 				available.add("tropic");
 				available.add("magma");
 				available.add("ichor");
+				available.add("ghast_totem");
+				available.add("tissue_chestplate");
 				available.add("phantom");
 				available.add("vex");
 				ArrayList<String> mobs = new ArrayList<String>();

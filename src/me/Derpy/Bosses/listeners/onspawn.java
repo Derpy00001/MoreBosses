@@ -195,7 +195,9 @@ public class onspawn implements Listener{
 			if(type==EntityType.WITHER_SKELETON) {
 				if(Random.random(tier3)) {
 					if(!(entity.isInvulnerable())) {
-						WitherSkeleton.newwitherskeleton((LivingEntity) entity, plugin);
+						if(!(entity.getWorld().getName().contains("MoreBosses"))) {
+							WitherSkeleton.newwitherskeleton((LivingEntity) entity, plugin);
+						}
 					}
 				}
 			}

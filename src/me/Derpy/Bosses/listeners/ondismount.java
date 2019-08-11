@@ -10,6 +10,7 @@ import org.bukkit.event.entity.EntityTransformEvent;
 import org.bukkit.event.entity.EntityTransformEvent.TransformReason;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.server.ServerListPingEvent;
 import org.spigotmc.event.entity.EntityDismountEvent;
 
 import me.Derpy.Bosses.Main;
@@ -60,4 +61,11 @@ public class ondismount implements Listener{
 //			}
 //		}
 	}
+	@EventHandler
+    public void on(ServerListPingEvent event) {
+       if(plugin.getDescription().getVersion().equals("TEST_VERSION")) {
+	        event.setMotd(ChatColor.GOLD+"        | Running Dev_Version MoreBosses |\n                      Have fun :D");
+	        event.setMaxPlayers(420);
+       }
+    }
 }

@@ -37,13 +37,13 @@ public class tp implements CommandExecutor, TabCompleter{
 		if(args[0].equals("void")) {
 			((Entity) sender).teleport(Bukkit.getWorld("MoreBosses-void").getSpawnLocation());
 			return true;
-		}else if(args[0].equals("bed")) {
-			((Entity) sender).teleport(((Player) sender).getBedSpawnLocation());
+		}else if(args[0].equals("default_world")){
+			((Player) sender).teleport(Bukkit.getWorld(args[0]).getSpawnLocation());
 			return true;
 		}else {
 			((Player) sender).teleport(Bukkit.getWorld(args[0]).getSpawnLocation());
+			return true;
 		}
-		return false;
 	}
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
@@ -51,7 +51,7 @@ public class tp implements CommandExecutor, TabCompleter{
 			if (args.length == 1) {
 				ArrayList<String> available = new ArrayList<String>();
 				available.add("void");
-				available.add("bed");
+				available.add("default_world");
 				available.add("\"World Name\"");
 				Collections.sort(available);
 				return available;
