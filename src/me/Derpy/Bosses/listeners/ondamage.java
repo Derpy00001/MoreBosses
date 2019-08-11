@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Animals;
@@ -13,10 +14,12 @@ import org.bukkit.entity.Creeper;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Ghast;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Slime;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,11 +31,11 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import me.Derpy.Bosses.Main;
 import me.Derpy.Bosses.events.ghastevent;
+import me.Derpy.Bosses.utilities.Random;
 import me.Derpy.Bosses.utilities.translate;
 import me.Derpy.Bosses.utilities.items.infused_diamond;
 import net.md_5.bungee.api.ChatColor;
@@ -66,12 +69,31 @@ public class ondamage implements Listener{
 	public static void Ondamage(final EntityDamageEvent event) {
 		if(event.getEntityType()==EntityType.GHAST) {
 			if(event.getEntity().getWorld().getName().contains("MoreBosses")) {
-				new BukkitRunnable(){
-					@Override
-					public void run(){
+				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+					public void run() {
 						event.getEntity().setVelocity(new Vector(0,0,0));
 					}
-				}.runTaskTimer(ondamage.plugin, 1, 1);
+				}, 20L);
+				if(Random.random(0.65)) {
+					Integer min = 1;
+					Integer max = 4;
+					Integer range = max-min+1;
+					int num = (int) ((int)(Math.random()*range)+min);
+					if(num==4) {
+						event.getEntity().teleport((Location) plugin.getConfig().get("raids.ghast_raid"));
+					}else {
+						event.getEntity().teleport((Location) plugin.getConfig().get("raids.teleports.ghast."+Integer.toString(num)));
+					}
+				}
+			}
+		}
+		if(event.getEntityType()==EntityType.BLAZE) {
+			if(event.getEntity().getWorld().getName().contains("MoreBosses")) {
+				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+					public void run() {
+						event.getEntity().setVelocity(new Vector(0,0,0));
+					}
+				}, 20L);
 			}
 		}
 		if(event.getEntityType()==EntityType.PLAYER) {
@@ -79,20 +101,23 @@ public class ondamage implements Listener{
 				if(!(event.getEntity().isDead())) {
 					Player p = (Player) event.getEntity();
 					if((p.getHealth()-event.getDamage())<=0) {
-						event.setCancelled(true);
-						p.getWorld().strikeLightningEffect(p.getLocation());
-						for (ItemStack itemStack : p.getInventory().getContents()) {
-							if(!(itemStack==null)) {
-								p.getWorld().dropItemNaturally(p.getLocation(), itemStack);
-								p.getInventory().remove(itemStack);
-							}
-	                    }
-						p.getInventory().clear();
-						p.setExp(0);
-						p.setFoodLevel(20);
-						p.setHealth(p.getMaxHealth());
-						((HumanEntity) p).setGameMode(GameMode.SPECTATOR);
-						ghastevent.check();
+						if(!(p.getInventory().getItemInOffHand().getType()==Material.TOTEM_OF_UNDYING)) {
+							event.setCancelled(true);
+							p.getWorld().strikeLightningEffect(p.getLocation());
+							p.teleport(p.getWorld().getSpawnLocation());
+							for (ItemStack itemStack : p.getInventory().getContents()) {
+								if(!(itemStack==null)) {
+									p.getWorld().dropItemNaturally(p.getLocation(), itemStack);
+									p.getInventory().remove(itemStack);
+								}
+		                    }
+							p.getInventory().clear();
+							p.setExp(0);
+							p.setFoodLevel(20);
+							p.setHealth(p.getMaxHealth());
+							((HumanEntity) p).setGameMode(GameMode.SPECTATOR);
+							ghastevent.check();
+						}
 					}
 				}
 			}
@@ -127,8 +152,22 @@ public class ondamage implements Listener{
 		
 	}
 	
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public static void Ondamage2(EntityDamageByEntityEvent event) {
+		if(event.getDamager().getType()==EntityType.FIREBALL) {
+			if(event.getEntity().getWorld().getName().contains("MoreBosses")) {
+				if(event.getEntity().getType()==EntityType.GHAST) {
+					event.setDamage(60);
+				}else if(event.getEntity().getType()==EntityType.PIG_ZOMBIE || event.getEntityType()==EntityType.WITHER_SKELETON) {
+					event.setDamage(1000);
+				}else if(event.getEntity().getType()==EntityType.PLAYER) {
+					if(((Entity) ((Projectile) event.getDamager()).getShooter()).getType()==EntityType.PLAYER) {
+						event.setDamage(0);
+					}
+				}
+			}
+		}
 		if(event.getDamager().getType()==EntityType.GUARDIAN||event.getDamager().getType()==EntityType.WITHER_SKELETON||event.getDamager().getType()==EntityType.ELDER_GUARDIAN) {
 			if(event.getDamager().isSilent()) {
 				if(event.getCause()==DamageCause.ENTITY_ATTACK) {
@@ -150,6 +189,19 @@ public class ondamage implements Listener{
 					}
 				}
 			}else if(event.getEntity().getType()==EntityType.PLAYER) {
+				if(event.getEntity().getWorld().getName().contains("MoreBosses")) {
+					if(event.getDamager().getType()==EntityType.EVOKER_FANGS) {
+						for(Entity entitys : event.getEntity().getNearbyEntities(100, 100, 100)) {
+							if (entitys instanceof Ghast) {
+								if((((Ghast) entitys).getHealth()+event.getDamage())>((Ghast)entitys).getMaxHealth()) {
+									((Ghast) entitys).setHealth(((Ghast) entitys).getMaxHealth());
+								}else {
+									((Ghast) entitys).setHealth(((Ghast) entitys).getHealth()+event.getDamage());
+								}
+							}
+						}
+					}
+				}
 				if(event.getCause()==DamageCause.PROJECTILE) {
 					if(event.getDamager() instanceof Arrow) {
 						LivingEntity shooter = (LivingEntity) ((Arrow) event.getDamager()).getShooter();

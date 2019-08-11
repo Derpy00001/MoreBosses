@@ -115,44 +115,70 @@ raids:
   ghast_raid:
     ==: org.bukkit.Location
     world: MoreBosses-void
-    x: 2.838753226750332
-    y: 28.056962514313714
-    z: 27.891879618370353
-    pitch: 33.835144
-    yaw: -177.85406
+    x: 0.29412187793998235
+    y: 168.85952724300694
+    z: 30.361163485952446
+    pitch: 48.142868
+    yaw: 185.52869
   ghast_raid_minion_spawns:
     '1':
       ==: org.bukkit.Location
       world: MoreBosses-void
-      x: -12.623019396630566
-      y: 21.0
-      z: 9.00338997944569
-      pitch: 17.303322
-      yaw: -132.46965
+      x: 21.41898116497156
+      y: 162.0
+      z: 12.349618076959192
+      pitch: 90.0
+      yaw: 182.43951
     '2':
       ==: org.bukkit.Location
       world: MoreBosses-void
-      x: 5.54167810934034
-      y: 23.0
-      z: -11.984512041280881
-      pitch: 32.33735
-      yaw: -86.516594
+      x: -2.96773881878915
+      y: 162.0
+      z: -5.54990324595229
+      pitch: 35.400265
+      yaw: -196.76314
     '3':
       ==: org.bukkit.Location
       world: MoreBosses-void
-      x: 26.94475871444182
-      y: 21.0
-      z: -0.454535216266093
-      pitch: 13.332069
-      yaw: 81.69433
+      x: 25.952250525345075
+      y: 161.0
+      z: -9.224853848404239
+      pitch: 49.0503
+      yaw: 82.38677
     '4':
       ==: org.bukkit.Location
       world: MoreBosses-void
-      x: 1.3693695817785925
-      y: 22.0
-      z: 5.611638838694567
-      pitch: 49.924324
-      yaw: 1.9856083
+      x: -0.4823046572372496
+      y: 153.0
+      z: 14.290684163411193
+      pitch: 46.350296
+      yaw: -233.51256
+  teleports:
+    ghast:
+      '1':
+        ==: org.bukkit.Location
+        world: MoreBosses-void
+        x: -22.11812122144501
+        y: 166.05369363891091
+        z: -15.763348184485839
+        pitch: 44.455276
+        yaw: 302.11334
+      '2':
+        ==: org.bukkit.Location
+        world: MoreBosses-void
+        x: 36.290793575731115
+        y: 166.05369363891091
+        z: -24.18448504461469
+        pitch: 35.66179
+        yaw: 49.62079
+      '3':
+        ==: org.bukkit.Location
+        world: MoreBosses-void
+        x: 38.344643175111024
+        y: 166.05369363891091
+        z: 23.81790238099832
+        pitch: 37.931076
+        yaw: 132.16614
 #/bsetspawn to set spawn to players current location Permission: "bosses.raid.ghastspawn"
 # ================================== OTHER ==================================
 

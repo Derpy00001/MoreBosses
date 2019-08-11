@@ -1,6 +1,8 @@
 package me.Derpy.Bosses.listeners;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -10,6 +12,8 @@ import org.bukkit.event.entity.EntityTransformEvent;
 import org.bukkit.event.entity.EntityTransformEvent.TransformReason;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.spigotmc.event.entity.EntityDismountEvent;
 
@@ -68,4 +72,25 @@ public class ondismount implements Listener{
 	        event.setMaxPlayers(420);
        }
     }
+	@EventHandler
+	public void onteleport(PlayerTeleportEvent event) {
+		if(event.getTo().getWorld().getName().equals("MoreBosses-void")) {
+			if(!(plugin.getConfig().getBoolean("ghastevent.active"))) {
+				if(!(event.getPlayer().hasPermission("bosses.raids.teleport.bypass"))) {
+					event.setCancelled(true);
+					event.getPlayer().setHealth(0);
+				}
+			}
+		}
+	}
+	@EventHandler
+	public void onPlayerMove(PlayerMoveEvent e) {
+		Location loc = new Location(e.getTo().getWorld(), e.getTo().getX(), e.getTo().getY(), e.getTo().getZ());
+		loc.setY(loc.getY()-1);
+		if(loc.getBlock().getType()==Material.BARRIER) {
+			if(loc.getBlock().getWorld().getName().contains("MoreBosses")) {
+				e.getPlayer().damage(1000);
+			}
+		}
+	}
 }

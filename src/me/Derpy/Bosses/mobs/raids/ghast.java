@@ -20,7 +20,7 @@ public class ghast {
 			entity.setGlowing(true);
 		}
 		entity.setSilent(true);
-		entity.setAI(false);
+		entity.setAI(true);
 		((LivingEntity) entity).setCanPickupItems(false);
 		entity.setMaxHealth(entity.getMaxHealth()*plugin.getConfig().getInt("health_scale.raids.ghast"));
 		entity.setHealth(entity.getMaxHealth());

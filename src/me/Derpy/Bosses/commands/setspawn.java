@@ -57,6 +57,21 @@ public class setspawn implements CommandExecutor, TabCompleter{
 			plugin.saveConfig();
 			plugin.saveDefaultConfig();
 			p.sendMessage("set spawn to current location!");
+		}else if(args[0].equals("ghast_raid.boss.teleport.1")) {
+			plugin.getConfig().set("raids.teleports.ghast.1", p.getLocation());
+			plugin.saveConfig();
+			plugin.saveDefaultConfig();
+			p.sendMessage("set spawn to current location!");
+		}else if(args[0].equals("ghast_raid.boss.teleport.2")) {
+			plugin.getConfig().set("raids.teleports.ghast.2", p.getLocation());
+			plugin.saveConfig();
+			plugin.saveDefaultConfig();
+			p.sendMessage("set spawn to current location!");
+		}else if(args[0].equals("ghast_raid.boss.teleport.3")) {
+			plugin.getConfig().set("raids.teleports.ghast.3", p.getLocation());
+			plugin.saveConfig();
+			plugin.saveDefaultConfig();
+			p.sendMessage("set spawn to current location!");
 		}
 		return false;
 	}
@@ -70,6 +85,7 @@ public class setspawn implements CommandExecutor, TabCompleter{
 				available.add("ghast_raid.minion.2");
 				available.add("ghast_raid.minion.3");
 				available.add("ghast_raid.minion.4");
+				available.add("ghast_raid.boss.teleport.1");
 				Collections.sort(available);
 				return available;
 			}

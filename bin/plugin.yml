@@ -30,3 +30,5 @@ commands:
   bsaveworld:
     description:
     usage: 
+  bforceload:
+  

@@ -21,6 +21,7 @@ public class GetName {
 	@SuppressWarnings("deprecation")
 	public static void getname(final LivingEntity entity, final LivingEntity entity2, final Plugin plugin, boolean b) {
 		entity.setRemoveWhenFarAway(true);
+		Boolean music = false;
 		ArrayList<String> names = new ArrayList<String>();
 		names.add("Amun");
 		names.add("Amon");
@@ -120,6 +121,8 @@ public class GetName {
 				}
 			}else if(thetitle.equals("Mutated")) {
 				bossAttributable.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(bossAttributable.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue()*2);
+			}else if(thetitle.equals("Overlord")) {
+				music = true;
 			}
 		}
 		if(plugin.getConfig().getBoolean("bosses.show_tier_in_bar")) {
@@ -145,6 +148,9 @@ public class GetName {
 			int num3 = (int) ((int)(Math.random()*range3)+min3);
 			final NamespacedKey key = new NamespacedKey(plugin, thename.replace(" ", "").replace("Ž", "Z").replace("Á", "A").replace("í", "i")+thetitle.replace(" ", "")+"-"+Integer.toString(num3));
 			BossBar bar2 = Bukkit.getServer().createBossBar( key, thename+" the "+thetitle, BarColor.BLUE, BarStyle.SEGMENTED_20, BarFlag.DARKEN_SKY);
+			if(music) {
+				bar2.addFlag(BarFlag.PLAY_BOSS_MUSIC);
+			}
 			bar2.setVisible(true);
 			new BukkitRunnable(){
 				@Override
