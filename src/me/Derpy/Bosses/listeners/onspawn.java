@@ -3,6 +3,7 @@ package me.Derpy.Bosses.listeners;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -25,6 +26,7 @@ import me.Derpy.Bosses.mobs.tier3.ElderGuardian;
 import me.Derpy.Bosses.mobs.tier3.Slime;
 import me.Derpy.Bosses.mobs.tier3.WitherSkeleton;
 import me.Derpy.Bosses.utilities.Random;
+import net.md_5.bungee.api.ChatColor;
 
 public class onspawn implements Listener{
 	private Main plugin;
@@ -39,6 +41,7 @@ public class onspawn implements Listener{
 	// places ravanger in its place
 	// speed and health
 	// (Raid boss)
+	private double merchant;
 	
 	// Mega slime for ending boss?
 	// maybe learn how to spawn an entire arena?
@@ -55,13 +58,33 @@ public class onspawn implements Listener{
 		this.tier2 = plugin.getConfig().getDouble("spawnrates.tier2spawnrate");
 		this.tier3 = plugin.getConfig().getDouble("spawnrates.tier3spawnrate");
 		this.fish = plugin.getConfig().getDouble("spawnrates.fish");
+		this.merchant = plugin.getConfig().getDouble("spawnrates.merchant.rate");
 	}
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public boolean onSpawn(CreatureSpawnEvent event) throws InterruptedException {
 		Entity entity = event.getEntity();
 		EntityType type = entity.getType();
 		// TIER 0
 		if(!(event.getSpawnReason()==SpawnReason.BREEDING)) {
+			if(type==EntityType.WANDERING_TRADER) {
+				if(plugin.getConfig().getBoolean("spawnrates.merchant.enabled")) {
+					if(Random.random(merchant)) {
+						entity.setCustomName(ChatColor.GOLD+"Merchant");
+						entity.getWorld().spawnEntity(entity.getLocation(), EntityType.HORSE).setPassenger(entity);
+						for(Entity ent : entity.getNearbyEntities(20, 20, 20)) {
+							if(ent instanceof Player) {
+								Player p = (Player) ent;
+								p.sendMessage("<"+ChatColor.GOLD+"Merchant"+ChatColor.RESET+"> Hello warrior.");
+							}
+							if(ent.getType()==EntityType.TRADER_LLAMA) {
+								ent.remove();
+							}
+						}
+					}
+					
+				}
+			}
 			if(type==EntityType.PHANTOM) {
 				if(plugin.getConfig().getBoolean("world.disable_phantoms")) {
 					entity.remove();

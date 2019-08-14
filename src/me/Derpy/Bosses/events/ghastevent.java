@@ -52,7 +52,7 @@ public class ghastevent {
 		theghast= ghast.newghast(loc, plugin);
 		setActive(true);
 		Integer amt = 400;
-		final Integer moblimit = 10;
+		final Integer moblimit = 15;
 		Integer mul;
 		if(playerlist.size()>=5) {
 			mul = 5;

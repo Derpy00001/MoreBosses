@@ -92,6 +92,10 @@ spawnrates:
   tier2spawnrate: 0.005
   tier3spawnrate: 0.005
   fish: 0.01
+  vex: 0.1
+  merchant:
+    enabled: true
+    rate: 0.3
 
 # ================================== BOSS CONFIG ==================================
 bosses:
@@ -100,6 +104,7 @@ bosses:
   show_bar: 30
   show_tier_in_bar: false
   bar_enabled: true
+  vex: true
 
 # ================================== Events ==================================
 
@@ -112,6 +117,41 @@ ghastevent:
 # Change only if ghastraid does not start when rightclicking gateway block with ghast_totem
 
 raids:
+  gladiator:
+    active: false
+    spawns:
+      king:
+        ==: org.bukkit.Location
+        world: MoreBosses-Colosseum
+        x: 8.574518792980488
+        y: 10.5
+        z: 41.93660153325716
+        pitch: 6.728375
+        yaw: -180.37415
+      gate1:
+        ==: org.bukkit.Location
+        world: MoreBosses-Colosseum
+        x: 8.538859337073339
+        y: 4.875
+        z: 37.325580890865155
+        pitch: 0.9304752
+        yaw: -179.77246
+      gate2:
+        ==: org.bukkit.Location
+        world: MoreBosses-Colosseum
+        x: -20.370532266775484
+        y: 4.875
+        z: 8.533264889852719
+        pitch: 0.6468218
+        yaw: -89.85193
+      gate3:
+        ==: org.bukkit.Location
+        world: MoreBosses-Colosseum
+        x: 37.57164505447856
+        y: 4.875
+        z: 8.502478792202451
+        pitch: -0.20416181
+        yaw: -270.54395
   ghast_raid:
     ==: org.bukkit.Location
     world: MoreBosses-void

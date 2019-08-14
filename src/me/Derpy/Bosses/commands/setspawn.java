@@ -31,6 +31,28 @@ public class setspawn implements CommandExecutor, TabCompleter{
 			return true;
 		}
 		Player p = (Player) sender;
+		if(args[0].equals("gladiator.king")) {
+			plugin.getConfig().set("raids.gladiator.spawns.king", p.getLocation());
+			plugin.saveConfig();
+			plugin.saveDefaultConfig();
+			p.sendMessage("set spawn to current location!");
+			return true;
+		}else if(args[0].equals("gladiator.gate1")) {
+			plugin.getConfig().set("raids.gladiator.spawns.gate1", p.getLocation());
+			plugin.saveConfig();
+			plugin.saveDefaultConfig();
+			p.sendMessage("set spawn to current location!");
+		}else if(args[0].equals("gladiator.gate2")) {
+			plugin.getConfig().set("raids.gladiator.spawns.gate2", p.getLocation());
+			plugin.saveConfig();
+			plugin.saveDefaultConfig();
+			p.sendMessage("set spawn to current location!");
+		}else if(args[0].equals("gladiator.gate3")) {
+			plugin.getConfig().set("raids.gladiator.spawns.gate3", p.getLocation());
+			plugin.saveConfig();
+			plugin.saveDefaultConfig();
+			p.sendMessage("set spawn to current location!");
+		}
 		if(args[0].equals("ghast_raidboss")) {
 			plugin.getConfig().set("raids.ghast_raid", p.getLocation());
 			plugin.saveConfig();
@@ -86,8 +108,24 @@ public class setspawn implements CommandExecutor, TabCompleter{
 				available.add("ghast_raid.minion.3");
 				available.add("ghast_raid.minion.4");
 				available.add("ghast_raid.boss.teleport.1");
+				available.add("gladiator.king");
+				available.add("gladiator.gate1");
+				available.add("gladiator.gate2");
+				available.add("gladiator.gate3");
 				Collections.sort(available);
-				return available;
+				ArrayList<String> query = new ArrayList<String>();
+				if(!(args[0].equals(""))) {
+					for(String items : available) {
+						if(items.contains(args[0])) {
+							query.add(items);
+						}
+					}
+					Collections.sort(query);
+					return query;
+				}else {
+					return available;
+				}
+				
 			}
 		}
 		

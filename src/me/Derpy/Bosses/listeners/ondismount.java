@@ -1,6 +1,7 @@
 package me.Derpy.Bosses.listeners;
 
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -43,10 +44,12 @@ public class ondismount implements Listener{
 		if(!(entity.isDead())) {
 			LivingEntity entity1 = (LivingEntity) entity;
 			if(event.getTransformReason()==TransformReason.DROWNED) {
-				event.setCancelled(true);
-				event.getEntity().remove();
-				LivingEntity drowned = (LivingEntity) entity1.getWorld().spawnEntity(entity1.getLocation(), EntityType.DROWNED);
-				Drowned.newdrowned(drowned, plugin, true);
+				if(entity.isSilent()) {
+					event.setCancelled(true);
+					event.getEntity().remove();
+					LivingEntity drowned = (LivingEntity) entity1.getWorld().spawnEntity(entity1.getLocation(), EntityType.DROWNED);
+					Drowned.newdrowned(drowned, plugin, true);
+				}
 			}
 		}
 	}
@@ -89,7 +92,15 @@ public class ondismount implements Listener{
 		loc.setY(loc.getY()-1);
 		if(loc.getBlock().getType()==Material.BARRIER) {
 			if(loc.getBlock().getWorld().getName().contains("MoreBosses")) {
-				e.getPlayer().damage(1000);
+				if(e.getPlayer().getGameMode()==GameMode.ADVENTURE) {
+					e.getPlayer().damage(1000);
+				}
+			}
+		}else if(loc.getWorld().getName().equals("MoreBosses-void")) {
+			if(!(plugin.getConfig().getBoolean("ghastevent.active"))) {
+				if(!(e.getPlayer().hasPermission("bosses.raids.teleport.bypass"))) {
+					e.getPlayer().setHealth(0);
+				}
 			}
 		}
 	}

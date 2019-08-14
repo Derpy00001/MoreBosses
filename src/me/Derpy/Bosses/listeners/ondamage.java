@@ -35,9 +35,11 @@ import org.bukkit.util.Vector;
 
 import me.Derpy.Bosses.Main;
 import me.Derpy.Bosses.events.ghastevent;
+import me.Derpy.Bosses.events.gladiator;
 import me.Derpy.Bosses.utilities.Random;
 import me.Derpy.Bosses.utilities.translate;
 import me.Derpy.Bosses.utilities.items.infused_diamond;
+import me.Derpy.Bosses.utilities.items.village;
 import net.md_5.bungee.api.ChatColor;
 
 public class ondamage implements Listener{
@@ -216,10 +218,10 @@ public class ondamage implements Listener{
 		}
 	}
 	@EventHandler
-	public static void oninteractentity(PlayerInteractEntityEvent event) {
+	public static void oninteractentity(PlayerInteractEntityEvent event) throws InterruptedException {
 		Player p = (Player) event.getPlayer();
-		if(p.getInventory().getItemInMainHand().getType()==Material.DIAMOND) {
-			if(event.getRightClicked().getType()==EntityType.CREEPER) {
+		if(event.getRightClicked().getType()==EntityType.CREEPER) {
+			if(p.getInventory().getItemInMainHand().getType()==Material.DIAMOND) {
 				Creeper creeper = (Creeper) event.getRightClicked();
 				if(creeper.isPowered()) {
 					if(!(p.getInventory().getItemInMainHand().getItemMeta().isUnbreakable())) {
@@ -233,6 +235,35 @@ public class ondamage implements Listener{
 							p.getWorld().dropItem(event.getPlayer().getLocation(), item2);
 						}
 					}
+				}
+			}
+		}else if(event.getRightClicked().getType()==EntityType.WANDERING_TRADER) {
+			if(event.getRightClicked().getCustomName().equals(ChatColor.GOLD+"Merchant")) {
+				if(event.getPlayer().hasPotionEffect(PotionEffectType.HERO_OF_THE_VILLAGE)) {
+					event.setCancelled(true);
+					if(p.getInventory().getItemInMainHand().getType()==Material.EMERALD) {
+						if(p.getInventory().getItemInMainHand().getAmount()>=43) {
+							p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount()-43);
+							p.getWorld().dropItemNaturally(event.getRightClicked().getLocation(), village.token());
+						}else {
+							p.sendMessage("<"+ChatColor.GOLD+"Merchant"+ChatColor.RESET+">"+ChatColor.GREEN+" The price of a challengers token is priced at 43 emeralds.");
+						}
+					}else {
+						p.sendMessage("<"+ChatColor.GOLD+"Merchant"+ChatColor.RESET+">"+ChatColor.GREEN+" The price of a challengers token is priced at 43 emeralds.");
+					}
+				}else {
+					p.sendMessage("<"+ChatColor.GOLD+"Merchant"+ChatColor.RESET+">"+ChatColor.GREEN+" Find me once you have been declared as a village's hero for the sale of an item that will test if you are a true warrior");
+				}
+			}
+		}else if(event.getRightClicked().getType()==EntityType.VILLAGER) {
+			if(event.getPlayer().getInventory().getItemInMainHand().isSimilar(village.token())) {
+				if(!(plugin.getConfig().getBoolean("raids.gladiator.active"))) {
+					event.getPlayer().getInventory().getItemInMainHand().setAmount(event.getPlayer().getInventory().getItemInMainHand().getAmount()-1);
+					plugin.getConfig().set("raids.gladiator.active", true);
+					plugin.saveConfig();
+					gladiator.start(event.getPlayer());
+				}else {
+					p.sendMessage("<"+ChatColor.YELLOW+"Villager"+ChatColor.RESET+"> "+ChatColor.YELLOW+"Please come back later.");
 				}
 			}
 		}
