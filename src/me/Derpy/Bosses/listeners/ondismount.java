@@ -1,5 +1,6 @@
 package me.Derpy.Bosses.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -14,11 +15,14 @@ import org.bukkit.event.entity.EntityTransformEvent.TransformReason;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.spigotmc.event.entity.EntityDismountEvent;
 
 import me.Derpy.Bosses.Main;
+import me.Derpy.Bosses.events.ghastevent;
+import me.Derpy.Bosses.events.gladiator;
 import me.Derpy.Bosses.mobs.tier1.Drowned;
 
 public class ondismount implements Listener{
@@ -96,11 +100,29 @@ public class ondismount implements Listener{
 					e.getPlayer().damage(1000);
 				}
 			}
-		}else if(loc.getWorld().getName().equals("MoreBosses-void")) {
+		}
+		if(loc.getWorld().getName().equals("MoreBosses-void")) {
 			if(!(plugin.getConfig().getBoolean("ghastevent.active"))) {
 				if(!(e.getPlayer().hasPermission("bosses.raids.teleport.bypass"))) {
 					e.getPlayer().setHealth(0);
 				}
+			}
+		}else if(loc.getWorld().getName().equals("MoreBosses-Colosseum")) {
+			if(!(plugin.getConfig().getBoolean("raids.gladiator.active"))) {
+				if(!(e.getPlayer().hasPermission("bosses.raids.teleport.bypass"))) {
+					e.getPlayer().setHealth(0);
+				}
+			}
+		}
+	}
+	@EventHandler
+	public void onquit(PlayerQuitEvent event) throws InterruptedException {
+		if(event.getPlayer().getWorld().getName().contains("MoreBosses")) {
+			event.getPlayer().teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
+			if(event.getPlayer().getWorld().getName().equals("MoreBosses-Colosseum")) {
+				gladiator.checkwave(event.getPlayer());
+			}else if(event.getPlayer().getWorld().getName().equals("MoreBosses-void")) {
+				ghastevent.check();
 			}
 		}
 	}

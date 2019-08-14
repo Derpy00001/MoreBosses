@@ -155,6 +155,9 @@ public class GetName {
 			new BukkitRunnable(){
 				@Override
 				public void run(){
+					if(Bukkit.getServer().getBossBar(key)==null) {
+						this.cancel();
+					}
 					ArrayList<Player> players = new ArrayList<Player>();
 					for(Player p : players) {
 						Bukkit.getServer().getBossBar(key).removePlayer(p);

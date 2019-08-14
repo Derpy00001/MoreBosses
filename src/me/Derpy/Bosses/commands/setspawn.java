@@ -31,7 +31,12 @@ public class setspawn implements CommandExecutor, TabCompleter{
 			return true;
 		}
 		Player p = (Player) sender;
-		if(args[0].equals("gladiator.king")) {
+		if(args[0].equals("gladiator.beacon_glass")) {
+			plugin.getConfig().set("raids.gladiator.specialblocks.beacon_glass", p.getLocation());
+			plugin.saveConfig();
+			plugin.saveDefaultConfig();
+			p.sendMessage("set spawn to current location!");
+		}else if(args[0].equals("gladiator.king")) {
 			plugin.getConfig().set("raids.gladiator.spawns.king", p.getLocation());
 			plugin.saveConfig();
 			plugin.saveDefaultConfig();
@@ -112,6 +117,7 @@ public class setspawn implements CommandExecutor, TabCompleter{
 				available.add("gladiator.gate1");
 				available.add("gladiator.gate2");
 				available.add("gladiator.gate3");
+				available.add("gladiator.beacon_glass");
 				Collections.sort(available);
 				ArrayList<String> query = new ArrayList<String>();
 				if(!(args[0].equals(""))) {

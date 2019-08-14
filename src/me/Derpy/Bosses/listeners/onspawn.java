@@ -66,6 +66,9 @@ public class onspawn implements Listener{
 		Entity entity = event.getEntity();
 		EntityType type = entity.getType();
 		// TIER 0
+		if(entity.getWorld().getName().contains("MoreBosses")) {
+			return false;
+		}
 		if(!(event.getSpawnReason()==SpawnReason.BREEDING)) {
 			if(type==EntityType.WANDERING_TRADER) {
 				if(plugin.getConfig().getBoolean("spawnrates.merchant.enabled")) {

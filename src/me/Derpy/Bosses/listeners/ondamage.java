@@ -44,7 +44,6 @@ import net.md_5.bungee.api.ChatColor;
 
 public class ondamage implements Listener{
 	private static Main plugin;
-
 	public ondamage(Main plugin) {
 		// TODO Auto-generated constructor stub
 		ondamage.plugin = plugin;
@@ -218,7 +217,7 @@ public class ondamage implements Listener{
 		}
 	}
 	@EventHandler
-	public static void oninteractentity(PlayerInteractEntityEvent event) throws InterruptedException {
+	public void oninteractentity(PlayerInteractEntityEvent event) throws InterruptedException {
 		Player p = (Player) event.getPlayer();
 		if(event.getRightClicked().getType()==EntityType.CREEPER) {
 			if(p.getInventory().getItemInMainHand().getType()==Material.DIAMOND) {
@@ -238,21 +237,23 @@ public class ondamage implements Listener{
 				}
 			}
 		}else if(event.getRightClicked().getType()==EntityType.WANDERING_TRADER) {
-			if(event.getRightClicked().getCustomName().equals(ChatColor.GOLD+"Merchant")) {
-				if(event.getPlayer().hasPotionEffect(PotionEffectType.HERO_OF_THE_VILLAGE)) {
-					event.setCancelled(true);
-					if(p.getInventory().getItemInMainHand().getType()==Material.EMERALD) {
-						if(p.getInventory().getItemInMainHand().getAmount()>=43) {
-							p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount()-43);
-							p.getWorld().dropItemNaturally(event.getRightClicked().getLocation(), village.token());
+			if(!(event.getPlayer().getWorld().getName().contains("MoreBosses"))) {
+				if(event.getRightClicked().getCustomName().equals(ChatColor.GOLD+"Merchant")) {
+					if(event.getPlayer().hasPotionEffect(PotionEffectType.HERO_OF_THE_VILLAGE)) {
+						event.setCancelled(true);
+						if(p.getInventory().getItemInMainHand().getType()==Material.EMERALD) {
+							if(p.getInventory().getItemInMainHand().getAmount()>=43) {
+								p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount()-43);
+								p.getWorld().dropItemNaturally(event.getRightClicked().getLocation(), village.token());
+							}else {
+								p.sendMessage("<"+ChatColor.GOLD+"Merchant"+ChatColor.RESET+">"+ChatColor.GREEN+" The price of a challengers token is priced at 43 emeralds.");
+							}
 						}else {
 							p.sendMessage("<"+ChatColor.GOLD+"Merchant"+ChatColor.RESET+">"+ChatColor.GREEN+" The price of a challengers token is priced at 43 emeralds.");
 						}
 					}else {
-						p.sendMessage("<"+ChatColor.GOLD+"Merchant"+ChatColor.RESET+">"+ChatColor.GREEN+" The price of a challengers token is priced at 43 emeralds.");
+						p.sendMessage("<"+ChatColor.GOLD+"Merchant"+ChatColor.RESET+">"+ChatColor.GREEN+" Find me once you have been declared as a village's hero for the sale of an item that will test if you are a true warrior");
 					}
-				}else {
-					p.sendMessage("<"+ChatColor.GOLD+"Merchant"+ChatColor.RESET+">"+ChatColor.GREEN+" Find me once you have been declared as a village's hero for the sale of an item that will test if you are a true warrior");
 				}
 			}
 		}else if(event.getRightClicked().getType()==EntityType.VILLAGER) {

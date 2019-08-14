@@ -119,6 +119,15 @@ ghastevent:
 raids:
   gladiator:
     active: false
+    specialblocks:
+      beacon_glass:
+        ==: org.bukkit.Location
+        world: MoreBosses-Colosseum
+        x: 8.4551483700261
+        y: 4.0
+        z: 8.522993742351828
+        pitch: 86.59607
+        yaw: 181.73213
     spawns:
       king:
         ==: org.bukkit.Location
