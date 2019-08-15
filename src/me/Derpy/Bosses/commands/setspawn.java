@@ -26,7 +26,7 @@ public class setspawn implements CommandExecutor, TabCompleter{
 			sender.sendMessage("Inable to execute command as console");
 			return true;
 		}
-		if(!(sender.hasPermission("bosses.raid.ghastspawn"))) {
+		if(!(sender.hasPermission("bosses.raid.setspawn"))) {
 			sender.sendMessage("You do not have the required permissions to perform this task");
 			return true;
 		}

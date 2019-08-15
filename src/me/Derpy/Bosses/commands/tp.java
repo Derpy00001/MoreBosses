@@ -34,11 +34,17 @@ public class tp implements CommandExecutor, TabCompleter{
 			sender.sendMessage("Inable to execute command as console");
 			return true;
 		}
+		if(!(sender.hasPermission("bosses.teleport.raid_arenas"))) {
+			return true;
+		}
 		if(args[0].equals("void")) {
 			((Entity) sender).teleport(Bukkit.getWorld("MoreBosses-void").getSpawnLocation());
 			return true;
 		}else if(args[0].equals("default_world")){
-			((Player) sender).teleport(Bukkit.getWorld(args[0]).getSpawnLocation());
+			((Player) sender).teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
+			return true;
+		}else if(args[0].equals("Colosseum")) {
+			((Player) sender).teleport(Bukkit.getWorld("MoreBosses-Colosseum").getSpawnLocation());
 			return true;
 		}else {
 			((Player) sender).teleport(Bukkit.getWorld(args[0]).getSpawnLocation());
@@ -51,6 +57,7 @@ public class tp implements CommandExecutor, TabCompleter{
 			if (args.length == 1) {
 				ArrayList<String> available = new ArrayList<String>();
 				available.add("void");
+				available.add("Colosseum");
 				available.add("default_world");
 				available.add("\"World Name\"");
 				Collections.sort(available);

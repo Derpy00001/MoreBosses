@@ -88,6 +88,13 @@ public class ondismount implements Listener{
 					event.getPlayer().setHealth(0);
 				}
 			}
+		}else if(event.getTo().getWorld().getName().equals("MoreBosses-Colosseum")) {
+			if(gladiator.getPlayer()==event.getPlayer()) {
+				if(!(event.getPlayer().hasPermission("bosses.raids.teleport.bypass"))) {
+					event.setCancelled(true);
+					event.getPlayer().setHealth(0);
+				}
+			}
 		}
 	}
 	@EventHandler
@@ -118,11 +125,12 @@ public class ondismount implements Listener{
 	@EventHandler
 	public void onquit(PlayerQuitEvent event) throws InterruptedException {
 		if(event.getPlayer().getWorld().getName().contains("MoreBosses")) {
-			event.getPlayer().teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
 			if(event.getPlayer().getWorld().getName().equals("MoreBosses-Colosseum")) {
 				gladiator.checkwave(event.getPlayer());
+				event.getPlayer().teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
 			}else if(event.getPlayer().getWorld().getName().equals("MoreBosses-void")) {
 				ghastevent.check();
+				event.getPlayer().teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
 			}
 		}
 	}

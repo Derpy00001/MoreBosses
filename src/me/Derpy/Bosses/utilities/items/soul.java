@@ -19,4 +19,14 @@ public class soul {
 		item.setItemMeta(meta);
 		return item;
 	}
+	public static ItemStack get(Integer amt) {
+		ItemStack item = new ItemStack(Material.PHANTOM_MEMBRANE, amt);
+		ItemMeta meta = item.getItemMeta();
+		meta.setDisplayName(ChatColor.DARK_PURPLE+"Soul");
+		meta.setUnbreakable(true);
+		meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+		meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
+		item.setItemMeta(meta);
+		return item;
+	}
 }

@@ -117,7 +117,16 @@ public class ondamage implements Listener{
 							p.setFoodLevel(20);
 							p.setHealth(p.getMaxHealth());
 							((HumanEntity) p).setGameMode(GameMode.SPECTATOR);
-							ghastevent.check();
+							if(p.getWorld().getName().equals("MoreBosses-void")) {
+								ghastevent.check();
+							}else if(p.getWorld().getName().equals("MoreBosses-Colosseum")){
+								try {
+									gladiator.checkwave(p);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
 						}
 					}
 				}
@@ -190,7 +199,7 @@ public class ondamage implements Listener{
 					}
 				}
 			}else if(event.getEntity().getType()==EntityType.PLAYER) {
-				if(event.getEntity().getWorld().getName().contains("MoreBosses")) {
+				if(event.getEntity().getWorld().getName().contains("MoreBosses-void")) {
 					if(event.getDamager().getType()==EntityType.EVOKER_FANGS) {
 						for(Entity entitys : event.getEntity().getNearbyEntities(100, 100, 100)) {
 							if (entitys instanceof Ghast) {

@@ -3,7 +3,6 @@ package me.Derpy.Bosses.events;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -36,7 +35,7 @@ public class gladiator {
 	private static ArrayList<Entity> wavemobs;
 	private static BossBar bar;
 	private static Integer maxmobsofround;
-	private static Boolean active;
+	private static Boolean active = false;
 	private static LivingEntity king;
 	public static void start(final Player p) throws InterruptedException {
 		p.setGameMode(GameMode.ADVENTURE);
@@ -48,10 +47,9 @@ public class gladiator {
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 			  public void run() {
 				  p.sendMessage("<"+ChatColor.GOLD+"Emperor"+ChatColor.RESET+"> "+ChatColor.RED+"BEGIN!");
-					p.getWorld().playSound(p.getLocation(), Sound.EVENT_RAID_HORN, 100F, 1F);
 					setPlayer(p);
 					setWave(1);
-					final NamespacedKey key = new NamespacedKey(plugin, "Colossuem-"+p.getName());
+					final NamespacedKey key = new NamespacedKey(plugin, "Colosseum-"+p.getName());
 					BossBar bar = Bukkit.getServer().createBossBar( key, "Wave 1", BarColor.YELLOW, BarStyle.SOLID, BarFlag.values());
 					bar.addPlayer(getPlayer());
 					bar.setProgress(1.0);
@@ -73,6 +71,7 @@ public class gladiator {
 				if(getActive()) {
 					if(Random.random(0.8)) {
 						getPlayer().sendTitle(ChatColor.GOLD+"The Emperor", ChatColor.GOLD+"has sent a gift!");
+						getPlayer().playSound(getPlayer().getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 10, 0.5F);
 						ArrayList<PotionType> potions = new ArrayList<PotionType>();
 						potions.add(PotionType.REGEN);
 						potions.add(PotionType.POISON);
@@ -82,12 +81,11 @@ public class gladiator {
 						potions.add(PotionType.WEAKNESS);
 						
 						AreaEffectCloud cloud = (AreaEffectCloud) ((Location) plugin.getConfig().get("raids.gladiator.specialblocks.beacon_glass")).getWorld().spawnEntity(partloc, EntityType.AREA_EFFECT_CLOUD);
-						cloud.setColor(Color.BLACK);
 						cloud.setDuration(200);
 						cloud.setParticle(Particle.TOTEM);
 						cloud.setRadius(5);
 						Integer min = 0;
-						Integer max = potions.size();
+						Integer max = potions.size()-1;
 						Integer range = max-min+1;
 						int num = (int) ((int)(Math.random()*range)+min);
 						cloud.setBasePotionData(new PotionData(potions.get(num)));
@@ -98,6 +96,12 @@ public class gladiator {
 							 }
 	//					}, 6000L);
 						}, 400);
+						try {
+							check();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}else {
 					this.cancel();
@@ -105,10 +109,33 @@ public class gladiator {
 			}
 		}.runTaskTimer(plugin, 800, 800);
 	}
+	private static void check() throws InterruptedException {
+		if(!(getWavemobs().size()==0)) {
+			try{
+				for(Entity entity : getWavemobs()) {
+					if(!(entity.isValid()) || entity.isDead()) {
+						getWavemobs().remove(entity);
+						String max = getMaxmobsofround().toString();
+						Integer curr = getWavemobs().size();
+						String currr = curr.toString();
+						getBar().setProgress(Double.parseDouble(currr)/Double.parseDouble(max));
+						if(getWavemobs().size()==0) {
+							endwave();
+						}
+					}
+				}
+			}catch(Exception e){
+				
+			}
+		}else {
+			endwave();
+		}
+	}
 	public static void checkwave(Entity entity2) throws InterruptedException {
 		if(getActive()) {
 			if(entity2 instanceof Player) {
-				if(entity2==getPlayer()) {
+				if(entity2.getUniqueId()==getPlayer().getUniqueId()) {
+					Bukkit.getConsoleSender().sendMessage("Ending");
 					end(false);
 				}
 			}
@@ -156,33 +183,47 @@ public class gladiator {
 			}
 		}
 		getKing().remove();
-		getPlayer().setGameMode(GameMode.SURVIVAL);
 		if(success) {
 			getPlayer().playSound(getPlayer().getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 100, 1);
-			getPlayer().sendMessage(ChatColor.GOLD+"Returning in 2 minutes");
+			getPlayer().sendMessage(ChatColor.GOLD+"Returning in 10 seconds");
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 				  public void run() {
+					  plugin.getConfig().set("raids.gladiator.active", false);
+					  plugin.saveConfig();
 					  if(getPlayer().getBedSpawnLocation()==null) {
 							getPlayer().teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
+							getPlayer().setGameMode(GameMode.SURVIVAL);
 						}else {
 							getPlayer().teleport(getPlayer().getBedSpawnLocation());
+							getPlayer().setGameMode(GameMode.SURVIVAL);
 						}
 				  }
-			}, 120000);
+			}, 200);
 			
 		}else {
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 				  public void run() {
-					if(getPlayer().getBedSpawnLocation()==null) {
-						getPlayer().teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
-					}else {
-						getPlayer().teleport(getPlayer().getBedSpawnLocation());
-					}
+					  plugin.getConfig().set("raids.gladiator.active", false);
+					  plugin.saveConfig();
+					  Boolean playerisonline = true;
+					 if(!(Bukkit.getPlayer(getPlayer().getUniqueId()).isOnline())) {
+						 playerisonline=false;
+					 }
+					 if(playerisonline) {
+						if(getPlayer().getBedSpawnLocation()==null) {
+							getPlayer().teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
+							getPlayer().setGameMode(GameMode.SURVIVAL);
+						}else {
+							getPlayer().teleport(getPlayer().getBedSpawnLocation());
+							getPlayer().setGameMode(GameMode.SURVIVAL);
+						}
+					 }
 				  }
-			}, 120000);
+			}, 200);
 		}
 	}
 	private static void startspawns() {
+		getKing().getWorld().playSound(getKing().getLocation(), Sound.EVENT_RAID_HORN, 10000F, 1F);
 		ArrayList<EntityType> types = new ArrayList<EntityType>();
 		ArrayList<Entity> mobs = new ArrayList<Entity>();
 		if(getWave()==1) {
@@ -191,6 +232,8 @@ public class gladiator {
 			Integer range = max-min+1;
 			int num = (int) ((int)(Math.random()*range)+min);
 			setMaxmobsofround(num);
+			types.add(EntityType.PILLAGER);
+			types.add(EntityType.PILLAGER);
 			types.add(EntityType.PILLAGER);
 			types.add(EntityType.VINDICATOR);
 			for(int i=0;i<num;i++) {
@@ -214,6 +257,8 @@ public class gladiator {
 			Integer range = max-min+1;
 			int num = (int) ((int)(Math.random()*range)+min);
 			setMaxmobsofround(num);
+			types.add(EntityType.PILLAGER);
+			types.add(EntityType.PILLAGER);
 			types.add(EntityType.PILLAGER);
 			types.add(EntityType.VINDICATOR);
 			types.add(EntityType.EVOKER);
@@ -239,6 +284,8 @@ public class gladiator {
 			int num = (int) ((int)(Math.random()*range)+min);
 			setMaxmobsofround(num);
 			types.add(EntityType.PILLAGER);
+			types.add(EntityType.PILLAGER);
+			types.add(EntityType.PILLAGER);
 			types.add(EntityType.VINDICATOR);
 			types.add(EntityType.EVOKER);
 			for(int i=0;i<num;i++) {
@@ -263,7 +310,10 @@ public class gladiator {
 			int num = (int) ((int)(Math.random()*range)+min);
 			setMaxmobsofround(num);
 			types.add(EntityType.PILLAGER);
+			types.add(EntityType.PILLAGER);
+			types.add(EntityType.PILLAGER);
 			types.add(EntityType.VINDICATOR);
+			types.add(EntityType.EVOKER);
 			types.add(EntityType.EVOKER);
 			types.add(EntityType.ILLUSIONER);
 			for(int i=0;i<num;i++) {
@@ -284,7 +334,10 @@ public class gladiator {
 		}else if(getWave()==5) {
 			setMaxmobsofround(25);
 			types.add(EntityType.PILLAGER);
+			types.add(EntityType.PILLAGER);
+			types.add(EntityType.PILLAGER);
 			types.add(EntityType.VINDICATOR);
+			types.add(EntityType.EVOKER);
 			types.add(EntityType.EVOKER);
 			types.add(EntityType.ILLUSIONER);
 			types.add(EntityType.RAVAGER);
@@ -309,7 +362,7 @@ public class gladiator {
 		String currr = curr.toString();
 		getBar().setProgress(Double.parseDouble(currr)/Double.parseDouble(max));
 	}
-	private static Player getPlayer() {
+	public static Player getPlayer() {
 		return player;
 	}
 	private static void setPlayer(Player player) {
