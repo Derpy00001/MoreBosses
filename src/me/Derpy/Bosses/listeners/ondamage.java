@@ -67,7 +67,7 @@ public class ondamage implements Listener{
 	}
 	@SuppressWarnings("deprecation")
 	@EventHandler
-	public static void Ondamage(final EntityDamageEvent event) {
+	public static void Ondamage(final EntityDamageEvent event) throws InterruptedException {
 		if(event.getEntityType()==EntityType.GHAST) {
 			if(event.getEntity().getWorld().getName().contains("MoreBosses")) {
 				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
@@ -120,12 +120,7 @@ public class ondamage implements Listener{
 							if(p.getWorld().getName().equals("MoreBosses-void")) {
 								ghastevent.check();
 							}else if(p.getWorld().getName().equals("MoreBosses-Colosseum")){
-								try {
 									gladiator.checkwave(p);
-								} catch (InterruptedException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
 							}
 						}
 					}
@@ -267,6 +262,23 @@ public class ondamage implements Listener{
 			}
 		}else if(event.getRightClicked().getType()==EntityType.VILLAGER) {
 			if(event.getPlayer().getInventory().getItemInMainHand().isSimilar(village.token())) {
+				Integer ditems = 0;
+				if(event.getPlayer().getInventory().contains(Material.DIAMOND_HELMET)) {
+					ditems++;
+				}
+				if(event.getPlayer().getInventory().contains(Material.DIAMOND_CHESTPLATE)) {
+					ditems++;
+				}
+				if(event.getPlayer().getInventory().contains(Material.DIAMOND_LEGGINGS)) {
+					ditems++;
+				}
+				if(event.getPlayer().getInventory().contains(Material.DIAMOND_BOOTS)) {
+					ditems++;
+				}
+				if(ditems>=2) {
+					event.getPlayer().sendMessage("<"+ChatColor.YELLOW+"Villager"+ChatColor.RESET+"> "+ChatColor.YELLOW+"You are equipped with too many strong items");
+					return;
+				}
 				if(!(plugin.getConfig().getBoolean("raids.gladiator.active"))) {
 					event.getPlayer().getInventory().getItemInMainHand().setAmount(event.getPlayer().getInventory().getItemInMainHand().getAmount()-1);
 					plugin.getConfig().set("raids.gladiator.active", true);

@@ -25,6 +25,7 @@ import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.Derpy.Bosses.utilities.Random;
+import me.Derpy.Bosses.utilities.raid_inventories.raid_inventories;
 import net.md_5.bungee.api.ChatColor;
 
 public class gladiator {
@@ -57,8 +58,34 @@ public class gladiator {
 					setActive(true);
 					startspawns();
 					startpotions();
+					starttimer();
 			 }
 		}, 20*5);
+	}
+	private static void starttimer() {
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+			  public void run() {
+				  if(getActive()) {
+					  if(getPlayer().isValid()&&!(getPlayer().isDead())) {
+						  getPlayer().damage(10000);
+						  if(getPlayer().isValid()&&!(getPlayer().isDead())) {
+							  getPlayer().damage(10000);
+						  }
+						  setActive(false);
+						  getBar().removeAll();
+						  for(Entity e : getKing().getNearbyEntities(100, 100, 100)) {
+							  if(!(e instanceof Player)) {
+								  e.remove();
+							  }
+						  }
+						  getKing().remove();
+						  plugin.getConfig().set("raids.gladiator.active", false);
+						  plugin.saveConfig();
+					  }
+				  }
+			 }
+//		}, 6000L);
+		}, 36000);
 	}
 	private static void startpotions() {
 		Location loc =  (Location) plugin.getConfig().get("raids.gladiator.specialblocks.beacon_glass");
@@ -125,13 +152,12 @@ public class gladiator {
 					}
 				}
 			}catch(Exception e){
-				
 			}
 		}else {
 			endwave();
 		}
 	}
-	public static void checkwave(Entity entity2) throws InterruptedException {
+	public static void checkwave(Entity entity2) throws InterruptedException{
 		if(getActive()) {
 			if(entity2 instanceof Player) {
 				if(entity2.getUniqueId()==getPlayer().getUniqueId()) {
@@ -150,18 +176,19 @@ public class gladiator {
 							getBar().setProgress(Double.parseDouble(currr)/Double.parseDouble(max));
 							if(getWavemobs().size()==0) {
 								endwave();
+							}else {
+								check();
 							}
 						}
 					}
 				}catch(Exception e){
-					
 				}
 			}else {
 				endwave();
 			}
 		}
 	}
-	private static void endwave() throws InterruptedException {
+	private static void endwave() {
 		setWave(getWave()+1);
 		if(getWave()==gladiator.maxwaves+1) {
 			end(true);
@@ -174,7 +201,7 @@ public class gladiator {
 			}, 20*5);
 		}
 	}
-	private static void end(Boolean success) throws InterruptedException {
+	private static void end(Boolean success) {
 		setActive(false);
 		getBar().removeAll();
 		for(Entity e : getKing().getNearbyEntities(100, 100, 100)) {
@@ -183,7 +210,14 @@ public class gladiator {
 			}
 		}
 		getKing().remove();
+		Bukkit.getConsoleSender().sendMessage("ending1");
 		if(success) {
+			Bukkit.getConsoleSender().sendMessage("ending2");
+			try {
+				getPlayer().openInventory(raid_inventories.gladiator_get());
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 			getPlayer().playSound(getPlayer().getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 100, 1);
 			getPlayer().sendMessage(ChatColor.GOLD+"Returning in 10 seconds");
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
@@ -201,6 +235,8 @@ public class gladiator {
 			}, 200);
 			
 		}else {
+			Bukkit.getConsoleSender().sendMessage("ending3");
+			getPlayer().sendMessage(ChatColor.GOLD+"Returning in 10 seconds");
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 				  public void run() {
 					  plugin.getConfig().set("raids.gladiator.active", false);

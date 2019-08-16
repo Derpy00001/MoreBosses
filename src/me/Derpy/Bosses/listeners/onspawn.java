@@ -73,7 +73,7 @@ public class onspawn implements Listener{
 				return false;
 			}
 		}
-		if(!(event.getSpawnReason()==SpawnReason.BREEDING)) {
+		if(event.getSpawnReason()==SpawnReason.NATURAL||event.getSpawnReason()==SpawnReason.BUILD_WITHER) {
 			if(type==EntityType.WANDERING_TRADER) {
 				if(plugin.getConfig().getBoolean("spawnrates.merchant.enabled")) {
 					if(Random.random(merchant)) {

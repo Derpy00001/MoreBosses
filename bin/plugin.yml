@@ -1,5 +1,5 @@
 name: MoreBosses
-version: r.2.1.0
+version: r.2.2.0
 author: Derpy
 main: me.Derpy.Bosses.Main
 description: Adds more bosses to your game!
@@ -30,5 +30,4 @@ commands:
   bsaveworld:
     description:
     usage: 
-  bforceload:
   

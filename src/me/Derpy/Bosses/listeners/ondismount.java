@@ -85,14 +85,29 @@ public class ondismount implements Listener{
 			if(!(plugin.getConfig().getBoolean("ghastevent.active"))) {
 				if(!(event.getPlayer().hasPermission("bosses.raids.teleport.bypass"))) {
 					event.setCancelled(true);
-					event.getPlayer().setHealth(0);
+					event.getPlayer().damage(100000);
 				}
 			}
-		}else if(event.getTo().getWorld().getName().equals("MoreBosses-Colosseum")) {
+		if(event.getFrom().getWorld().getName().equals("MoreBosses-void")) {
+			if(plugin.getConfig().getBoolean("ghastevent.active")) {
+				if(!(event.getPlayer().hasPermission("bosses.raids.teleport.bypass"))) {
+					event.setCancelled(true);
+					event.getPlayer().damage(100000);
+				}
+			}
+		}
+		}else if(event.getFrom().getWorld().getName().equals("MoreBosses-Colosseum")) {
 			if(gladiator.getPlayer()==event.getPlayer()) {
 				if(!(event.getPlayer().hasPermission("bosses.raids.teleport.bypass"))) {
 					event.setCancelled(true);
-					event.getPlayer().setHealth(0);
+					event.getPlayer().damage(100000);
+				}
+			}
+		}else if(event.getTo().getWorld().getName().equals("MoreBosses-Colosseum")) {
+			if(!(gladiator.getPlayer()==event.getPlayer())) {
+				if(!(event.getPlayer().hasPermission("bosses.raids.teleport.bypass"))) {
+					event.setCancelled(true);
+					event.getPlayer().damage(100000);
 				}
 			}
 		}
