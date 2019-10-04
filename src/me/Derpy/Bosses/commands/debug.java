@@ -16,11 +16,11 @@ import org.bukkit.entity.Player;
 
 import com.google.common.collect.Lists;
 
-import me.Derpy.Bosses.Main;
+import me.Derpy.Bosses.MoreBosses;
 
 public class debug implements CommandExecutor, TabCompleter{
 
-	public debug(Main plugin) {
+	public debug(MoreBosses plugin) {
 		plugin.getCommand("bdebug").setExecutor(this);
 		
 	}
@@ -36,12 +36,7 @@ public class debug implements CommandExecutor, TabCompleter{
 	    	}else {
 		    	if(args[1].toLowerCase().equals("all")) {
 		    		if(p.hasPermission("bosses.debug.all")) {
-				    	Iterator<KeyedBossBar> myIterator = Bukkit.getBossBars(); //some iterator
-				    	List<KeyedBossBar> myList = Lists.newArrayList(myIterator);
-				    	for(BossBar bar:myList) {
-				    		bar.removeAll();
-				    		bar.setVisible(false);
-				    	}
+		    			me.Derpy.Bosses.utilities.BossbarStorage.removeall();
 				    	return true;
 		    		}else {
 		    			return false;

@@ -23,7 +23,7 @@ public class Magma {
 		entity.setSilent(true);
 		((LivingEntity) entity).setCanPickupItems(false);
 		((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 1000000, 2, true), true);
-		entity.setMaxHealth(entity.getMaxHealth()*plugin.getConfig().getInt("health_scale.tier5"));
+		entity.setMaxHealth(entity.getMaxHealth()*plugin.getConfig().getInt("health_scale.tier5.magma"));
 		entity.setHealth(entity.getMaxHealth());
 		
 		((org.bukkit.entity.MagmaCube) entity).setSize(10);

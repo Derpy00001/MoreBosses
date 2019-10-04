@@ -11,14 +11,14 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 
-import me.Derpy.Bosses.Main;
+import me.Derpy.Bosses.MoreBosses;
 import net.md_5.bungee.api.ChatColor;
 
 public class event implements CommandExecutor, TabCompleter{
 
-	private Main plugin;
+	private MoreBosses plugin;
 	
-	public event(Main plugin) {
+	public event(MoreBosses plugin) {
 		this.plugin = plugin;
 		plugin.getCommand("bevent").setExecutor(this);
 		

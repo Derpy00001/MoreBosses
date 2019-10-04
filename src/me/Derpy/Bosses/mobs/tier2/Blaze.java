@@ -26,12 +26,12 @@ public class Blaze {
 		// within radius
 		((LivingEntity) entity).setCanPickupItems(false);
 		((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 1000000, 2, true), true);
-		entity.setMaxHealth(entity.getMaxHealth()*plugin.getConfig().getInt("health_scale.tier2"));
+		entity.setMaxHealth(entity.getMaxHealth()*plugin.getConfig().getInt("health_scale.tier2.blaze"));
 		entity.setHealth(entity.getMaxHealth());
 		
 		Attributable bossAttributable = (Attributable) entity;
 		AttributeInstance ai2 = bossAttributable.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
-		ai2.setBaseValue(ai2.getBaseValue()*5*plugin.getConfig().getInt("damage_scale.tier2"));
+		ai2.setBaseValue(ai2.getBaseValue()*plugin.getConfig().getInt("damage_scale.tier2.blaze"));
 		
 		EntityEquipment ee = ((LivingEntity) entity).getEquipment();
 		ee.setHelmet(new ItemStack(Material.DIAMOND_HELMET, 64));

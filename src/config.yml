@@ -20,6 +20,8 @@ translation:
     booklore0: A mysterious book emitting dark power
     booklore1: May contain ancient spoils
     forgelore: An forged based on an ancient design.
+    totem_lore: Bring to a rift
+    token_lore: Bring to a villager
   norsk:
     breach: Withers død slipper løs sin rå kraft inn i verdenene, og bryter selet mellom oververdenen og den andre verden.
     booklore0: En mystisk bok som avgir mørk kraft
@@ -36,6 +38,8 @@ translation:
     ichorbootlore: støvlar laged av guds blod.
     ichorhelmlore: Et hjelm laged av guds blod.
     forgelore: An forged based on an ancient design.
+    totem_lore: Et totem som åpner en rift inn i overherrens hjem
+    token_lore: 
   español:
     breach: La muerte de Wither libera su fuerza bruta en los mundos, rompiendo el sello entre el mundo y el otro mundo.
     breachsa: Una piedra preciosa ha sido sacrificada a los dioses!
@@ -52,6 +56,8 @@ translation:
     booklore0: Un libro misterioso que emite fuerza oscura.
     booklore1: Puede contener Botines viejos.
     forgelore: An forged based on an ancient design.
+    totem_lore: Traer al rift
+    token_lore: Traer al aldeano
   customlanguage:
     breach: wither has ben deded
     booklore0: coolio booko
@@ -67,21 +73,61 @@ translation:
 # ================================== SCALES ==================================
 
 damage_scale:
-  tier0: 1
-  tier1: 1
-  tier2: 1
-  tier3: 1
+  tier0:
+    cow: 3
+    pig: 3
+    sheep: 3
+  tier1:
+    drowned: 4
+    skeleton: 4
+    zombie: 4
+  tier2:
+    blaze: 5
+    guardian: 5
+    stray: 5
+    creeper: 5
+  tier3:
+    guardian_elder: 5
+    skeleton_wither: 5
   vex: 1
+  addon:
+    nordic:
+      warlock: 2
+  
 health_scale:
-  tier0: 1
-  tier1: 1
-  tier2: 1
-  tier3: 1
-  tier4: 1
-  tier5: 1
+  tier0:
+    cow: 1
+    phantom: 1
+    pig: 1
+    sheep: 1
+    tropic: 5
+  tier1:
+    drowned: 1
+    skeleton: 1
+    zombie: 1
+  tier2:
+    blaze: 1
+    creeper: 1
+    guardian: 1
+    stray: 1
+  tier3:
+    guardian_elder: 1
+    skeleton_wither: 1
+  tier4:
+    dragon: 1
+    wither: 1
+  tier5:
+    magma: 1
   vex: 1
   raids:
     ghast: 60
+  addon:
+    nordic:
+      warlock: 2
+enchants:
+  lifesteal: 0.1
+  bleed:  0.33333333333
+#enchants.bleed is how many bleedticks to add
 # raids.ghast is ghasts default health mulitplied by number (Ghasts have low health)
 
 # ================================== SPAWNRATES ==================================
@@ -93,9 +139,13 @@ spawnrates:
   tier3spawnrate: 0.005
   fish: 0.01
   vex: 0.1
-  merchant:
-    enabled: true
+  merchants:
+    special_traders_enabled: true
     rate: 0.3
+    merchant:
+      enabled: true
+    nomadic_tinker:
+      enabled: true
 
 # ================================== BOSS CONFIG ==================================
 bosses:
@@ -105,6 +155,42 @@ bosses:
   show_tier_in_bar: false
   bar_enabled: true
   vex: true
+  undead_wither:
+    radius: 10
+    level: 3
+    effect_enabled: true
+  phantom:
+    effect_enabled: true
+  custom_loot_pools:
+    tier0: false
+    tier1: false
+    tier2: false
+    tier3: false
+    tier4: false
+    tier5: false
+    ghast_raid: false
+    addon:
+      nordic:
+        fenrir: false
+        warlock: false
+  enabled_bosses:
+    cow: true
+    pig: true
+    sheep: true
+    drowned: true
+    skeleton: true
+    zombie: true
+    blaze: true
+    creeper: true
+    guardian: true
+    stray: true
+    guardian_elder: true
+    slime: true
+    skeleton_wither: true
+    dragon: true
+    wither: true
+    magma: true
+    fenrir: true
 
 # ================================== Events ==================================
 
@@ -231,8 +317,21 @@ raids:
 #/bsetspawn to set spawn to players current location Permission: "bosses.raid.ghastspawn"
 # ================================== OTHER ==================================
 
+enabled_enchants:
+  replenish: true
+  mites: true
+  lifesteal: true
+  ember: true
+  undying: true
+  smelt: true
+  fleet: true
+
 world:
   disable_phantoms: false
+  keep_inventory: false
+  addons:
+    nordic:
+      nether_world: true
 
 tier0_bosses:
   phantomboss_enabled: true
@@ -253,9 +352,7 @@ tier4_bosses:
   Undeaddragon_Killed: false
   Undeadwither_Killed: false
 
-
-
-
-
-
-
+# ================================= Reload =====================================
+# Allows plugin to be compatible with /reload or /rl
+reload:
+  reload_permission: "bukkit.command.reload"

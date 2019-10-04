@@ -13,7 +13,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
 public class infused_tear {
-	private Plugin plugin = me.Derpy.Bosses.Main.getPlugin(me.Derpy.Bosses.Main.class);
+	private Plugin plugin = me.Derpy.Bosses.MoreBosses.getPlugin(me.Derpy.Bosses.MoreBosses.class);
 	public static ItemStack get(Plugin plugin) {
 		ItemStack item2 = new ItemStack(Material.GHAST_TEAR, 1);
 		ItemMeta meta = (ItemMeta) item2.getItemMeta();
@@ -35,5 +35,6 @@ public class infused_tear {
 		shaped.shape(" * ","***"," * ");
 		shaped.setIngredient('*', Custom2);
 		Bukkit.addRecipe(shaped);
+		RecipeStorage.addrecipe(shaped, key);
 	}
 }

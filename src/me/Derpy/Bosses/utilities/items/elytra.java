@@ -10,7 +10,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.Plugin;
 
 public class elytra {
-	private Plugin plugin = me.Derpy.Bosses.Main.getPlugin(me.Derpy.Bosses.Main.class);
+	private Plugin plugin = me.Derpy.Bosses.MoreBosses.getPlugin(me.Derpy.Bosses.MoreBosses.class);
 	@SuppressWarnings("deprecation")
 	public void customRecipeElytra() {
 		NamespacedKey key = new NamespacedKey(plugin, "elytra_broken");
@@ -22,5 +22,6 @@ public class elytra {
 		recipe.shape("***", "***", "* *");
 		recipe.setIngredient('*', souli);
 		Bukkit.addRecipe(recipe);
+		RecipeStorage.addrecipe(recipe, key);
 	}
 }

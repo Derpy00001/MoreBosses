@@ -1,6 +1,8 @@
 package me.Derpy.Bosses.utilities.items;
 
 
+import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -13,9 +15,12 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
+import me.Derpy.Bosses.MoreBosses;
+import me.Derpy.Bosses.utilities.translate;
+
 
 public class ghast_totem {
-	private Plugin plugin = me.Derpy.Bosses.Main.getPlugin(me.Derpy.Bosses.Main.class);
+	private Plugin plugin = me.Derpy.Bosses.MoreBosses.getPlugin(me.Derpy.Bosses.MoreBosses.class);
 	public static ItemStack get(Plugin plugin) {
 		ItemStack item2 = new ItemStack(Material.TOTEM_OF_UNDYING, 1);
 		ItemMeta meta = (ItemMeta) item2.getItemMeta();
@@ -24,6 +29,9 @@ public class ghast_totem {
 		meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
 		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		meta.setDisplayName(ChatColor.RESET+""+ChatColor.DARK_RED+"Totem of the Ghasts");
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add(ChatColor.GOLD+"["+translate.get("totem_lore", MoreBosses.getPlugin(MoreBosses.class))+"]");
+		meta.setLore(lore);
 		item2.setItemMeta(meta);
 		item2.addUnsafeEnchantment(Enchantment.RIPTIDE, 1);
 		return item2;
@@ -40,5 +48,6 @@ public class ghast_totem {
 		shaped.setIngredient('*', Custom2);
 		shaped.setIngredient('%', Custom);
 		Bukkit.addRecipe(shaped);
+		RecipeStorage.addrecipe(shaped, key);
 	}
 }

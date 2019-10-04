@@ -29,7 +29,7 @@ public class EnderDragon {
 			((org.bukkit.entity.EnderDragon) entity).getBossBar().setTitle("Undead Dragon");
 			((org.bukkit.entity.EnderDragon) entity).getBossBar().addFlag(BarFlag.CREATE_FOG);
 		}
-		entity.setMaxHealth(entity.getMaxHealth()*plugin.getConfig().getInt("health_scale.tier4"));
+		entity.setMaxHealth(entity.getMaxHealth()*plugin.getConfig().getInt("health_scale.tier4.dragon"));
 		entity.setHealth(entity.getMaxHealth());
 		
 			//		Attributable bossAttributable = (Attributable) entity;

@@ -10,12 +10,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import me.Derpy.Bosses.Main;
+import me.Derpy.Bosses.MoreBosses;
 
 public class saveworld implements CommandExecutor, TabCompleter{
 
 	
-	public saveworld(Main plugin) {
+	public saveworld(MoreBosses plugin) {
 		plugin.getCommand("bsaveworld").setExecutor(this);
 		
 	}

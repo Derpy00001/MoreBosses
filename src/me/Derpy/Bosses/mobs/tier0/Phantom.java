@@ -22,25 +22,26 @@ public class Phantom {
 			entity.setSilent(true);
 			((LivingEntity) entity).setCanPickupItems(false);
 			((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 1000000, 1, true), true);
-			entity.setMaxHealth(entity.getMaxHealth()*plugin.getConfig().getInt("health_scale.tier1"));
+			entity.setMaxHealth(entity.getMaxHealth()*plugin.getConfig().getInt("health_scale.tier1.phantom"));
 			entity.setHealth(entity.getMaxHealth());
 			
 			GetName.getname(entity, entity, plugin, false);
-			
-			new BukkitRunnable(){
-				@Override
-				public void run(){
-					if(!(entity.isDead())){
-						for(Entity entity2 : entity.getNearbyEntities(10, 10, 10)) {
-							if(entity2 instanceof Player || entity2 instanceof Monster) {
-								((LivingEntity) entity2).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 1));
+			if(plugin.getConfig().getBoolean("bosses.phantom.effect_enabled")) {
+				new BukkitRunnable(){
+					@Override
+					public void run(){
+						if(!(entity.isDead())){
+							for(Entity entity2 : entity.getNearbyEntities(10, 10, 10)) {
+								if(entity2 instanceof Player || entity2 instanceof Monster) {
+									((LivingEntity) entity2).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 1));
+								}
 							}
+						}else {
+							this.cancel();
 						}
-					}else {
-						this.cancel();
 					}
-				}
-			}.runTaskTimer(plugin, 10L, 10L);
+				}.runTaskTimer(plugin, 10L, 10L);
+			}
 		}
 	}
 }

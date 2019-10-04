@@ -23,7 +23,7 @@ public class Tropic {
 			entity.setSilent(true);
 			((LivingEntity) entity).setCanPickupItems(false);
 			((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 1000000, 1, true), true);
-			entity.setMaxHealth(entity.getMaxHealth()*plugin.getConfig().getInt("health_scale.tier1")*5);
+			entity.setMaxHealth(entity.getMaxHealth()*plugin.getConfig().getInt("health_scale.tier1.tropic"));
 			entity.setHealth(entity.getMaxHealth());
 			
 			for(int i = 0; i < 30 ; i++) {

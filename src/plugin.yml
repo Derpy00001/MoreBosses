@@ -1,9 +1,10 @@
 name: MoreBosses
-version: r.2.2.0
+version: TEST_VERSION_r.2.3.0
 author: Derpy
-main: me.Derpy.Bosses.Main
+main: me.Derpy.Bosses.MoreBosses
 description: Adds more bosses to your game!
 api-version: 1.14
+softdepend: [NordicReload]
 
 commands:
   bspawn:
@@ -30,4 +31,12 @@ commands:
   bsaveworld:
     description:
     usage: 
-  
+  bdamage:
+    description: 
+    usage: 
+  bnordic:
+    description:
+    usage: 
+  blootpool:
+    description: 
+    usage: 

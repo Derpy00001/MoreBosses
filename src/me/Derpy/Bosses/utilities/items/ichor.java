@@ -16,7 +16,7 @@ import org.bukkit.plugin.Plugin;
 import me.Derpy.Bosses.utilities.translate;
 
 public class ichor {
-	private Plugin plugin = me.Derpy.Bosses.Main.getPlugin(me.Derpy.Bosses.Main.class);
+	private Plugin plugin = me.Derpy.Bosses.MoreBosses.getPlugin(me.Derpy.Bosses.MoreBosses.class);
 	public static ItemStack get(int num0, Plugin plugin) {
 		ItemStack item = new ItemStack(Material.YELLOW_DYE, num0);
 		ItemMeta meta = item.getItemMeta();
@@ -122,6 +122,7 @@ public class ichor {
 		stickre.shape("   "," * "," * ");
 		stickre.setIngredient('*', ichori);
 		Bukkit.addRecipe(stickre);
+		RecipeStorage.addrecipe(stickre, key);
 	}
 	@SuppressWarnings("deprecation")
 	public void customRecipeSword() {
@@ -134,6 +135,7 @@ public class ichor {
 		iswordre.setIngredient('*', ichori);
 		iswordre.setIngredient('$', ichorsticki);
 		Bukkit.addRecipe(iswordre);
+		RecipeStorage.addrecipe(iswordre, key);
 	}
 	@SuppressWarnings("deprecation")
 	public void customRecipeChest() {
@@ -144,6 +146,7 @@ public class ichor {
 		recipe.shape("* *", "***", "***");
 		recipe.setIngredient('*', ichori);
 		Bukkit.addRecipe(recipe);
+		RecipeStorage.addrecipe(recipe, key);
 	}
 	@SuppressWarnings("deprecation")
 	public void customRecipeLeggings() {
@@ -154,6 +157,7 @@ public class ichor {
 		recipe.shape("***", "* *", "* *");
 		recipe.setIngredient('*', ichori);
 		Bukkit.addRecipe(recipe);
+		RecipeStorage.addrecipe(recipe, key);
 	}
 	@SuppressWarnings("deprecation")
 	public void customRecipeBoots() {
@@ -164,6 +168,7 @@ public class ichor {
 		recipe.shape("   ", "* *", "* *");
 		recipe.setIngredient('*', ichori);
 		Bukkit.addRecipe(recipe);
+		RecipeStorage.addrecipe(recipe, key);
 	}
 	@SuppressWarnings("deprecation")
 	public void customRecipeHelmet() {
@@ -174,5 +179,6 @@ public class ichor {
 		recipe.shape("***", "* *", "   ");
 		recipe.setIngredient('*', ichori);
 		Bukkit.addRecipe(recipe);
+		RecipeStorage.addrecipe(recipe, key);
 	}
 }

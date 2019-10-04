@@ -17,7 +17,7 @@ import me.Derpy.Bosses.utilities.translate;
 import net.md_5.bungee.api.ChatColor;
 
 public class cursed_diamond {
-	private Plugin plugin = me.Derpy.Bosses.Main.getPlugin(me.Derpy.Bosses.Main.class);
+	private Plugin plugin = me.Derpy.Bosses.MoreBosses.getPlugin(me.Derpy.Bosses.MoreBosses.class);
 	public static ItemStack get(Plugin plugin) {
 		ItemStack item2 = new ItemStack(Material.DIAMOND, 1);
 		ItemMeta meta = (ItemMeta) item2.getItemMeta();
@@ -43,5 +43,6 @@ public class cursed_diamond {
 		shaped.shape("%*%","***","%*%");
 		shaped.setIngredient('*', Custom);
 		Bukkit.addRecipe(shaped);
+		RecipeStorage.addrecipe(shaped, key);
 	}
 }

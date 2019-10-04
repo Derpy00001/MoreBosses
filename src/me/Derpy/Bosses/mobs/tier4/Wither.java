@@ -17,7 +17,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class Wither extends JavaPlugin{
 
 	@SuppressWarnings("deprecation")
-	public static void newwither(final LivingEntity entity, Plugin plugin) {
+	public static void newwither(final LivingEntity entity, final Plugin plugin) {
 		if(plugin.getConfig().getBoolean("bosses.has_glow")) {
 			entity.setGlowing(true);
 		}
@@ -33,7 +33,7 @@ public class Wither extends JavaPlugin{
 			((org.bukkit.entity.Wither) entity).getBossBar().setTitle("Undead Wither");
 			((org.bukkit.entity.Wither) entity).getBossBar().addFlag(BarFlag.CREATE_FOG);
 		}
-		entity.setMaxHealth(entity.getMaxHealth()*plugin.getConfig().getInt("health_scale.tier3"));
+		entity.setMaxHealth(entity.getMaxHealth()*plugin.getConfig().getInt("health_scale.tier4.wither"));
 		entity.setHealth(entity.getMaxHealth());
 		
 			//		Attributable bossAttributable = (Attributable) entity;
@@ -54,19 +54,23 @@ public class Wither extends JavaPlugin{
 //		Bukkit.getScheduler().runTaskTimer((Plugin) Bukkit.getPluginManager(), new BukkitRunnable(){
 //			
 //		}, 20L, 20L);
-		new BukkitRunnable(){
-			@Override
-			public void run(){
-				if(!(entity.isDead())){
-					for(Entity entity2 : entity.getNearbyEntities(10, 10, 10)) {
-						if(entity2 instanceof LivingEntity) {
-							((LivingEntity) entity2).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 70, 2));
+		if(plugin.getConfig().getBoolean("bosses.undead_wither.effect_enabled")) {
+			new BukkitRunnable(){
+				@Override
+				public void run(){
+					if(!(entity.isDead())){
+						Integer radius = plugin.getConfig().getInt("bosses.undead_wither.radius");
+						Integer level = plugin.getConfig().getInt("bosses.undead_wither.level")-1;
+						for(Entity entity2 : entity.getNearbyEntities(radius, radius, radius)) {
+							if(entity2 instanceof LivingEntity) {
+								((LivingEntity) entity2).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 70, level));
+							}
 						}
+					}else {
+						this.cancel();
 					}
-				}else {
-					this.cancel();
 				}
-			}
-		}.runTaskTimer(plugin, 20, 20);
+			}.runTaskTimer(plugin, 20, 20);
+		}
 	}
 }

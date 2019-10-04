@@ -21,6 +21,8 @@ import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -29,7 +31,7 @@ import me.Derpy.Bosses.utilities.raid_inventories.raid_inventories;
 import net.md_5.bungee.api.ChatColor;
 
 public class gladiator {
-	private static Plugin plugin = me.Derpy.Bosses.Main.getPlugin(me.Derpy.Bosses.Main.class);
+	private static Plugin plugin = me.Derpy.Bosses.MoreBosses.getPlugin(me.Derpy.Bosses.MoreBosses.class);
 	private static Player player;
 	private static Integer wave;
 	private static Integer maxwaves = 5;
@@ -38,9 +40,11 @@ public class gladiator {
 	private static Integer maxmobsofround;
 	private static Boolean active = false;
 	private static LivingEntity king;
+	private static NamespacedKey barkey;
 	public static void start(final Player p) throws InterruptedException {
 		p.setGameMode(GameMode.ADVENTURE);
 		p.teleport(Bukkit.getWorld("MoreBosses-Colosseum").getSpawnLocation());
+		p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20*10, 255));
 		LivingEntity theking = (LivingEntity) p.getWorld().spawnEntity((Location) plugin.getConfig().get("raids.gladiator.spawns.king"), EntityType.WANDERING_TRADER);
 		theking.setAI(false);
 		setKing(theking);
@@ -54,6 +58,7 @@ public class gladiator {
 					BossBar bar = Bukkit.getServer().createBossBar( key, "Wave 1", BarColor.YELLOW, BarStyle.SOLID, BarFlag.values());
 					bar.addPlayer(getPlayer());
 					bar.setProgress(1.0);
+					setBarkey(key);
 					setBar(bar);
 					setActive(true);
 					startspawns();
@@ -104,7 +109,6 @@ public class gladiator {
 						potions.add(PotionType.POISON);
 						potions.add(PotionType.STRENGTH);
 						potions.add(PotionType.TURTLE_MASTER);
-						potions.add(PotionType.NIGHT_VISION);
 						potions.add(PotionType.WEAKNESS);
 						
 						AreaEffectCloud cloud = (AreaEffectCloud) ((Location) plugin.getConfig().get("raids.gladiator.specialblocks.beacon_glass")).getWorld().spawnEntity(partloc, EntityType.AREA_EFFECT_CLOUD);
@@ -115,7 +119,13 @@ public class gladiator {
 						Integer max = potions.size()-1;
 						Integer range = max-min+1;
 						int num = (int) ((int)(Math.random()*range)+min);
-						cloud.setBasePotionData(new PotionData(potions.get(num)));
+						PotionData potion;
+						if(potions.get(num).isUpgradeable()) {
+							potion = new PotionData(potions.get(num), false, true);
+						}else {
+							potion = new PotionData(potions.get(num), false, false);
+						}
+						cloud.setBasePotionData(potion);
 						((Location) plugin.getConfig().get("raids.gladiator.specialblocks.beacon_glass")).getBlock().setType(Material.RED_STAINED_GLASS);
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 							  public void run() {
@@ -202,61 +212,61 @@ public class gladiator {
 		}
 	}
 	private static void end(Boolean success) {
-		setActive(false);
-		getBar().removeAll();
-		for(Entity e : getKing().getNearbyEntities(100, 100, 100)) {
-			if(!(e instanceof Player)) {
-				e.remove();
+		try {
+			setActive(false);
+			getBar().removeAll();
+			Bukkit.getServer().removeBossBar(getBarkey());
+			for(Entity e : getKing().getNearbyEntities(100, 100, 100)) {
+				if(!(e instanceof Player)) {
+					e.remove();
+				}
 			}
-		}
-		getKing().remove();
-		Bukkit.getConsoleSender().sendMessage("ending1");
-		if(success) {
-			Bukkit.getConsoleSender().sendMessage("ending2");
-			try {
-				getPlayer().openInventory(raid_inventories.gladiator_get());
-			}catch(Exception e) {
-				e.printStackTrace();
+			getKing().remove();
+			if(success) {
+				try {
+					getPlayer().openInventory(raid_inventories.gladiator_get());
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+				getPlayer().playSound(getPlayer().getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 100, 1);
+				getPlayer().sendMessage(ChatColor.GOLD+"Returning in 10 seconds");
+				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+					  public void run() {
+						  plugin.getConfig().set("raids.gladiator.active", false);
+						  plugin.saveConfig();
+						  if(getPlayer().getBedSpawnLocation()==null) {
+								getPlayer().teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
+								getPlayer().setGameMode(GameMode.SURVIVAL);
+							}else {
+								getPlayer().teleport(getPlayer().getBedSpawnLocation());
+								getPlayer().setGameMode(GameMode.SURVIVAL);
+							}
+					  }
+				}, 200);
+				
+			}else {
+				getPlayer().sendMessage(ChatColor.GOLD+"Returning in 10 seconds");
+				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+					  public void run() {
+						  plugin.getConfig().set("raids.gladiator.active", false);
+						  plugin.saveConfig();
+						  Boolean playerisonline = true;
+						 if(!(Bukkit.getPlayer(getPlayer().getUniqueId()).isOnline())) {
+							 playerisonline=false;
+						 }
+						 if(playerisonline) {
+							if(getPlayer().getBedSpawnLocation()==null) {
+								getPlayer().teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
+								getPlayer().setGameMode(GameMode.SURVIVAL);
+							}else {
+								getPlayer().teleport(getPlayer().getBedSpawnLocation());
+								getPlayer().setGameMode(GameMode.SURVIVAL);
+							}
+						 }
+					  }
+				}, 200);
 			}
-			getPlayer().playSound(getPlayer().getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 100, 1);
-			getPlayer().sendMessage(ChatColor.GOLD+"Returning in 10 seconds");
-			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-				  public void run() {
-					  plugin.getConfig().set("raids.gladiator.active", false);
-					  plugin.saveConfig();
-					  if(getPlayer().getBedSpawnLocation()==null) {
-							getPlayer().teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
-							getPlayer().setGameMode(GameMode.SURVIVAL);
-						}else {
-							getPlayer().teleport(getPlayer().getBedSpawnLocation());
-							getPlayer().setGameMode(GameMode.SURVIVAL);
-						}
-				  }
-			}, 200);
-			
-		}else {
-			Bukkit.getConsoleSender().sendMessage("ending3");
-			getPlayer().sendMessage(ChatColor.GOLD+"Returning in 10 seconds");
-			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-				  public void run() {
-					  plugin.getConfig().set("raids.gladiator.active", false);
-					  plugin.saveConfig();
-					  Boolean playerisonline = true;
-					 if(!(Bukkit.getPlayer(getPlayer().getUniqueId()).isOnline())) {
-						 playerisonline=false;
-					 }
-					 if(playerisonline) {
-						if(getPlayer().getBedSpawnLocation()==null) {
-							getPlayer().teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
-							getPlayer().setGameMode(GameMode.SURVIVAL);
-						}else {
-							getPlayer().teleport(getPlayer().getBedSpawnLocation());
-							getPlayer().setGameMode(GameMode.SURVIVAL);
-						}
-					 }
-				  }
-			}, 200);
-		}
+		}catch(Exception e) {}
 	}
 	private static void startspawns() {
 		getKing().getWorld().playSound(getKing().getLocation(), Sound.EVENT_RAID_HORN, 10000F, 1F);
@@ -439,5 +449,11 @@ public class gladiator {
 	}
 	public static void setKing(LivingEntity king) {
 		gladiator.king = king;
+	}
+	public static NamespacedKey getBarkey() {
+		return barkey;
+	}
+	public static void setBarkey(NamespacedKey key) {
+		gladiator.barkey = key;
 	}
 }

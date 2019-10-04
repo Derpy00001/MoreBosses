@@ -21,7 +21,7 @@ import org.bukkit.plugin.Plugin;
 import net.md_5.bungee.api.ChatColor;
 
 public class ghast {
-	private static Plugin plugin = me.Derpy.Bosses.Main.getPlugin(me.Derpy.Bosses.Main.class);
+	private static Plugin plugin = me.Derpy.Bosses.MoreBosses.getPlugin(me.Derpy.Bosses.MoreBosses.class);
 	public static ItemStack tissue(Integer amt) {
 		ItemStack item = new ItemStack(Material.FERMENTED_SPIDER_EYE, amt);
 		ItemMeta meta = item.getItemMeta();
@@ -85,6 +85,7 @@ public class ghast {
 			shaped.shape("*%*","***","***");
 			shaped.setIngredient('*', Custom2);
 			Bukkit.addRecipe(shaped);
+			RecipeStorage.addrecipe(shaped, key);
 		}
 		@SuppressWarnings("deprecation")
 		public void customRecipe_leggings() {
@@ -96,6 +97,7 @@ public class ghast {
 			shaped.shape("***","*%*","*%*");
 			shaped.setIngredient('*', Custom2);
 			Bukkit.addRecipe(shaped);
+			RecipeStorage.addrecipe(shaped, key);
 		}
 		@SuppressWarnings("deprecation")
 		public void customRecipe_helmet() {
@@ -107,6 +109,7 @@ public class ghast {
 			shaped.shape("***","*%*","%%%");
 			shaped.setIngredient('*', Custom2);
 			Bukkit.addRecipe(shaped);
+			RecipeStorage.addrecipe(shaped, key);
 		}
 		@SuppressWarnings("deprecation")
 		public void customRecipe_boots() {
@@ -118,6 +121,7 @@ public class ghast {
 			shaped.shape("%%%","*%*","*%*");
 			shaped.setIngredient('*', Custom2);
 			Bukkit.addRecipe(shaped);
+			RecipeStorage.addrecipe(shaped, key);
 		}
 	}
 }

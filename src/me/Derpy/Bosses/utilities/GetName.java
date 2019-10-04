@@ -17,6 +17,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import net.md_5.bungee.api.ChatColor;
+
 public class GetName {
 	@SuppressWarnings("deprecation")
 	public static void getname(final LivingEntity entity, final LivingEntity entity2, final Plugin plugin, boolean b) {
@@ -52,7 +54,7 @@ public class GetName {
 		names.add("Valli");
 		names.add("Živa");
 		ArrayList<String> titles = new ArrayList<String>();
-		if(entity.getType()==EntityType.TROPICAL_FISH || entity.getType()==EntityType.MAGMA_CUBE||entity.getType()==EntityType.VEX||entity.getType()==EntityType.GHAST) {
+		if(entity.getType()==EntityType.TROPICAL_FISH || entity.getType()==EntityType.MAGMA_CUBE||entity.getType()==EntityType.VEX||entity.getType()==EntityType.GHAST||entity.getType()==EntityType.WANDERING_TRADER||entity.getType()==EntityType.WOLF) {
 			if(entity.getType()==EntityType.TROPICAL_FISH) {
 				titles.add("Fish");
 			}
@@ -68,7 +70,9 @@ public class GetName {
 			if(entity.getType()==EntityType.GHAST) {
 				titles.add("Overlord");
 			}
-			
+			if(entity.getType()==EntityType.WANDERING_TRADER||entity.getType()==EntityType.WOLF) {
+				titles.add("");
+			}
 		}else {
 			if(b) {
 				titles.add("Mutated");
@@ -92,8 +96,13 @@ public class GetName {
 		Integer range2 = max2-min2+1;
 		int num2 = (int) ((int)(Math.random()*range2)+min2);
 		String thetitle= titles.get(num2);
-		entity.setCustomName(thename+" the "+thetitle);
-		entity.setCustomNameVisible(false);
+		if(!(entity.getType()==EntityType.WANDERING_TRADER)) {
+			entity.setCustomName(thename+" the "+thetitle);
+			if(entity.getType()==EntityType.WOLF) {
+				entity.setCustomName(ChatColor.RED+"Fragment of Fenrir");
+			}
+			entity.setCustomNameVisible(false);
+		}
 		Attributable bossAttributable = (Attributable) entity2;
 		if(!(entity.getType()==EntityType.SLIME)) {
 			if(thetitle.equals("Destroyer")) {
@@ -147,7 +156,17 @@ public class GetName {
 			Integer range3 = max3-min3+1;
 			int num3 = (int) ((int)(Math.random()*range3)+min3);
 			final NamespacedKey key = new NamespacedKey(plugin, thename.replace(" ", "").replace("Ž", "Z").replace("Á", "A").replace("í", "i")+thetitle.replace(" ", "")+"-"+Integer.toString(num3));
-			BossBar bar2 = Bukkit.getServer().createBossBar( key, thename+" the "+thetitle, BarColor.BLUE, BarStyle.SEGMENTED_20, BarFlag.DARKEN_SKY);
+			BossBar bar2;
+			if(!(entity.getType()==EntityType.WANDERING_TRADER||entity.getType()==EntityType.WOLF)) {
+				bar2 = Bukkit.getServer().createBossBar( key, thename+" the "+thetitle, BarColor.BLUE, BarStyle.SEGMENTED_20, BarFlag.DARKEN_SKY);
+			}else {
+				if(entity.getType()==EntityType.WANDERING_TRADER) {
+					bar2 = Bukkit.getServer().createBossBar(key, ChatColor.GOLD+"Nomad", BarColor.RED, BarStyle.SOLID);
+				}else{
+					bar2 = Bukkit.getServer().createBossBar(key, ChatColor.RED+"Fragment of Fenrir", BarColor.RED, BarStyle.SOLID);
+				}
+			}
+			BossbarStorage.addBar(key);
 			if(music) {
 				bar2.addFlag(BarFlag.PLAY_BOSS_MUSIC);
 			}
@@ -155,36 +174,48 @@ public class GetName {
 			new BukkitRunnable(){
 				@Override
 				public void run(){
-					if(Bukkit.getServer().getBossBar(key)==null) {
-						this.cancel();
-					}
-					ArrayList<Player> players = new ArrayList<Player>();
-					for(Player p : players) {
-						Bukkit.getServer().getBossBar(key).removePlayer(p);
-					}
-					if(entity.isValid()) {
-						if(!(entity.isDead())){
-							if(!(entity.getHealth()<=0)) {
-								Bukkit.getServer().getBossBar(key).setProgress(entity.getHealth()/entity.getMaxHealth());
-								Integer amt = plugin.getConfig().getInt("bosses.show_bar");
-								for(Entity entity2 : entity.getNearbyEntities(amt, amt, amt)) {
-									if(entity2 instanceof Player) {
-										players.add((Player) entity2);
-										Bukkit.getServer().getBossBar(key).addPlayer((Player) entity2);
-									}
-								}
-							}else {
-//								Bukkit.getServer().getBossBar(key).setVisible(false);
-								Bukkit.getServer().getBossBar(key).removeAll();
+					try {
+						if(!(this.isCancelled())) {
+							if(Bukkit.getServer().getBossBar(key)==null) {
 								this.cancel();
 							}
-						}else {
-//							Bukkit.getServer().getBossBar(key).setVisible(false);
-							Bukkit.getServer().getBossBar(key).removeAll();
-							this.cancel();
+							ArrayList<Player> players = new ArrayList<Player>();
+							for(Player p : players) {
+								Bukkit.getServer().getBossBar(key).removePlayer(p);
+							}
+							if(entity.isValid()) {
+								if(!(entity.isDead())){
+									if(!(entity.getHealth()<=0)) {
+										Bukkit.getServer().getBossBar(key).setProgress(entity.getHealth()/entity.getMaxHealth());
+										Integer amt = plugin.getConfig().getInt("bosses.show_bar");
+										for(Entity entity2 : entity.getNearbyEntities(amt, amt, amt)) {
+											if(entity2 instanceof Player) {
+												players.add((Player) entity2);
+												Bukkit.getServer().getBossBar(key).addPlayer((Player) entity2);
+											}
+										}
+									}else {
+		//								Bukkit.getServer().getBossBar(key).setVisible(false);
+										Bukkit.getServer().getBossBar(key).removeAll();
+										Bukkit.getServer().removeBossBar(key);
+										BossbarStorage.removeBar(key);
+										this.cancel();
+									}
+								}else {
+		//							Bukkit.getServer().getBossBar(key).setVisible(false);
+									Bukkit.getServer().getBossBar(key).removeAll();
+									Bukkit.getServer().removeBossBar(key);
+									BossbarStorage.removeBar(key);
+									this.cancel();
+								}
+							}else {
+								Bukkit.getServer().getBossBar(key).removeAll();
+								Bukkit.getServer().removeBossBar(key);
+								BossbarStorage.removeBar(key);
+								this.cancel();
+							}
 						}
-					}else {
-						Bukkit.getServer().getBossBar(key).removeAll();
+					}catch(Exception ignored) {
 						this.cancel();
 					}
 				}

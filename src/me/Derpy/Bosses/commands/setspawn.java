@@ -10,13 +10,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import me.Derpy.Bosses.Main;
+import me.Derpy.Bosses.MoreBosses;
 
 public class setspawn implements CommandExecutor, TabCompleter{
 
 	
-	private Main plugin;
-	public setspawn(Main plugin) {
+	private MoreBosses plugin;
+	public setspawn(MoreBosses plugin) {
 		this.plugin = plugin;
 		plugin.getCommand("bsetspawn").setExecutor(this);
 		
@@ -30,75 +30,79 @@ public class setspawn implements CommandExecutor, TabCompleter{
 			sender.sendMessage("You do not have the required permissions to perform this task");
 			return true;
 		}
-		Player p = (Player) sender;
-		if(args[0].equals("gladiator.beacon_glass")) {
-			plugin.getConfig().set("raids.gladiator.specialblocks.beacon_glass", p.getLocation());
-			plugin.saveConfig();
-			plugin.saveDefaultConfig();
-			p.sendMessage("set spawn to current location!");
-		}else if(args[0].equals("gladiator.king")) {
-			plugin.getConfig().set("raids.gladiator.spawns.king", p.getLocation());
-			plugin.saveConfig();
-			plugin.saveDefaultConfig();
-			p.sendMessage("set spawn to current location!");
-			return true;
-		}else if(args[0].equals("gladiator.gate1")) {
-			plugin.getConfig().set("raids.gladiator.spawns.gate1", p.getLocation());
-			plugin.saveConfig();
-			plugin.saveDefaultConfig();
-			p.sendMessage("set spawn to current location!");
-		}else if(args[0].equals("gladiator.gate2")) {
-			plugin.getConfig().set("raids.gladiator.spawns.gate2", p.getLocation());
-			plugin.saveConfig();
-			plugin.saveDefaultConfig();
-			p.sendMessage("set spawn to current location!");
-		}else if(args[0].equals("gladiator.gate3")) {
-			plugin.getConfig().set("raids.gladiator.spawns.gate3", p.getLocation());
-			plugin.saveConfig();
-			plugin.saveDefaultConfig();
-			p.sendMessage("set spawn to current location!");
-		}
-		if(args[0].equals("ghast_raidboss")) {
-			plugin.getConfig().set("raids.ghast_raid", p.getLocation());
-			plugin.saveConfig();
-			plugin.saveDefaultConfig();
-			p.sendMessage("set spawn to current location!");
-			return true;
-		}else if(args[0].equals("ghast_raid.minion.1")) {
-			plugin.getConfig().set("raids.ghast_raid_minion_spawns.1", p.getLocation());
-			plugin.saveConfig();
-			plugin.saveDefaultConfig();
-			p.sendMessage("set spawn to current location!");
-		}else if(args[0].equals("ghast_raid.minion.2")) {
-			plugin.getConfig().set("raids.ghast_raid_minion_spawns.2", p.getLocation());
-			plugin.saveConfig();
-			plugin.saveDefaultConfig();
-			p.sendMessage("set spawn to current location!");
-		}else if(args[0].equals("ghast_raid.minion.3")) {
-			plugin.getConfig().set("raids.ghast_raid_minion_spawns.3", p.getLocation());
-			plugin.saveConfig();
-			plugin.saveDefaultConfig();
-			p.sendMessage("set spawn to current location!");
-		}else if(args[0].equals("ghast_raid.minion.4")) {
-			plugin.getConfig().set("raids.ghast_raid_minion_spawns.4", p.getLocation());
-			plugin.saveConfig();
-			plugin.saveDefaultConfig();
-			p.sendMessage("set spawn to current location!");
-		}else if(args[0].equals("ghast_raid.boss.teleport.1")) {
-			plugin.getConfig().set("raids.teleports.ghast.1", p.getLocation());
-			plugin.saveConfig();
-			plugin.saveDefaultConfig();
-			p.sendMessage("set spawn to current location!");
-		}else if(args[0].equals("ghast_raid.boss.teleport.2")) {
-			plugin.getConfig().set("raids.teleports.ghast.2", p.getLocation());
-			plugin.saveConfig();
-			plugin.saveDefaultConfig();
-			p.sendMessage("set spawn to current location!");
-		}else if(args[0].equals("ghast_raid.boss.teleport.3")) {
-			plugin.getConfig().set("raids.teleports.ghast.3", p.getLocation());
-			plugin.saveConfig();
-			plugin.saveDefaultConfig();
-			p.sendMessage("set spawn to current location!");
+		if(args[0].equals("")) {
+			return false;
+		}else {
+			Player p = (Player) sender;
+			if(args[0].equals("gladiator.beacon_glass")) {
+				plugin.getConfig().set("raids.gladiator.specialblocks.beacon_glass", p.getLocation());
+				plugin.saveConfig();
+				plugin.saveDefaultConfig();
+				p.sendMessage("set spawn to current location!");
+			}else if(args[0].equals("gladiator.king")) {
+				plugin.getConfig().set("raids.gladiator.spawns.king", p.getLocation());
+				plugin.saveConfig();
+				plugin.saveDefaultConfig();
+				p.sendMessage("set spawn to current location!");
+				return true;
+			}else if(args[0].equals("gladiator.gate1")) {
+				plugin.getConfig().set("raids.gladiator.spawns.gate1", p.getLocation());
+				plugin.saveConfig();
+				plugin.saveDefaultConfig();
+				p.sendMessage("set spawn to current location!");
+			}else if(args[0].equals("gladiator.gate2")) {
+				plugin.getConfig().set("raids.gladiator.spawns.gate2", p.getLocation());
+				plugin.saveConfig();
+				plugin.saveDefaultConfig();
+				p.sendMessage("set spawn to current location!");
+			}else if(args[0].equals("gladiator.gate3")) {
+				plugin.getConfig().set("raids.gladiator.spawns.gate3", p.getLocation());
+				plugin.saveConfig();
+				plugin.saveDefaultConfig();
+				p.sendMessage("set spawn to current location!");
+			}
+			if(args[0].equals("ghast_raidboss")) {
+				plugin.getConfig().set("raids.ghast_raid", p.getLocation());
+				plugin.saveConfig();
+				plugin.saveDefaultConfig();
+				p.sendMessage("set spawn to current location!");
+				return true;
+			}else if(args[0].equals("ghast_raid.minion.1")) {
+				plugin.getConfig().set("raids.ghast_raid_minion_spawns.1", p.getLocation());
+				plugin.saveConfig();
+				plugin.saveDefaultConfig();
+				p.sendMessage("set spawn to current location!");
+			}else if(args[0].equals("ghast_raid.minion.2")) {
+				plugin.getConfig().set("raids.ghast_raid_minion_spawns.2", p.getLocation());
+				plugin.saveConfig();
+				plugin.saveDefaultConfig();
+				p.sendMessage("set spawn to current location!");
+			}else if(args[0].equals("ghast_raid.minion.3")) {
+				plugin.getConfig().set("raids.ghast_raid_minion_spawns.3", p.getLocation());
+				plugin.saveConfig();
+				plugin.saveDefaultConfig();
+				p.sendMessage("set spawn to current location!");
+			}else if(args[0].equals("ghast_raid.minion.4")) {
+				plugin.getConfig().set("raids.ghast_raid_minion_spawns.4", p.getLocation());
+				plugin.saveConfig();
+				plugin.saveDefaultConfig();
+				p.sendMessage("set spawn to current location!");
+			}else if(args[0].equals("ghast_raid.boss.teleport.1")) {
+				plugin.getConfig().set("raids.teleports.ghast.1", p.getLocation());
+				plugin.saveConfig();
+				plugin.saveDefaultConfig();
+				p.sendMessage("set spawn to current location!");
+			}else if(args[0].equals("ghast_raid.boss.teleport.2")) {
+				plugin.getConfig().set("raids.teleports.ghast.2", p.getLocation());
+				plugin.saveConfig();
+				plugin.saveDefaultConfig();
+				p.sendMessage("set spawn to current location!");
+			}else if(args[0].equals("ghast_raid.boss.teleport.3")) {
+				plugin.getConfig().set("raids.teleports.ghast.3", p.getLocation());
+				plugin.saveConfig();
+				plugin.saveDefaultConfig();
+				p.sendMessage("set spawn to current location!");
+			}
 		}
 		return false;
 	}

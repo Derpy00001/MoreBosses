@@ -7,31 +7,19 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.Plugin;
 
+import me.Derpy.Bosses.utilities.items.Enchants;
+import me.Derpy.Bosses.utilities.items.RecipeStorage;
+import me.Derpy.Bosses.utilities.items.gems;
 import me.Derpy.Bosses.utilities.items.ichor;
-import me.Derpy.Bosses.utilities.items.recipes;
 
 
 public class GetRewards {
 	//Max tier rewards axe that spawns lightning
-	public static ItemStack newgem(String name, ChatColor color) {
-		ItemStack item = new ItemStack(Material.EMERALD, 1);
-		ItemMeta meta = item.getItemMeta();
-		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(color+name);
-		meta.setLore(lore);
-		meta.setUnbreakable(true);
-		meta.setDisplayName(ChatColor.RESET+""+ChatColor.DARK_RED+"Gem of "+name);
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		item.setItemMeta(meta);
-		item.addUnsafeEnchantment(Enchantment.PIERCING, 0);
-		return item;
-	}
 	public static ItemStack getreward_tier0() throws IOException {
 		ArrayList<ItemStack> pool = new ArrayList<ItemStack>(50);
 		pool.add(new ItemStack(Material.IRON_INGOT, 10));
@@ -67,14 +55,9 @@ public class GetRewards {
 		pool.add(new ItemStack(Material.BOOK, 5));
 		pool.add(new ItemStack(Material.DRIED_KELP, 23));
 		
-		pool.add(recipes.cursed());
-		pool.add(recipes.ichorboots());
-		pool.add(recipes.ichorlegs());
-		pool.add(recipes.ichorchest());
-		pool.add(recipes.ichorhelm());
-		pool.add(recipes.ichorstick());
-		pool.add(recipes.ichorsword());
-		pool.add(recipes.elytra());
+		for(ItemStack item : RecipeStorage.getbooks()) {
+			pool.add(item);
+		}
 		
 		Integer min = 0;
 		Integer max = pool.size()-1;
@@ -169,51 +152,15 @@ public class GetRewards {
 	}
 	public static ItemStack getreward_tier4(Player user) {
 		ArrayList<ItemStack> pool = new ArrayList<ItemStack>();
-		ItemStack item = new ItemStack(Material.EMERALD, 1);
-		ItemMeta meta = item.getItemMeta();
-		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(ChatColor.GREEN+"Levitation");
-		meta.setLore(lore);
-		meta.setDisplayName(ChatColor.RESET+""+ChatColor.DARK_RED+"Gem of Levitation");
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		meta.setUnbreakable(true);
-		item.setItemMeta(meta);
-		item.addUnsafeEnchantment(Enchantment.PIERCING, 0);
-		pool.add(item);
-		ItemStack item2 = new ItemStack(Material.EMERALD, 1);
-		ItemMeta meta2 = item2.getItemMeta();
-		ArrayList<String> lore2 = new ArrayList<String>();
-		lore2.add(ChatColor.AQUA+"Water Breathing");
-		meta2.setLore(lore2);
-		meta2.setDisplayName(ChatColor.RESET+""+ChatColor.DARK_RED+"Gem of Water Breathing");
-		meta2.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		meta2.setUnbreakable(true);
-		item2.setItemMeta(meta2);
-		item2.addUnsafeEnchantment(Enchantment.PIERCING, 0);
-		pool.add(item2);
-		ItemStack item3 = new ItemStack(Material.EMERALD, 1);
-		ItemMeta meta3 = item3.getItemMeta();
-		ArrayList<String> lore3 = new ArrayList<String>();
-		lore3.add(ChatColor.WHITE+"Speed");
-		meta3.setLore(lore3);
-		meta3.setDisplayName(ChatColor.RESET+""+ChatColor.DARK_RED+"Gem of Speed");
-		meta3.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		meta3.setUnbreakable(true);
-		item3.setItemMeta(meta3);
-		item3.addUnsafeEnchantment(Enchantment.PIERCING, 0);
-		pool.add(item3);
-		ItemStack item4 = new ItemStack(Material.EMERALD, 1);
-		ItemMeta meta4 = item4.getItemMeta();
-		ArrayList<String> lore4 = new ArrayList<String>();
-		lore4.add(ChatColor.WHITE+"Speed");
-		meta4.setLore(lore4);
-		meta4.setDisplayName(ChatColor.RESET+""+ChatColor.DARK_RED+"Gem of Speed");
-		meta4.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		meta4.setUnbreakable(true);
-		item4.setItemMeta(meta4);
-		item4.addUnsafeEnchantment(Enchantment.PIERCING, 0);
-		pool.add(item4);
-		pool.add(newgem("Jump Boost", ChatColor.YELLOW));
+		
+		pool.add(gems.levitiationget());
+		
+		pool.add(gems.water_breathingget());
+		
+		pool.add(gems.speedget());
+	
+		pool.add(gems.jumpget());
+		pool.add(Enchants.mites());
 		
 		Integer min = 0;
 		Integer max = pool.size()-1;

@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.GameRule;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -21,6 +22,7 @@ import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Slime;
+import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -33,7 +35,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-import me.Derpy.Bosses.Main;
+import me.Derpy.Bosses.MoreBosses;
 import me.Derpy.Bosses.events.ghastevent;
 import me.Derpy.Bosses.events.gladiator;
 import me.Derpy.Bosses.utilities.Random;
@@ -43,8 +45,8 @@ import me.Derpy.Bosses.utilities.items.village;
 import net.md_5.bungee.api.ChatColor;
 
 public class ondamage implements Listener{
-	private static Main plugin;
-	public ondamage(Main plugin) {
+	private static MoreBosses plugin;
+	public ondamage(MoreBosses plugin) {
 		// TODO Auto-generated constructor stub
 		ondamage.plugin = plugin;
 	}
@@ -99,28 +101,32 @@ public class ondamage implements Listener{
 		}
 		if(event.getEntityType()==EntityType.PLAYER) {
 			if(event.getEntity().getWorld().getName().startsWith("MoreBosses")) {
-				if(!(event.getEntity().isDead())) {
-					Player p = (Player) event.getEntity();
-					if((p.getHealth()-event.getDamage())<=0) {
-						if(!(p.getInventory().getItemInOffHand().getType()==Material.TOTEM_OF_UNDYING)) {
-							event.setCancelled(true);
-							p.getWorld().strikeLightningEffect(p.getLocation());
-							p.teleport(p.getWorld().getSpawnLocation());
-							for (ItemStack itemStack : p.getInventory().getContents()) {
-								if(!(itemStack==null)) {
-									p.getWorld().dropItemNaturally(p.getLocation(), itemStack);
-									p.getInventory().remove(itemStack);
+				if(!(event.getEntity().getWorld().getName().contains("Addon"))) {
+					if(!(event.getEntity().isDead())) {
+						Player p = (Player) event.getEntity();
+						if((p.getHealth()-event.getDamage())<=0) {
+							if(!(p.getInventory().getItemInOffHand().getType()==Material.TOTEM_OF_UNDYING)) {
+								event.setCancelled(true);
+								p.getWorld().strikeLightningEffect(p.getLocation());
+								p.teleport(p.getWorld().getSpawnLocation());
+								if(!event.getEntity().getWorld().getGameRuleValue(GameRule.KEEP_INVENTORY)||!plugin.getConfig().getBoolean("world.keep_inventory")) {
+									for (ItemStack itemStack : p.getInventory().getContents()) {
+										if(!(itemStack==null)) {
+											p.getWorld().dropItemNaturally(p.getLocation(), itemStack);
+											p.getInventory().remove(itemStack);
+										}
+				                    }
 								}
-		                    }
-							p.getInventory().clear();
-							p.setExp(0);
-							p.setFoodLevel(20);
-							p.setHealth(p.getMaxHealth());
-							((HumanEntity) p).setGameMode(GameMode.SPECTATOR);
-							if(p.getWorld().getName().equals("MoreBosses-void")) {
-								ghastevent.check();
-							}else if(p.getWorld().getName().equals("MoreBosses-Colosseum")){
-									gladiator.checkwave(p);
+								p.getInventory().clear();
+								p.setExp(0);
+								p.setFoodLevel(20);
+								p.setHealth(p.getMaxHealth());
+								((HumanEntity) p).setGameMode(GameMode.SPECTATOR);
+								if(p.getWorld().getName().equals("MoreBosses-void")) {
+									ghastevent.check();
+								}else if(p.getWorld().getName().equals("MoreBosses-Colosseum")){
+										gladiator.checkwave(p);
+								}
 							}
 						}
 					}
@@ -150,6 +156,7 @@ public class ondamage implements Listener{
 							armour.addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 10000);
 							((LivingEntity) entity2).getEquipment().setBoots(armour);
 							((LivingEntity) entity2).getEquipment().setBootsDropChance(0);
+							((LivingEntity) entity2).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 999999, 1, true));
 						}
 				}
 			}
@@ -223,6 +230,9 @@ public class ondamage implements Listener{
 	@EventHandler
 	public void oninteractentity(PlayerInteractEntityEvent event) throws InterruptedException {
 		Player p = (Player) event.getPlayer();
+		if(event.getRightClicked()==null) {
+			return;
+		}
 		if(event.getRightClicked().getType()==EntityType.CREEPER) {
 			if(p.getInventory().getItemInMainHand().getType()==Material.DIAMOND) {
 				Creeper creeper = (Creeper) event.getRightClicked();
@@ -261,8 +271,32 @@ public class ondamage implements Listener{
 				}
 			}
 		}else if(event.getRightClicked().getType()==EntityType.VILLAGER) {
+			Villager vil = (Villager) event.getRightClicked();
+			if(vil.isSleeping()) {
+				return;
+			}
 			if(event.getPlayer().getInventory().getItemInMainHand().isSimilar(village.token())) {
 				Integer ditems = 0;
+				if(event.getPlayer().getInventory().getHelmet()!=null) {
+					if(event.getPlayer().getInventory().getHelmet().getType()==Material.DIAMOND_HELMET) {
+						ditems++;
+					}
+				}
+				if(event.getPlayer().getInventory().getChestplate()!=null) {
+					if(event.getPlayer().getInventory().getChestplate().getType()==Material.DIAMOND_CHESTPLATE) {
+						ditems++;
+					}
+				}
+				if(event.getPlayer().getInventory().getLeggings()!=null) {
+					if(event.getPlayer().getInventory().getLeggings().getType()==Material.DIAMOND_LEGGINGS) {
+						ditems++;
+					}
+				}
+				if(event.getPlayer().getInventory().getBoots()!=null) {
+					if(event.getPlayer().getInventory().getBoots().getType()==Material.DIAMOND_BOOTS) {
+						ditems++;
+					}
+				}
 				if(event.getPlayer().getInventory().contains(Material.DIAMOND_HELMET)) {
 					ditems++;
 				}

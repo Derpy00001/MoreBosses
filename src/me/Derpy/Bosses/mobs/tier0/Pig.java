@@ -36,11 +36,11 @@ public class Pig {
 		rider.setCanPickupItems(false);
 		rider.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 1, true), true);
 		rider.setRemoveWhenFarAway(false);
-		entity.setMaxHealth(entity.getMaxHealth()*plugin.getConfig().getInt("health_scale.tier0"));
+		entity.setMaxHealth(entity.getMaxHealth()*plugin.getConfig().getInt("health_scale.tier0.pig"));
 		entity.setHealth(entity.getMaxHealth());
 		Attributable bossAttributable = (Attributable) rider;
 		AttributeInstance ai2 = bossAttributable.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
-		ai2.setBaseValue(ai2.getBaseValue()*3*plugin.getConfig().getInt("damage_scale.tier0"));
+		ai2.setBaseValue(ai2.getBaseValue()*plugin.getConfig().getInt("damage_scale.tier0.pig"));
 		AttributeInstance ai3 = bossAttributable.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
 		ai3.setBaseValue(ai3.getBaseValue()*20);
 		// https://hub.spigotmc.org/javadocs/spigot/org/spigotmc/event/entity/EntityDismountEvent.html

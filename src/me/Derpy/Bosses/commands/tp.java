@@ -13,16 +13,16 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import me.Derpy.Bosses.Main;
+import me.Derpy.Bosses.MoreBosses;
 
 public class tp implements CommandExecutor, TabCompleter{
 
 	@SuppressWarnings("unused")
-	private Main plugin;
+	private MoreBosses plugin;
 	@SuppressWarnings("unused")
 	private ArrayList<UUID> list;
 	
-	public tp(Main plugin) {
+	public tp(MoreBosses plugin) {
 		this.plugin = plugin;
 		plugin.getCommand("barena").setExecutor(this);
 		ArrayList<UUID> list = new ArrayList<UUID>();
@@ -37,18 +37,22 @@ public class tp implements CommandExecutor, TabCompleter{
 		if(!(sender.hasPermission("bosses.teleport.raid_arenas"))) {
 			return true;
 		}
-		if(args[0].equals("void")) {
-			((Entity) sender).teleport(Bukkit.getWorld("MoreBosses-void").getSpawnLocation());
-			return true;
-		}else if(args[0].equals("default_world")){
-			((Player) sender).teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
-			return true;
-		}else if(args[0].equals("Colosseum")) {
-			((Player) sender).teleport(Bukkit.getWorld("MoreBosses-Colosseum").getSpawnLocation());
-			return true;
+		if(args[0].equals("")) {
+			return false;
 		}else {
-			((Player) sender).teleport(Bukkit.getWorld(args[0]).getSpawnLocation());
-			return true;
+			if(args[0].equals("void")) {
+				((Entity) sender).teleport(Bukkit.getWorld("MoreBosses-void").getSpawnLocation());
+				return true;
+			}else if(args[0].equals("default_world")){
+				((Player) sender).teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
+				return true;
+			}else if(args[0].equals("Colosseum")) {
+				((Player) sender).teleport(Bukkit.getWorld("MoreBosses-Colosseum").getSpawnLocation());
+				return true;
+			}else {
+				((Player) sender).teleport(Bukkit.getWorld(args[0]).getSpawnLocation());
+				return true;
+			}
 		}
 	}
 	@Override

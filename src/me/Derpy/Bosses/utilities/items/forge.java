@@ -16,7 +16,7 @@ import org.bukkit.plugin.Plugin;
 import me.Derpy.Bosses.utilities.translate;
 
 public class forge {
-	private Plugin plugin = me.Derpy.Bosses.Main.getPlugin(me.Derpy.Bosses.Main.class);
+	private Plugin plugin = me.Derpy.Bosses.MoreBosses.getPlugin(me.Derpy.Bosses.MoreBosses.class);
 	public static ItemStack get(Plugin plugin) {
 		ItemStack item2 = new ItemStack(Material.FURNACE, 1);
 		ItemMeta meta = (ItemMeta) item2.getItemMeta();

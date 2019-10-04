@@ -41,7 +41,7 @@ import net.md_5.bungee.api.ChatColor;
 //playerConnection.sendPacket(itemPacket);
 
 public class ghastevent {
-	private static Plugin plugin = me.Derpy.Bosses.Main.getPlugin(me.Derpy.Bosses.Main.class);
+	private static Plugin plugin = me.Derpy.Bosses.MoreBosses.getPlugin(me.Derpy.Bosses.MoreBosses.class);
 	private static ArrayList<Player> playerlist;
 	private static Ghast theghast;
 	private static boolean active;
