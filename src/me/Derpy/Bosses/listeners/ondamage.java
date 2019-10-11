@@ -252,23 +252,25 @@ public class ondamage implements Listener{
 			}
 		}else if(event.getRightClicked().getType()==EntityType.WANDERING_TRADER) {
 			if(!(event.getPlayer().getWorld().getName().contains("MoreBosses"))) {
-				if(event.getRightClicked().getCustomName().equals(ChatColor.GOLD+"Merchant")) {
-					if(event.getPlayer().hasPotionEffect(PotionEffectType.HERO_OF_THE_VILLAGE)) {
-						event.setCancelled(true);
-						if(p.getInventory().getItemInMainHand().getType()==Material.EMERALD) {
-							if(p.getInventory().getItemInMainHand().getAmount()>=43) {
-								p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount()-43);
-								p.getWorld().dropItemNaturally(event.getRightClicked().getLocation(), village.token());
+				try {
+					if(event.getRightClicked().getCustomName().equals(ChatColor.GOLD+"Merchant")) {
+						if(event.getPlayer().hasPotionEffect(PotionEffectType.HERO_OF_THE_VILLAGE)) {
+							event.setCancelled(true);
+							if(p.getInventory().getItemInMainHand().getType()==Material.EMERALD) {
+								if(p.getInventory().getItemInMainHand().getAmount()>=43) {
+									p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount()-43);
+									p.getWorld().dropItemNaturally(event.getRightClicked().getLocation(), village.token());
+								}else {
+									p.sendMessage("<"+ChatColor.GOLD+"Merchant"+ChatColor.RESET+">"+ChatColor.GREEN+" The price of a challengers token is priced at 43 emeralds.");
+								}
 							}else {
 								p.sendMessage("<"+ChatColor.GOLD+"Merchant"+ChatColor.RESET+">"+ChatColor.GREEN+" The price of a challengers token is priced at 43 emeralds.");
 							}
 						}else {
-							p.sendMessage("<"+ChatColor.GOLD+"Merchant"+ChatColor.RESET+">"+ChatColor.GREEN+" The price of a challengers token is priced at 43 emeralds.");
+							p.sendMessage("<"+ChatColor.GOLD+"Merchant"+ChatColor.RESET+">"+ChatColor.GREEN+" Find me once you have been declared as a village's hero for the sale of an item that will test if you are a true warrior");
 						}
-					}else {
-						p.sendMessage("<"+ChatColor.GOLD+"Merchant"+ChatColor.RESET+">"+ChatColor.GREEN+" Find me once you have been declared as a village's hero for the sale of an item that will test if you are a true warrior");
 					}
-				}
+				}catch(NullPointerException e) {}
 			}
 		}else if(event.getRightClicked().getType()==EntityType.VILLAGER) {
 			Villager vil = (Villager) event.getRightClicked();
@@ -276,50 +278,52 @@ public class ondamage implements Listener{
 				return;
 			}
 			if(event.getPlayer().getInventory().getItemInMainHand().isSimilar(village.token())) {
-				Integer ditems = 0;
-				if(event.getPlayer().getInventory().getHelmet()!=null) {
-					if(event.getPlayer().getInventory().getHelmet().getType()==Material.DIAMOND_HELMET) {
+				if(plugin.getConfig().getBoolean("worlds.enabled_worlds.MoreBossesColosseum")) {
+					Integer ditems = 0;
+					if(event.getPlayer().getInventory().getHelmet()!=null) {
+						if(event.getPlayer().getInventory().getHelmet().getType()==Material.DIAMOND_HELMET) {
+							ditems++;
+						}
+					}
+					if(event.getPlayer().getInventory().getChestplate()!=null) {
+						if(event.getPlayer().getInventory().getChestplate().getType()==Material.DIAMOND_CHESTPLATE) {
+							ditems++;
+						}
+					}
+					if(event.getPlayer().getInventory().getLeggings()!=null) {
+						if(event.getPlayer().getInventory().getLeggings().getType()==Material.DIAMOND_LEGGINGS) {
+							ditems++;
+						}
+					}
+					if(event.getPlayer().getInventory().getBoots()!=null) {
+						if(event.getPlayer().getInventory().getBoots().getType()==Material.DIAMOND_BOOTS) {
+							ditems++;
+						}
+					}
+					if(event.getPlayer().getInventory().contains(Material.DIAMOND_HELMET)) {
 						ditems++;
 					}
-				}
-				if(event.getPlayer().getInventory().getChestplate()!=null) {
-					if(event.getPlayer().getInventory().getChestplate().getType()==Material.DIAMOND_CHESTPLATE) {
+					if(event.getPlayer().getInventory().contains(Material.DIAMOND_CHESTPLATE)) {
 						ditems++;
 					}
-				}
-				if(event.getPlayer().getInventory().getLeggings()!=null) {
-					if(event.getPlayer().getInventory().getLeggings().getType()==Material.DIAMOND_LEGGINGS) {
+					if(event.getPlayer().getInventory().contains(Material.DIAMOND_LEGGINGS)) {
 						ditems++;
 					}
-				}
-				if(event.getPlayer().getInventory().getBoots()!=null) {
-					if(event.getPlayer().getInventory().getBoots().getType()==Material.DIAMOND_BOOTS) {
+					if(event.getPlayer().getInventory().contains(Material.DIAMOND_BOOTS)) {
 						ditems++;
 					}
-				}
-				if(event.getPlayer().getInventory().contains(Material.DIAMOND_HELMET)) {
-					ditems++;
-				}
-				if(event.getPlayer().getInventory().contains(Material.DIAMOND_CHESTPLATE)) {
-					ditems++;
-				}
-				if(event.getPlayer().getInventory().contains(Material.DIAMOND_LEGGINGS)) {
-					ditems++;
-				}
-				if(event.getPlayer().getInventory().contains(Material.DIAMOND_BOOTS)) {
-					ditems++;
-				}
-				if(ditems>=2) {
-					event.getPlayer().sendMessage("<"+ChatColor.YELLOW+"Villager"+ChatColor.RESET+"> "+ChatColor.YELLOW+"You are equipped with too many strong items");
-					return;
-				}
-				if(!(plugin.getConfig().getBoolean("raids.gladiator.active"))) {
-					event.getPlayer().getInventory().getItemInMainHand().setAmount(event.getPlayer().getInventory().getItemInMainHand().getAmount()-1);
-					plugin.getConfig().set("raids.gladiator.active", true);
-					plugin.saveConfig();
-					gladiator.start(event.getPlayer());
-				}else {
-					p.sendMessage("<"+ChatColor.YELLOW+"Villager"+ChatColor.RESET+"> "+ChatColor.YELLOW+"Please come back later.");
+					if(ditems>=2) {
+						event.getPlayer().sendMessage("<"+ChatColor.YELLOW+"Villager"+ChatColor.RESET+"> "+ChatColor.YELLOW+"You are equipped with too many strong items");
+						return;
+					}
+					if(!(plugin.getConfig().getBoolean("raids.gladiator.active"))) {
+						event.getPlayer().getInventory().getItemInMainHand().setAmount(event.getPlayer().getInventory().getItemInMainHand().getAmount()-1);
+						plugin.getConfig().set("raids.gladiator.active", true);
+						plugin.saveConfig();
+						gladiator.start(event.getPlayer());
+					}else {
+						p.sendMessage("<"+ChatColor.YELLOW+"Villager"+ChatColor.RESET+"> "+ChatColor.YELLOW+"Please come back later.");
+					}
 				}
 			}
 		}

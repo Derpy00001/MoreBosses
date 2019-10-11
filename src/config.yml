@@ -332,6 +332,10 @@ world:
   addons:
     nordic:
       nether_world: true
+  enabled_worlds:
+    MoreBossesVoid: true
+    MoreBossesColosseum: true
+    
 
 tier0_bosses:
   phantomboss_enabled: true

@@ -144,7 +144,6 @@ public class ondismount implements Listener{
     public void on(ServerListPingEvent event) {
        if(plugin.getDescription().getVersion().contains("TEST_VERSION")) {
 	        event.setMotd(ChatColor.GOLD+"        | Running Dev_Version MoreBosses |\n             Version: "+plugin.getDescription().getVersion());
-	        event.setMaxPlayers(420);
        }
     }
 	@EventHandler
