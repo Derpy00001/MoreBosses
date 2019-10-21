@@ -1,9 +1,5 @@
 name: MoreBosses
-<<<<<<< Updated upstream
-version: TEST_VERSION_r.2.3.4
-=======
 version: r.2.3.4
->>>>>>> Stashed changes
 author: Derpy
 main: me.Derpy.Bosses.MoreBosses
 description: Adds more bosses to your game!
