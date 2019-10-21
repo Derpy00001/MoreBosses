@@ -1,5 +1,9 @@
 name: MoreBosses
+<<<<<<< Updated upstream
 version: TEST_VERSION_r.2.3.4
+=======
+version: r.2.3.4
+>>>>>>> Stashed changes
 author: Derpy
 main: me.Derpy.Bosses.MoreBosses
 description: Adds more bosses to your game!
@@ -10,33 +14,24 @@ commands:
   bspawn:
     description: Spawns Random Bosses mobs
     usage: bspawn <Mob>
-  breport:
-    description: report a bug within MoreBosses
-    usage: report <Report>
   bdebug:
-    description:
+    description: "Debug certain elements"
     usage: debug <arg>
   bevent:
-    description:
+    description: "Toggle world events"
     usage: bevent <arg> <arg>
   blanguage:
     description: "Plugin Language (Reloads server)"
     usage: blanguage <language>
   barena:
-    description:
-    usage: 
+    description: "Teleport to a boss arena"
+    usage: barena <arena>
   bsetspawn:
-    description:
-    usage: 
+    description: "Set the spawn location of an arena mob"
+    usage: bsetspawn <mob>
   bsaveworld:
-    description:
-    usage: 
-  bdamage:
-    description: 
-    usage: 
-  bnordic:
-    description:
-    usage: 
+    description: "Saves the current world the user is in (Used for boss arenas)"
+    usage: bsaveworld
   blootpool:
-    description: 
-    usage: 
+    description: "Edit custom drop pools"
+    usage: blootpool <pool>
