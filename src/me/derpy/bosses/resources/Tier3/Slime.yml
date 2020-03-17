@@ -1,0 +1,5 @@
+Slime:
+  size: 8
+  ability:
+    enabled: true
+    slime_count: 2

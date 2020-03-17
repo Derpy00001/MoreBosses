@@ -1,0 +1,9 @@
+
+plugin:
+  check_version: true
+  edit_mode: false
+
+bosses:
+  bossbar:
+    enabled: true
+    distance: 10.0

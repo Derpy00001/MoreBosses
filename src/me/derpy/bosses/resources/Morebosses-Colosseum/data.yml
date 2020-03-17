@@ -1,0 +1,8 @@
+# Not enabled
+# Arenas Work in progress
+type: COLOSSEUM_ARENA
+time: 0
+border:
+  enabled: false
+  size: 500
+  warning-distance: 100000000

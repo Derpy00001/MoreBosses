@@ -1,0 +1,5 @@
+Magma:
+  size: 10
+  ability:
+    enabled: true
+    fire_seconds: 6
