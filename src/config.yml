@@ -1,9 +1,9 @@
 
 plugin:
   check_version: true
-  edit_mode: false
 
 bosses:
+  glowing: true
   bossbar:
     enabled: true
     distance: 10.0

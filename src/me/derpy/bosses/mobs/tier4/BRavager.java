@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.bukkit.entity.EntityType;
 
+import me.derpy.bosses.Morebosses;
+import me.derpy.bosses.items.ItemType;
 import me.derpy.bosses.mobs.blueprints.BHostile;
 import me.derpy.bosses.mobs.interfaces.IMount;
 
@@ -15,7 +17,7 @@ public class BRavager extends BHostile implements IMount {
 		// TODO Auto-generated constructor stub
 		this.setExperience(13);
 		this.addMount(EntityType.PILLAGER, EntityType.VINDICATOR);
-//		this.addSpoil(new Trident(), new SpoilTier1());
+		this.addSpoil(ItemType.SPOILS_TIER4.getInterface().getFinalizedItem());
 	}
 
 	@Override
@@ -71,6 +73,13 @@ public class BRavager extends BHostile implements IMount {
 	@Override
 	public int getMinions() {
 		return 0;
+	}
+
+	@Override
+	public double getSpawnChance() {
+		return Morebosses.getConfigurationHandler().openBossConfiguration("Tier4\\Ravager.yml")
+				.getDouble("Ravager.rate");
+
 	}
 
 	@Override

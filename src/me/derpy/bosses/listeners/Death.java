@@ -11,6 +11,8 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 import me.derpy.bosses.events.BossDeathEvent;
+import me.derpy.bosses.items.ItemType;
+import me.derpy.bosses.items.blueprints.misc.BannerSkull;
 import me.derpy.bosses.items.interfaces.ILootable;
 import me.derpy.bosses.utilities.Console;
 import me.derpy.bosses.utilities.Random;
@@ -33,12 +35,15 @@ public class Death implements Listener {
 			e.getDrops().clear();
 			if (event.getLootpool().size() > 0) {
 				Object obj = event.getLootpool().get(Random.random(0, event.getLootpool().size() - 1));
-				Console.print(obj.toString());
 				if (obj instanceof ItemStack) {
 					e.getDrops().add((ItemStack) obj);
+					Console.print(obj.toString());
 				} else if (obj instanceof ILootable) {
 					e.getDrops().add(((ILootable) obj).getFinalizedItem());
 				}
+			}
+			if (Random.random(BannerSkull.getDropRate())) {
+				e.getDrops().add(ItemType.BANNER_DEATH.getInterface().getFinalizedItem());
 			}
 
 			e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);

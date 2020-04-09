@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import me.derpy.bosses.items.interfaces.ILootable;
-import net.md_5.bungee.api.ChatColor;
+import me.derpy.bosses.utilities.Tagger;
 
 public class BLootable implements ILootable {
 	@Override
@@ -31,15 +32,40 @@ public class BLootable implements ILootable {
 	@Override
 	public ItemStack getFinalizedItem() {
 		ItemStack item = this.getItem();
-		ItemMeta meta = item.getItemMeta();
-		List<String> lore = meta.getLore();
-		List<String> strings = new ArrayList<String>();
-		for (String string : lore) {
-			strings.add(ChatColor.RESET + "" + ChatColor.GRAY + string);
+		if (item.hasItemMeta()) {
+			item.getItemMeta().setDisplayName(ChatColor.RESET + item.getItemMeta().getDisplayName());
+			if (!this.hasCustomColor()) {
+				ItemMeta meta = item.getItemMeta();
+				if (meta.hasLore()) {
+					List<String> lore = meta.getLore();
+					List<String> strings = new ArrayList<String>();
+					for (String string : lore) {
+						strings.add(ChatColor.RESET + "" + this.getLoreColor() + string);
+					}
+					meta.setLore(strings);
+				}
+				meta.setDisplayName(ChatColor.RESET + "" + this.getNameColor() + meta.getDisplayName());
+				item.setItemMeta(meta);
+			}
 		}
-		meta.setLore(strings);
-		meta.setDisplayName(ChatColor.RESET + "" + ChatColor.WHITE + meta.getDisplayName());
-		item.setItemMeta(meta);
-		return item;
+		return Tagger.tagItem(item, this.getNamespacedKey());
+	}
+
+	@Override
+	public ChatColor getNameColor() {
+		// TODO Auto-generated method stub
+		return ChatColor.WHITE;
+	}
+
+	@Override
+	public ChatColor getLoreColor() {
+		// TODO Auto-generated method stub
+		return ChatColor.GRAY;
+	}
+
+	@Override
+	public boolean hasCustomColor() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

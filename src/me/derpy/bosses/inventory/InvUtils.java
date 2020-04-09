@@ -62,4 +62,16 @@ public class InvUtils {
 			i++;
 		}
 	}
+
+	public static int getDynamicSize(int size) {
+		if (size == 0) {
+			size = 1;
+		}
+		double calc = (double) size / 9;
+		size = (int) Math.ceil(calc);
+		if (size == 0) {
+			size = 1;
+		}
+		return size * 9;
+	}
 }

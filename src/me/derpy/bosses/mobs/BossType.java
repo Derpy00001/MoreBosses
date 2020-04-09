@@ -1,9 +1,12 @@
 package me.derpy.bosses.mobs;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.entity.EntityType;
 
 import me.derpy.bosses.mobs.interfaces.IBoss;
-import me.derpy.bosses.mobs.tier0.BBee;
+import me.derpy.bosses.mobs.tier1.BBee;
 import me.derpy.bosses.mobs.tier1.BDrowned;
 import me.derpy.bosses.mobs.tier1.BSkeleton;
 import me.derpy.bosses.mobs.tier1.BZombie;
@@ -40,22 +43,28 @@ public enum BossType {
 		return null;
 	}
 
-	public static BossType getFromInterfaceClass(Class<? extends IBoss> clazz) {
-		for (BossType type : BossType.values()) {
-			if (type.getInterface().getClass() == clazz) {
-				return type;
+	public static BossType[] getFromInterfaceClass(Class<? extends IBoss> clazz) {
+		List<BossType> type = new ArrayList<BossType>();
+		for (BossType bossType : BossType.values()) {
+			if (bossType.getInterface().getClass() == clazz) {
+				type.add(bossType);
 			}
 		}
-		return null;
+		BossType[] array = new BossType[type.size()];
+		type.toArray(array);
+		return array;
 	}
 
-	public static BossType getFromEntityType(EntityType entityType) {
-		for (BossType type : BossType.values()) {
-			if (type.getInterface().getEntityType() == entityType) {
-				return type;
+	public static BossType[] getFromEntityType(EntityType entityType) {
+		List<BossType> type = new ArrayList<BossType>();
+		for (BossType bossType : BossType.values()) {
+			if (bossType.getEntityType() == entityType) {
+				type.add(bossType);
 			}
 		}
-		return null;
+		BossType[] array = new BossType[type.size()];
+		type.toArray(array);
+		return array;
 	}
 
 	private final IBoss iBoss;

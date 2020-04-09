@@ -2,7 +2,8 @@ package me.derpy.bosses.mobs.tier2;
 
 import org.bukkit.entity.EntityType;
 
-import me.derpy.bosses.items.spoils.SpoilTier2;
+import me.derpy.bosses.Morebosses;
+import me.derpy.bosses.items.ItemType;
 import me.derpy.bosses.mobs.blueprints.BHostile;
 import me.derpy.bosses.mobs.interfaces.IAbility;
 import me.derpy.bosses.mobs.interfaces.IAvian;
@@ -10,7 +11,7 @@ import me.derpy.bosses.mobs.interfaces.IAvian;
 public class BBlaze extends BHostile implements IAbility, IAvian {
 	public BBlaze() {
 		this.setExperience(17);
-		this.addSpoil(new SpoilTier2());
+		this.addSpoil(ItemType.SPOILS_TIER2.getInterface());
 	}
 
 	@Override
@@ -75,5 +76,11 @@ public class BBlaze extends BHostile implements IAbility, IAvian {
 	@Override
 	public double getFollowRange() {
 		return 4;
+	}
+
+	@Override
+	public double getSpawnChance() {
+		return Morebosses.getConfigurationHandler().openBossConfiguration("Tier2\\Blaze.yml").getDouble("Blaze.rate");
+
 	}
 }

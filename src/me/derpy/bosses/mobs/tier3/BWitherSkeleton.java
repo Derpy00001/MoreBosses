@@ -6,7 +6,8 @@ import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 
-import me.derpy.bosses.items.spoils.SpoilTier2;
+import me.derpy.bosses.Morebosses;
+import me.derpy.bosses.items.ItemType;
 import me.derpy.bosses.mobs.blueprints.BEquipable;
 import me.derpy.bosses.mobs.interfaces.IAbility;
 import me.derpy.bosses.utilities.Random;
@@ -14,7 +15,7 @@ import me.derpy.bosses.utilities.Random;
 public class BWitherSkeleton extends BEquipable implements IAbility {
 	public BWitherSkeleton() {
 		this.setExperience(Random.random(18, 27));
-		this.addSpoil(new SpoilTier2());
+		this.addSpoil(ItemType.SPOILS_TIER3.getInterface());
 	}
 
 	@Override
@@ -67,6 +68,13 @@ public class BWitherSkeleton extends BEquipable implements IAbility {
 	@Override
 	public double getFollowRange() {
 		return 3.2;
+	}
+
+	@Override
+	public double getSpawnChance() {
+		return Morebosses.getConfigurationHandler().openBossConfiguration("Tier3\\WitherSkeleton.yml")
+				.getDouble("WitherSkeleton.rate");
+
 	}
 
 	@Override

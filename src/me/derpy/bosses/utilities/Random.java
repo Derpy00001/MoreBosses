@@ -2,6 +2,7 @@ package me.derpy.bosses.utilities;
 
 public class Random {
 	public static boolean random(Double chance) {
+		// lowest : 0.001
 		Integer min = 1;
 		Integer max = 1000;
 		Integer range = max - min + 1;

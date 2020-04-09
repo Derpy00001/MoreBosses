@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.Listener;
@@ -23,9 +24,12 @@ import me.derpy.bosses.utilities.Console;
 import net.md_5.bungee.api.ChatColor;
 
 public class EnchantmentHandler {
-	final public Enchantment EMBER;
-	final public Enchantment FLEET;
-	final private Map<String, Enchantment> ENCHANTMENTS = new HashMap<String, Enchantment>();
+	public Enchantment EMBER;
+	public Enchantment FLEET;
+	public Enchantment LIFESTEAL;
+	public Enchantment BLEED;
+	public Enchantment REPLENISH;
+	private Map<String, Enchantment> ENCHANTMENTS = new HashMap<String, Enchantment>();
 	private Map<String, Enchantment> enchantments_custom = new HashMap<String, Enchantment>();
 	final private static String[] NUMERALS = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" };
 	private static final NamespacedKey ENCHANTMENT_KEY_IDENTIFIER = NamespacedKey
@@ -36,7 +40,18 @@ public class EnchantmentHandler {
 		this.setAcceptingNew(true);
 		this.EMBER = this.registerEnchantment(new BEmber(NamespacedKey.minecraft("enchant-ember")), true);
 		this.FLEET = this.registerEnchantment(new BFleet(NamespacedKey.minecraft("enchant-fleet")), true);
+		this.LIFESTEAL = this.registerEnchantment(new BLifesteal(NamespacedKey.minecraft("enchant-lifesteal")), true);
+		this.BLEED = this.registerEnchantment(new BBleed(NamespacedKey.minecraft("enchant-bleed")), true);
+		this.REPLENISH = this.registerEnchantment(new BReplenish(NamespacedKey.minecraft("enchant-replenish")), true);
 		this.setAcceptingNew(false);
+	}
+
+	public static ItemStack getBook(Enchantment enchantment, int level, boolean ignoreLevelRestriction) {
+		ItemStack item = new ItemStack(Material.ENCHANTED_BOOK);
+		EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
+		meta.addStoredEnchant(enchantment, level, ignoreLevelRestriction);
+		item.setItemMeta(meta);
+		return addEnchantCopy(item, enchantment, meta.getStoredEnchantLevel(enchantment), true);
 	}
 
 	public static ItemStack addEnchantCopy(ItemStack item, Enchantment enchantment, int level, boolean book) {

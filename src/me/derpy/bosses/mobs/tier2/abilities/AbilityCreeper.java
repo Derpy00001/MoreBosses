@@ -15,11 +15,11 @@ import me.derpy.bosses.utilities.Random;
 public class AbilityCreeper implements Listener {
 	private final YamlConfiguration CONFIG = Morebosses.getConfigurationHandler()
 			.openBossConfiguration("Tier2\\Creeper.yml");
-	private final double YIELD = this.CONFIG.getDouble("Blaze.ability.explosion_yield");
-	private final int MOB_COUNT = this.CONFIG.getInt("Blaze.ability.mob_count");
-	private final boolean ENABLED = this.CONFIG.getBoolean("Blaze.ability.enabled");
-	private final boolean DESTROY = this.CONFIG.getBoolean("Blaze.ability.destroy_blocks");
-	private final List<?> MOBS = this.CONFIG.getList("Blaze.ability.mobs");
+	private final double YIELD = this.CONFIG.getDouble("Creeper.ability.explosion_yield");
+	private final int MOB_COUNT = this.CONFIG.getInt("Creeper.ability.mob_count");
+	private final boolean ENABLED = this.CONFIG.getBoolean("Creeper.ability.enabled");
+	private final boolean DESTROY = this.CONFIG.getBoolean("Creeper.ability.destroy_blocks");
+	private final List<?> MOBS = this.CONFIG.getList("Creeper.ability.mobs");
 
 	@SuppressWarnings("deprecation")
 	@EventHandler
@@ -34,7 +34,7 @@ public class AbilityCreeper implements Listener {
 					if (this.MOBS.size() > 0) {
 						for (int i = 1; i <= this.MOB_COUNT; i++) {
 							Console.print(Integer.toString(i));
-							Object obj = this.MOBS.get(Random.random(0, this.MOBS.size()));
+							Object obj = this.MOBS.get(Random.random(0, this.MOBS.size() - 1));
 							if (obj instanceof String) {
 								if (EntityType.fromName((String) obj) != null) {
 									e.getLocation().getWorld().spawnEntity(e.getLocation(),

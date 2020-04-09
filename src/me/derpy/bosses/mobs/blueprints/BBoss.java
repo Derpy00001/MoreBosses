@@ -196,4 +196,10 @@ public class BBoss implements IBoss {
 	public IBoss cloneBoss() throws CloneNotSupportedException {
 		return (IBoss) this.clone();
 	}
+
+	@Override
+	public double getSpawnChance() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

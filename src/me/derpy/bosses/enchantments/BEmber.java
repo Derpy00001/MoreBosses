@@ -1,7 +1,6 @@
 package me.derpy.bosses.enchantments;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -19,6 +18,10 @@ import org.jetbrains.annotations.NotNull;
 import me.derpy.bosses.Morebosses;
 
 public class BEmber extends Enchantment implements Listener {
+	final int DURATION = Morebosses.getConfigurationHandler().openEnchantmentConfiguration("ember.yml")
+			.getInt("ember.duration");
+	final int LEVEL_CAP = Morebosses.getConfigurationHandler().openEnchantmentConfiguration("ember.yml")
+			.getInt("ember.level_cap");
 
 	public BEmber(NamespacedKey key) {
 		super(key);
@@ -31,9 +34,14 @@ public class BEmber extends Enchantment implements Listener {
 		if (entity instanceof LivingEntity) {
 			if (!entity.isDead()) {
 				for (ItemStack item : ((LivingEntity) entity).getEquipment().getArmorContents()) {
-					if (item.getItemMeta().hasEnchant(this)) {
-						for (Entity entityNear : entity.getNearbyEntities(10, 10, 10)) {
-							entityNear.setFireTicks(20 * (5 * item.getItemMeta().getEnchantLevel(this)));
+					if (!(item == null)) {
+						if (item.hasItemMeta()) {
+							if (item.getItemMeta().hasEnchant(this)) {
+								for (Entity entityNear : entity.getNearbyEntities(10, 10, 10)) {
+									entityNear.setFireTicks(
+											20 * (this.DURATION * item.getItemMeta().getEnchantLevel(this)));
+								}
+							}
 						}
 					}
 				}
@@ -44,14 +52,19 @@ public class BEmber extends Enchantment implements Listener {
 	@Override
 	public boolean canEnchantItem(@NotNull ItemStack arg0) {
 		// TODO Auto-generated method stub
-		List<Material> materials = Arrays.asList(Material.CHAINMAIL_HELMET, Material.IRON_HELMET,
-				Material.GOLDEN_HELMET, Material.LEATHER_HELMET, Material.DIAMOND_HELMET, Material.CHAINMAIL_CHESTPLATE,
-				Material.IRON_CHESTPLATE, Material.GOLDEN_CHESTPLATE, Material.LEATHER_CHESTPLATE,
-				Material.DIAMOND_CHESTPLATE, Material.CHAINMAIL_LEGGINGS, Material.IRON_LEGGINGS,
-				Material.GOLDEN_LEGGINGS, Material.LEATHER_LEGGINGS, Material.DIAMOND_LEGGINGS,
-				Material.CHAINMAIL_BOOTS, Material.IRON_BOOTS, Material.GOLDEN_BOOTS, Material.LEATHER_BOOTS,
-				Material.DIAMOND_BOOTS);
-		return materials.contains(arg0.getType());
+		if (arg0.getType().name().toLowerCase().contains("_")) {
+			String[] allowedNames = { "helmet", "chestplate", "legging", "boot" };
+			String name = arg0.getType().name().toLowerCase().split("_")[1];
+			if (Arrays.asList(allowedNames).contains(name)) {
+				return true;
+			} else {
+				if (arg0.getType() == Material.ENCHANTED_BOOK) {
+					return true;
+				}
+			}
+		}
+		return false;
+
 	}
 
 	@Override
@@ -69,7 +82,7 @@ public class BEmber extends Enchantment implements Listener {
 	@Override
 	public int getMaxLevel() {
 		// TODO Auto-generated method stub
-		return 4;
+		return this.LEVEL_CAP;
 	}
 
 	@Override

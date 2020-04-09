@@ -1,8 +1,5 @@
 package me.derpy.bosses.enchantments;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
@@ -15,7 +12,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import me.derpy.bosses.Morebosses;
+
 public class BFleet extends Enchantment implements Listener {
+	final int DURATION = Morebosses.getConfigurationHandler().openEnchantmentConfiguration("fleet.yml")
+			.getInt("fleet.duration");
+	final int LEVEL_CAP = Morebosses.getConfigurationHandler().openEnchantmentConfiguration("fleet.yml")
+			.getInt("fleet.level_cap");
+
 	public BFleet(NamespacedKey key) {
 		super(key);
 	}
@@ -25,9 +29,14 @@ public class BFleet extends Enchantment implements Listener {
 		if (event.getEntity() instanceof LivingEntity) {
 			if (!event.getEntity().isDead()) {
 				for (ItemStack item : ((LivingEntity) event.getEntity()).getEquipment().getArmorContents()) {
-					if (item.getItemMeta().hasEnchant(this)) {
-						((LivingEntity) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.SPEED,
-								20 * 5, item.getItemMeta().getEnchantLevel(this) - 1));
+					if (!(item == null)) {
+						if (item.hasItemMeta()) {
+							if (item.getItemMeta().hasEnchant(this)) {
+								((LivingEntity) event.getEntity())
+										.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * this.DURATION,
+												item.getItemMeta().getEnchantLevel(this) - 1));
+							}
+						}
 					}
 				}
 			}
@@ -37,9 +46,14 @@ public class BFleet extends Enchantment implements Listener {
 	@Override
 	public boolean canEnchantItem(ItemStack arg0) {
 		// TODO Auto-generated method stub
-		List<Material> materials = Arrays.asList(Material.LEATHER_BOOTS, Material.IRON_BOOTS, Material.GOLDEN_BOOTS,
-				Material.DIAMOND_BOOTS, Material.CHAINMAIL_BOOTS);
-		return materials.contains(arg0.getType());
+		if (arg0.getType() == Material.ENCHANTED_BOOK) {
+			return true;
+		} else {
+			if (arg0.getType().name().toLowerCase().contains("boot")) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
@@ -57,7 +71,7 @@ public class BFleet extends Enchantment implements Listener {
 	@Override
 	public int getMaxLevel() {
 		// TODO Auto-generated method stub
-		return 5;
+		return this.LEVEL_CAP;
 	}
 
 	@Override

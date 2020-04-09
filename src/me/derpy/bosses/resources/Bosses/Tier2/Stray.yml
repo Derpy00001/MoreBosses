@@ -1,0 +1,4 @@
+Stray:
+  rate: 0.3
+  ability:
+    enabled: true

@@ -54,6 +54,8 @@ public interface IBoss extends Cloneable {
 
 	int getBossId();
 
+	double getSpawnChance();
+
 	Map<Integer, Object> getMappedDrops();
 
 	boolean hasBossbar();

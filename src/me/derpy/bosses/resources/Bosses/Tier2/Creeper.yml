@@ -1,0 +1,15 @@
+Creeper:
+  rate: 0.3
+  ability:
+    enabled: true
+    explosion_yield: 0.0
+    mob_count: 7
+    mobs:
+    - ZOMBIE
+    - SKELETON
+    - CREEPER
+    - DROWNED
+    - STRAY
+    - PILLAGER
+    - WITCH
+    - SILVERFISH

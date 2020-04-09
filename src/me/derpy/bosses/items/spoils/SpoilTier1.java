@@ -2,7 +2,6 @@ package me.derpy.bosses.items.spoils;
 
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.enchantments.Enchantment;
 
 import me.derpy.bosses.items.blueprints.BSpoilbag;
 
@@ -15,17 +14,21 @@ public class SpoilTier1 extends BSpoilbag {
 		this.addItem(Material.GOLDEN_APPLE, 1, 4);
 		this.addItem(Material.EMERALD, 6, 17);
 		this.addItem(Material.GOLD_INGOT, 2, 6);
-		this.addItem(Material.WITHER_SKELETON_SKULL,1);
-		this.addItemWithEnchants(Material.CHAINMAIL_CHESTPLATE, this.getEnchantmentsFor(Material.CHAINMAIL_CHESTPLATE));
-		this.addItemWithEnchants(Material.CHAINMAIL_LEGGINGS, this.getEnchantmentsFor(Material.CHAINMAIL_LEGGINGS));
-		this.addItemWithEnchants(Material.CHAINMAIL_HELMET, this.getEnchantmentsFor(Material.CHAINMAIL_HELMET));
-		this.addItemWithEnchants(Material.CHAINMAIL_BOOTS, this.getEnchantmentsFor(Material.CHAINMAIL_BOOTS));
-		this.addItemWithEnchants(Material.BOW, this.getEnchantmentsFor(Material.BOW));
-		this.addItemWithEnchants(Material.CROSSBOW, this.getEnchantmentsFor(Material.CROSSBOW));
-		this.addItemWithEnchants(Material.IRON_PICKAXE, this.getEnchantmentsFor(Material.IRON_PICKAXE));
-		this.addItemWithEnchants(Material.IRON_AXE, this.getEnchantmentsFor(Material.IRON_AXE));
-		this.addItemWithEnchants(Material.IRON_SHOVEL, this.getEnchantmentsFor(Material.IRON_SHOVEL));
-		this.addItemWithEnchants(Material.IRON_SWORD, this.getEnchantmentsFor(Material.IRON_SWORD));
+		this.addItem(Material.HONEY_BOTTLE, 6, 12);
+		this.addItem(Material.WITHER_SKELETON_SKULL, 1);
+		this.addItemWithEnchants(Material.CHAINMAIL_CHESTPLATE, 2, false,
+				this.getEnchantmentsFor(Material.CHAINMAIL_CHESTPLATE));
+		this.addItemWithEnchants(Material.CHAINMAIL_LEGGINGS, 2, false,
+				this.getEnchantmentsFor(Material.CHAINMAIL_LEGGINGS));
+		this.addItemWithEnchants(Material.CHAINMAIL_HELMET, 2, false,
+				this.getEnchantmentsFor(Material.CHAINMAIL_HELMET));
+		this.addItemWithEnchants(Material.CHAINMAIL_BOOTS, 2, false, this.getEnchantmentsFor(Material.CHAINMAIL_BOOTS));
+		this.addItemWithEnchants(Material.BOW, 2, false, this.getEnchantmentsFor(Material.BOW));
+		this.addItemWithEnchants(Material.CROSSBOW, 2, false, this.getEnchantmentsFor(Material.CROSSBOW));
+		this.addItemWithEnchants(Material.IRON_PICKAXE, 2, false, this.getEnchantmentsFor(Material.IRON_PICKAXE));
+		this.addItemWithEnchants(Material.IRON_AXE, 2, false, this.getEnchantmentsFor(Material.IRON_AXE));
+		this.addItemWithEnchants(Material.IRON_SHOVEL, 2, false, this.getEnchantmentsFor(Material.IRON_SHOVEL));
+		this.addItemWithEnchants(Material.IRON_SWORD, 2, false, this.getEnchantmentsFor(Material.IRON_SWORD));
 	}
 
 	@Override
@@ -36,5 +39,10 @@ public class SpoilTier1 extends BSpoilbag {
 	@Override
 	public int getDropCount() {
 		return 4;
+	}
+
+	@Override
+	public int getTagId() {
+		return 1;
 	}
 }

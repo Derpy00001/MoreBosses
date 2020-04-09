@@ -1,0 +1,4 @@
+WitherSkeleton:
+  rate: 0.2
+  ability:
+    enabled: true

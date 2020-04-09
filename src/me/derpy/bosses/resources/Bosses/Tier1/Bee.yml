@@ -1,0 +1,11 @@
+Bee:
+  rate: 0.45
+  ability:
+    enabled: true
+    bee_count: 3
+    effect_seconds: 4
+    effect_level: 1
+    effects:
+    - BLINDNESS
+    - SLOW
+    - WEAKNESS

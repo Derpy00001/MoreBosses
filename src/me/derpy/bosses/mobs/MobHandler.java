@@ -29,6 +29,7 @@ public class MobHandler {
 		return Morebosses.getBarHandler().spawnBarBoss(location, boss);
 	}
 
+	// Main
 	public static LivingEntity spawnBoss(Location location, IBoss boss) {
 		LivingEntity mob = (LivingEntity) location.getWorld().spawnEntity(location, boss.getEntityType());
 		BossSpawnEvent event = new BossSpawnEvent(false, mob, boss.getBossId(), boss, location);
@@ -129,6 +130,9 @@ public class MobHandler {
 					new FixedMetadataValue(JavaPlugin.getPlugin(Morebosses.class), boss.getBossId()));
 			mob.setMetadata("Morebosses-Spoils",
 					new FixedMetadataValue(JavaPlugin.getPlugin(Morebosses.class), boss.getMappedDrops()));
+			if (JavaPlugin.getPlugin(Morebosses.class).getConfig().getBoolean("bosses.glowing")) {
+				mob.setGlowing(true);
+			}
 			return mob;
 		} else {
 			mob.remove();

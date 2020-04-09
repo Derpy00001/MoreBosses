@@ -24,10 +24,11 @@ public class ConfigurationHandler {
 	private File nameFile;
 	private String jarPath = "src/me/derpy/bosses/resources/";
 	private final List<String> WORLDS = Arrays.asList("Colosseum", "Ghast");
-	private final List<String> BOSS_CONFIGS = Arrays.asList("Tier0/Bee.yml", "Tier2/Blaze.yml", "Tier2/Creeper.yml",
-			"Tier2/Stray.yml", "Tier2/Guardian.yml", "Tier3/Slime.yml", "Tier3/WitherSkeleton.yml", "Tier4/Pigman.yml",
-			"Tier4/MagmaCube.yml");
-
+	private final List<String> BOSS_CONFIGS = Arrays.asList("Tier1/Bee.yml", "Tier1/Drowned.yml", "Tier1/Skeleton.yml",
+			"Tier1/Zombie.yml", "Tier2/Blaze.yml", "Tier2/Creeper.yml", "Tier2/Stray.yml", "Tier2/Guardian.yml",
+			"Tier2/Phantom.yml", "Tier3/Slime.yml", "Tier3/WitherSkeleton.yml", "Tier4/Pigman.yml",
+			"Tier4/MagmaCube.yml", "Tier4/Ravager");
+	private final List<String> ENCHANT_CONFIGS = Arrays.asList("bleed","ember","fleet","lifesteal","replenish");
 	public ConfigurationHandler() {
 		this.checkFiles();
 	}
@@ -66,7 +67,21 @@ public class ConfigurationHandler {
 			if (!configFile.exists()) {
 				try {
 					String splitName = configs.split("/")[1];
-					configFile = new File(plugin.getDataFolder().getAbsolutePath() + "\\Bosses\\" + splitName);
+//					configFile = new File(plugin.getDataFolder().getAbsolutePath() + "\\Bosses\\" + splitName);
+					configFile = new File(plugin.getDataFolder().getAbsolutePath() + "\\" + splitName);
+					this.copyFile(configFile, false);
+				} catch (IOException | URISyntaxException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		for (String enchantName : ENCHANT_CONFIGS) {
+			enchantName = enchantName.toLowerCase();
+			File configFile = new File(plugin.getDataFolder().getAbsolutePath() + "\\Enchants\\" + enchantName);
+			if (!configFile.exists()) {
+				configFile = new File(plugin.getDataFolder().getAbsolutePath() + "\\" + enchantName);
+				try {
 					this.copyFile(configFile, false);
 				} catch (IOException | URISyntaxException e) {
 					// TODO Auto-generated catch block
@@ -131,42 +146,40 @@ public class ConfigurationHandler {
 		return YamlConfiguration.loadConfiguration(configFile);
 	}
 
-	private void copyFile(File file, boolean isArena) throws IOException, URISyntaxException {
-		Console.print("-------Copying Files to Directory-------");
-		if (isArena) {
-			Console.print("-------Boss Arena: " + file.getName() + "-------");
-		} else {
-			Console.print("-------File: " + file.getName() + "-------");
+	public YamlConfiguration openEnchantmentConfiguration(String name) {
+		File configFile = new File(plugin.getDataFolder().getAbsolutePath() + "\\Enchantments\\" + name);
+		if (!configFile.exists()) {
+			try {
+				this.copyFile(configFile, false);
+			} catch (IOException | URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		return YamlConfiguration.loadConfiguration(configFile);
+	}
+
+	private void copyFile(File file, boolean isArena) throws IOException, URISyntaxException {
+//		if (isArena) {
+//			Console.print("Boss Arena: " + file.getName());
+//		} else {
+//			Console.print("File: " + file.getName());
+//		}
 		JarFile jar = new JarFile(
 				Morebosses.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
 		Enumeration<JarEntry> entries = jar.entries();
+		String directory = file.getParentFile().getAbsolutePath();
 		while (entries.hasMoreElements()) {
 			JarEntry entry = entries.nextElement();
 			if (entry.getName().contains("resources/") && entry.getName().contains(file.getName())) {
 				String newName = entry.getName().substring(this.jarPath.length());
-				String[] splitName = newName.split("/");
-				String newFileString = "";
-				for (String string : splitName) {
-					if (!string.contains(".")) {
-						newFileString += "\\" + string;
-					}
-				}
-				File newFile = new File(file.getParentFile().getAbsolutePath() + "\\" + newFileString);
-				if (!newFile.exists()) {
-					Console.print("New Directory:" + newFile.getAbsolutePath());
-					if (!newFile.exists()) {
-						newFile.mkdirs();
-					}
-					if (!newFile.isDirectory()) {
-						newFile.delete();
-					}
-				}
 				try {
 					File checkFile = new File(file.getParentFile().getAbsolutePath() + "\\" + newName);
 					if (!checkFile.exists()) {
-						String[] display = entry.getName().split("/");
-						Console.print("File:" + display[display.length - 1]);
+						if (!checkFile.getParentFile().exists()) {
+							checkFile.getParentFile().mkdirs();
+							Console.print("New Directory: " + checkFile.getParentFile().getAbsolutePath());
+						}
 						InputStream inStream = plugin.getResource(entry.getName());
 						File tempFile = new File(file.getParentFile().getAbsolutePath() + "\\" + newName);
 						File.createTempFile(file.getParentFile().getAbsolutePath() + "\\" + newName, null);
@@ -174,6 +187,7 @@ public class ConfigurationHandler {
 						IOUtils.copy(inStream, outStream);
 						inStream.close();
 						outStream.close();
+						directory = tempFile.getParentFile().getAbsolutePath();
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -181,6 +195,6 @@ public class ConfigurationHandler {
 			}
 		}
 		jar.close();
-		Console.print("Copied: " + file.getName() + "!");
+		Console.print("Copied: " + file.getName() + " to " + directory);
 	}
 }

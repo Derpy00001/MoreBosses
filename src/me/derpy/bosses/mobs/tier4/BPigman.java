@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 
 import me.derpy.bosses.Morebosses;
+import me.derpy.bosses.items.ItemType;
 import me.derpy.bosses.mobs.blueprints.BEquipable;
 import me.derpy.bosses.utilities.Random;
 
@@ -19,7 +20,7 @@ public class BPigman extends BEquipable {
 	public BPigman() {
 		// TODO Auto-generated constructor stub
 		this.setExperience(13);
-//		this.addSpoil(new Trident(), new SpoilTier1());
+		this.addSpoil(ItemType.SPOILS_TIER4.getInterface().getFinalizedItem());
 	}
 
 	@Override
@@ -70,6 +71,12 @@ public class BPigman extends BEquipable {
 	@Override
 	public double getFollowRange() {
 		return 3.2;
+	}
+
+	@Override
+	public double getSpawnChance() {
+		return Morebosses.getConfigurationHandler().openBossConfiguration("Tier4\\Pigman.yml").getDouble("Pigman.rate");
+
 	}
 
 	@Override

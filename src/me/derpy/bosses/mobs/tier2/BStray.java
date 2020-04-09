@@ -6,14 +6,15 @@ import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 
-import me.derpy.bosses.items.spoils.SpoilTier2;
+import me.derpy.bosses.Morebosses;
+import me.derpy.bosses.items.ItemType;
 import me.derpy.bosses.mobs.blueprints.BEquipable;
 import me.derpy.bosses.mobs.interfaces.IAbility;
 
 public class BStray extends BEquipable implements IAbility {
 	public BStray() {
 		this.setExperience(17);
-		this.addSpoil(new SpoilTier2());
+		this.addSpoil(ItemType.SPOILS_TIER2.getInterface());
 	}
 
 	@Override
@@ -66,6 +67,12 @@ public class BStray extends BEquipable implements IAbility {
 	@Override
 	public double getFollowRange() {
 		return 7.5;
+	}
+
+	@Override
+	public double getSpawnChance() {
+		return Morebosses.getConfigurationHandler().openBossConfiguration("Tier2\\Stray.yml").getDouble("Stray.rate");
+
 	}
 
 	@Override

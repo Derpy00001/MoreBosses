@@ -16,10 +16,10 @@ public class SpoilTier2 extends SpoilTier1 {
 		this.addItem(Material.TOTEM_OF_UNDYING, 1);
 		this.addItem(Material.NAUTILUS_SHELL, 1, 3);
 		this.addItem(Material.REDSTONE, 32, 42);
-		this.addItemWithEnchants(Material.IRON_HELMET, this.getEnchantmentsFor(Material.IRON_HELMET));
-		this.addItemWithEnchants(Material.IRON_CHESTPLATE, this.getEnchantmentsFor(Material.IRON_CHESTPLATE));
-		this.addItemWithEnchants(Material.IRON_LEGGINGS, this.getEnchantmentsFor(Material.IRON_LEGGINGS));
-		this.addItemWithEnchants(Material.IRON_BOOTS, this.getEnchantmentsFor(Material.IRON_BOOTS));
+		this.addItemWithEnchants(Material.IRON_HELMET, 3, true, this.getEnchantmentsFor(Material.IRON_HELMET));
+		this.addItemWithEnchants(Material.IRON_CHESTPLATE, 3, true, this.getEnchantmentsFor(Material.IRON_CHESTPLATE));
+		this.addItemWithEnchants(Material.IRON_LEGGINGS, 3, true, this.getEnchantmentsFor(Material.IRON_LEGGINGS));
+		this.addItemWithEnchants(Material.IRON_BOOTS, 3, true, this.getEnchantmentsFor(Material.IRON_BOOTS));
 	}
 
 	@Override
@@ -33,7 +33,12 @@ public class SpoilTier2 extends SpoilTier1 {
 	}
 
 	@Override
-	public ChatColor getColor() {
+	public ChatColor getNameColor() {
 		return ChatColor.GREEN;
+	}
+
+	@Override
+	public int getTagId() {
+		return 2;
 	}
 }

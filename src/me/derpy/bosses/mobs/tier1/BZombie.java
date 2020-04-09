@@ -6,8 +6,8 @@ import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 
-import me.derpy.bosses.items.spoils.SpoilTier1;
-import me.derpy.bosses.items.weapons.Trident;
+import me.derpy.bosses.Morebosses;
+import me.derpy.bosses.items.ItemType;
 import me.derpy.bosses.mobs.blueprints.BEquipable;
 import me.derpy.bosses.utilities.Random;
 
@@ -16,7 +16,7 @@ public class BZombie extends BEquipable {
 	public BZombie() {
 		// TODO Auto-generated constructor stub
 		this.setExperience(13);
-		this.addSpoil(new Trident(), new SpoilTier1());
+		this.addSpoil(ItemType.SPOILS_TIER1.getInterface());
 	}
 
 	@Override
@@ -67,6 +67,12 @@ public class BZombie extends BEquipable {
 	@Override
 	public double getFollowRange() {
 		return 4;
+	}
+
+	@Override
+	public double getSpawnChance() {
+		return Morebosses.getConfigurationHandler().openBossConfiguration("Tier1\\Zombie.yml").getDouble("Zombie.rate");
+
 	}
 
 	@Override

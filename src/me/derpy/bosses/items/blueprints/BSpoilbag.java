@@ -1,69 +1,48 @@
 package me.derpy.bosses.items.blueprints;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.block.Chest;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import me.derpy.bosses.items.data.ItemSpoil;
 import me.derpy.bosses.items.data.Spoil;
 import me.derpy.bosses.items.interfaces.ISpoilbag;
 import me.derpy.bosses.utilities.Random;
+import me.derpy.bosses.utilities.Tagger;
 
 public class BSpoilbag implements ISpoilbag {
 	private List<Object> itemPool = new ArrayList<Object>();
 	private String name = "Spoils Container";
 
+	// YOU KNOW WHAT FUCK THIS - 3/20/20
 	public BSpoilbag() {
 	}
 
 	@Override
 	public ItemStack getItem() {
 		// TODO Auto-generated method stub
-		ItemStack item = new ItemStack(Material.CHEST);
-		BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
-		Chest chest = (Chest) meta.getBlockState();
-		if (this.getDrops().size() > 0) {
-			for (int i = 1; i <= this.getDropCount(); i++) {
-				Object obj = this.getDrops().get(Random.random(0, this.getDrops().size() - 1));
-				if (obj instanceof ItemStack) {
-					chest.getInventory().setItem(this.getChestSlot(chest), (ItemStack) obj);
-				} else if (obj instanceof Spoil) {
-					if(!((Spoil) obj).isEnchantable()) {
-						chest.getInventory().setItem(this.getChestSlot(chest), new ItemStack(((Spoil) obj).getMaterial(),
-								Random.random(((Spoil) obj).getMin(), ((Spoil) obj).getMax())));
-					}else {
-						ItemStack chestItem = new ItemStack(((Spoil) obj).getMaterial(), Random.random(((Spoil) obj).getMin(), ((Spoil) obj).getMax()));
-						Enchantment enchant = ((Spoil) obj).getRandomEnchantment();
-						ItemMeta chestItemMeta = chestItem.getItemMeta();
-						chestItemMeta.addEnchant(enchant, Random.random(enchant.getStartLevel(), enchant.getMaxLevel()), false);
-						chestItem.setItemMeta(chestItemMeta);
-						chest.getInventory().setItem(this.getChestSlot(chest), chestItem);
-					}
-				}
-			}
-		}
-		meta.setDisplayName(name);
-		meta.setLore(Arrays.asList("A container filled of items"));
-		meta.setBlockState(chest);
+		ItemStack item = new ItemStack(Material.BOOK);
+		ItemMeta meta = item.getItemMeta();
+		meta.setDisplayName(this.name);
 		item.setItemMeta(meta);
+		Tagger.tagSpoil(item, this.getTagId());
 		return item;
 	}
 
-	public int getChestSlot(Chest chest) {
-		int slot = Random.random(0, chest.getInventory().getSize() - 1);
-		for (int attempts = 0;; attempts++, slot = Random.random(0, chest.getInventory().getSize() - 1)) {
-			if (attempts >= chest.getInventory().getSize()) {
+	public static int getSlot(Inventory inventory) {
+		int slot = Random.random(0, inventory.getSize() - 1);
+		for (int attempts = 0;; attempts++, slot = Random.random(0, inventory.getSize() - 1)) {
+			if (attempts >= inventory.getSize()) {
 				break;
 			}
-			if (chest.getInventory().getItem(slot) == null) {
+			if (inventory.getItem(slot) == null) {
 				break;
 			}
 		}
@@ -85,15 +64,13 @@ public class BSpoilbag implements ISpoilbag {
 	public ItemStack getFinalizedItem() {
 		// TODO Auto-generated method stub
 		ItemStack item = this.getItem();
-		ItemMeta meta = item.getItemMeta();
-		List<String> lore = meta.getLore();
-		List<String> strings = new ArrayList<String>();
-		for (String string : lore) {
-			strings.add(ChatColor.RESET + "" + ChatColor.GRAY + string);
+		if (!this.hasCustomColor()) {
+			if (item.hasItemMeta()) {
+				ItemMeta meta = item.getItemMeta();
+				meta.setDisplayName(ChatColor.RESET + "" + this.getNameColor() + meta.getDisplayName());
+				item.setItemMeta(meta);
+			}
 		}
-		meta.setLore(strings);
-		meta.setDisplayName(ChatColor.RESET + "" + this.getColor() + meta.getDisplayName());
-		item.setItemMeta(meta);
 		return item;
 	}
 
@@ -142,28 +119,52 @@ public class BSpoilbag implements ISpoilbag {
 	@Override
 	public void addItem(Material material, int minAmount, int maxAmount) {
 		// TODO Auto-generated method stub
-		this.itemPool.add(new Spoil(material, minAmount, maxAmount, false));
+		this.itemPool.add(new Spoil(material, minAmount, maxAmount, false, null, false));
 	}
-	
+
 	@Override
-	public void addItemWithEnchants(Material material, Enchantment... enchantments) {
-		this.itemPool.add(new Spoil(material, 1, 1, true, enchantments));
+	public void addItemWithEnchants(Material material, int limit, boolean forcedEnchant, Enchantment[] enchantments) {
+		this.itemPool.add(new Spoil(material, 1, 1, true, limit, forcedEnchant, enchantments));
+	}
+
+	@Override
+	public void addItem(ItemStack item, boolean guaranteed, int minAmount, int maxAmount) {
+		// TODO Auto-generated method stub
+		this.itemPool.add(new ItemSpoil(item, true, minAmount, maxAmount));
 	}
 
 	public Enchantment[] getEnchantmentsFor(Material material) {
-		List<Enchantment> enchantments = new ArrayList<Enchantment>();	
-		for(Enchantment enchantment : Enchantment.values()) {
-			if(enchantment.canEnchantItem(new ItemStack(material))) {
+		List<Enchantment> enchantments = new ArrayList<Enchantment>();
+		for (Enchantment enchantment : Enchantment.values()) {
+			if (enchantment.canEnchantItem(new ItemStack(material))) {
 				enchantments.add(enchantment);
 			}
 		}
-		return (Enchantment[]) enchantments.toArray(new Enchantment[enchantments.size()]);
+		return enchantments.toArray(new Enchantment[enchantments.size()]);
 	}
-	
+
 	@Override
-	public org.bukkit.ChatColor getColor() {
+	public ChatColor getNameColor() {
 		// TODO Auto-generated method stub
 		return ChatColor.WHITE;
+	}
+
+	@Override
+	public ChatColor getLoreColor() {
+		// TODO Auto-generated method stub
+		return ChatColor.GRAY;
+	}
+
+	@Override
+	public boolean hasCustomColor() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int getTagId() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
