@@ -85,11 +85,11 @@ public class Morebosses extends JavaPlugin {
 			Console.print("Checking for updates...");
 			try {
 				if (UpdateChecker.isUpdateAvailable()) {
-					Console.print("New version available!");
-					Console.print("Latest Release: " + UpdateChecker.getCurrentSpigotVersion());
-					Console.print(UpdateChecker.getSpigotUrl());
+					Console.print("> New version available!");
+					Console.print("> Latest Release: " + UpdateChecker.getCurrentSpigotVersion());
+					Console.print("> " + UpdateChecker.getSpigotUrl());
 				} else {
-					Console.print("Plugin up to date!");
+					Console.print("> Plugin up to date!");
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

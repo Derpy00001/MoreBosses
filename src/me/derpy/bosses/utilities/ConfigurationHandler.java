@@ -27,8 +27,10 @@ public class ConfigurationHandler {
 	private final List<String> BOSS_CONFIGS = Arrays.asList("Tier1/Bee.yml", "Tier1/Drowned.yml", "Tier1/Skeleton.yml",
 			"Tier1/Zombie.yml", "Tier2/Blaze.yml", "Tier2/Creeper.yml", "Tier2/Stray.yml", "Tier2/Guardian.yml",
 			"Tier2/Phantom.yml", "Tier3/Slime.yml", "Tier3/WitherSkeleton.yml", "Tier4/Pigman.yml",
-			"Tier4/MagmaCube.yml", "Tier4/Ravager");
-	private final List<String> ENCHANT_CONFIGS = Arrays.asList("bleed","ember","fleet","lifesteal","replenish");
+			"Tier4/MagmaCube.yml", "Tier4/Ravager.yml");
+	private final List<String> ENCHANT_CONFIGS = Arrays.asList("bleed.yml", "ember.yml", "fleet.yml", "lifesteal.yml",
+			"replenish.yml");
+
 	public ConfigurationHandler() {
 		this.checkFiles();
 	}
@@ -78,7 +80,7 @@ public class ConfigurationHandler {
 		}
 		for (String enchantName : ENCHANT_CONFIGS) {
 			enchantName = enchantName.toLowerCase();
-			File configFile = new File(plugin.getDataFolder().getAbsolutePath() + "\\Enchants\\" + enchantName);
+			File configFile = new File(plugin.getDataFolder().getAbsolutePath() + "\\Enchantments\\" + enchantName);
 			if (!configFile.exists()) {
 				configFile = new File(plugin.getDataFolder().getAbsolutePath() + "\\" + enchantName);
 				try {

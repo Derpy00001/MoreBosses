@@ -28,10 +28,12 @@ import me.derpy.bosses.items.spoils.SpoilTier1;
 import me.derpy.bosses.items.spoils.SpoilTier2;
 import me.derpy.bosses.items.spoils.SpoilTier3;
 import me.derpy.bosses.items.spoils.SpoilTier4;
+import me.derpy.bosses.items.spoils.SpoilTier5;
 
 public enum ItemType {
 	SPOILS_TIER1(new SpoilTier1()), SPOILS_TIER2(new SpoilTier2()), SPOILS_TIER3(new SpoilTier3()),
-	SPOILS_TIER4(new SpoilTier4()), BANNER_DEATH(new BannerSkull()), BANNER_OVERLORD(new BannerGlobe()),
+	SPOILS_TIER4(new SpoilTier4()), SPOILS_TIER5(new SpoilTier5()), BANNER_DEATH(new BannerSkull()), 
+	BANNER_OVERLORD(new BannerGlobe()),
 	GHAST_TISSUE(new GhastTissue()), GHAST_TOTEM(new GhastTotem()), GHAST_HELMET(new GhastHelmet()),
 	GHAST_CHESTPLATE(new GhastChestplate()), GHAST_LEGGINGS(new GhastLeggings()), GHAST_BOOTS(new GhastBoots());
 
@@ -67,33 +69,32 @@ public enum ItemType {
 
 	static Map<NamespacedKey, Recipe> recipes = new HashMap<NamespacedKey, Recipe>();
 
-	public static void addRecipe(NamespacedKey key, Recipe recipe) {
-		recipes.put(key, recipe);
-	}
-
 	public static Map<NamespacedKey, Recipe> getRecipes() {
 		return Collections.unmodifiableMap(recipes);
 	}
 
-	private final ILootable ilootable;
-
-	ItemType(ILootable ilootable) {
-		this.ilootable = ilootable;
-		if (ilootable instanceof ICraftable) {
-			if(((ICraftable) ilootable).getRecipes().length>0) {
-				for (Recipe recipe : Arrays.asList(((ICraftable) ilootable).getRecipes())) {
-					if(recipe!=null) {
+	static {
+		for (ItemType type : ItemType.values()) {
+			if (type.getInterface() instanceof ICraftable) {
+				ICraftable craftable = (ICraftable) type.getInterface();
+				if (craftable.getRecipes().length > 0) {
+					for (Recipe recipe : Arrays.asList(craftable.getRecipes())) {
 						Bukkit.addRecipe(recipe);
-						if(recipe instanceof ShapelessRecipe) {
-							addRecipe(((ShapelessRecipe) recipe).getKey(), recipe);
-						}else if(recipe instanceof ShapedRecipe) {
-							addRecipe(((ShapedRecipe) recipe).getKey(), recipe);
+						if (recipe instanceof ShapedRecipe) {
+							recipes.put(((ShapedRecipe) recipe).getKey(), recipe);
+						} else if (recipe instanceof ShapelessRecipe) {
+							recipes.put(((ShapelessRecipe) recipe).getKey(), recipe);
 						}
-						
 					}
 				}
 			}
 		}
+	}
+
+	private final ILootable ilootable;
+
+	ItemType(final ILootable ilootable) {
+		this.ilootable = ilootable;
 	}
 
 	public ILootable getInterface() {

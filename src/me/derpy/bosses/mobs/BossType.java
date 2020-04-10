@@ -69,7 +69,7 @@ public enum BossType {
 
 	private final IBoss iBoss;
 
-	BossType(IBoss iBoss) {
+	BossType(final IBoss iBoss) {
 		this.iBoss = iBoss;
 	}
 

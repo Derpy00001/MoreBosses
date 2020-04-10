@@ -7,6 +7,7 @@ import me.derpy.bosses.items.blueprints.BSpoilbag;
 
 public class SpoilTier1 extends BSpoilbag {
 	public SpoilTier1() {
+
 		this.addItem(Material.IRON_INGOT, 2, 16);
 		this.addItem(Material.COAL, 2, 33);
 		this.addItem(Material.DIAMOND, 1, 3);

@@ -39,7 +39,7 @@ public class GhastLeggings extends BEquipment implements ICraftable {
 
 	@Override
 	public NamespacedKey getNamespacedKey() {
-		return NamespacedKey.minecraft("ghast-leggings");
+		return NamespacedKey.minecraft("tissue-leggings");
 	}
 
 	@Override

@@ -16,7 +16,7 @@ public class Pickup implements Listener {
 			Player player = (Player) e.getEntity();
 			if (e.getItem().getItemStack().isSimilar(ItemType.GHAST_TISSUE.getInterface().getFinalizedItem())) {
 				for (NamespacedKey key : ItemType.getRecipes().keySet()) {
-					if (key.getKey().contains("tissue")) {
+					if (key.getKey().toLowerCase().contains("tissue")) {
 						player.discoverRecipe(key);
 					}
 				}
