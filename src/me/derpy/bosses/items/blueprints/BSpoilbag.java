@@ -128,9 +128,9 @@ public class BSpoilbag implements ISpoilbag {
 	}
 
 	@Override
-	public void addItem(ItemStack item, boolean guaranteed, int minAmount, int maxAmount) {
+	public void addItemGuarantee(ItemStack item, boolean guaranteed, int minAmount, int maxAmount) {
 		// TODO Auto-generated method stub
-		this.itemPool.add(new ItemSpoil(item, true, minAmount, maxAmount));
+		this.itemPool.add(new ItemSpoil(item, guaranteed, minAmount, maxAmount));
 	}
 
 	public Enchantment[] getEnchantmentsFor(Material material) {

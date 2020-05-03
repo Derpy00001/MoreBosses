@@ -1,5 +1,7 @@
 package me.derpy.bosses.utilities;
 
+import java.util.List;
+
 public class Random {
 	public static boolean random(Double chance) {
 		// lowest : 0.001
@@ -24,5 +26,11 @@ public class Random {
 		double range = max - min;
 		double num = Math.random() * range + min;
 		return num;
+	}
+
+	public static <T> void addWeight(T obj, List<T> list, int amount) {
+		for (int i = 0; i <= amount; i++) {
+			list.add(obj);
+		}
 	}
 }

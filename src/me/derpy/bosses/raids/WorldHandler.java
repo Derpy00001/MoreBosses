@@ -77,12 +77,14 @@ public class WorldHandler {
 				for (File worldFile : file.listFiles()) {
 					if (worldFile.getName().equals("data.yml")) {
 						String typeString = YamlConfiguration.loadConfiguration(worldFile).getString("type");
-						if (typeString.equals(name)) {
-							World world = Bukkit.getServer().createWorld(new WorldCreator(file.getName()));
-							if (!this.worlds.contains(world)) {
-								this.worlds.add(world);
+						if (typeString != null) {
+							if (typeString.equals(name)) {
+								World world = Bukkit.getServer().createWorld(new WorldCreator(file.getName()));
+								if (!this.worlds.contains(world)) {
+									this.worlds.add(world);
+								}
+								return world;
 							}
-							return world;
 						}
 					}
 				}

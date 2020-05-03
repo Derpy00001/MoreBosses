@@ -25,5 +25,5 @@ public interface ISpoilbag extends ILootable {
 
 	void addItemWithEnchants(Material material, int limit, boolean forcedEnchant, Enchantment[] enchantments);
 
-	void addItem(ItemStack item, boolean guaranteed, int minAmount, int maxAmount);
+	void addItemGuarantee(ItemStack item, boolean guaranteed, int minAmount, int maxAmount);
 }

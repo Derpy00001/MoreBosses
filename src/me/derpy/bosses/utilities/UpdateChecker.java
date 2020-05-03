@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.bukkit.Bukkit;
+
 import me.derpy.bosses.Morebosses;
 
 public class UpdateChecker {
@@ -27,5 +29,11 @@ public class UpdateChecker {
 
 	public static String getSpigotUrl() {
 		return "https://spigotmc.org/resources/" + project;
+	}
+
+	public static double getBukkitMajor() {
+		String version = Bukkit.getVersion().split("\\(MC: ")[1].replace("\\)", "");
+		return Double.parseDouble(version.split("\\.")[0] + "." + version.split("\\.")[1]);
+
 	}
 }

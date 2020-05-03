@@ -5,8 +5,9 @@ import org.bukkit.entity.EntityType;
 import me.derpy.bosses.mobs.blueprints.BHostile;
 import me.derpy.bosses.mobs.interfaces.IAbility;
 import me.derpy.bosses.mobs.interfaces.IAvian;
+import me.derpy.bosses.mobs.interfaces.IRaid;
 
-public class BGhast extends BHostile implements IAbility, IAvian {
+public class BGhast extends BHostile implements IAbility, IAvian, IRaid {
 	public BGhast() {
 		this.setExperience(30);
 		// this.addSpoil();

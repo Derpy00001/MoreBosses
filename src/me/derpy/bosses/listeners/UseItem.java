@@ -49,6 +49,7 @@ public class UseItem implements Listener {
 							if (spoil.getDrops().size() > 0) {
 								int items = 1;
 								for (Object obj : spoil.getDrops()) {
+									// SPOIL ITEMSPOIL
 									if (obj instanceof ItemSpoil) {
 										if (((ItemSpoil) obj).isGuaranteed()) {
 											inv.setItem(BSpoilbag.getSlot(inv), ((ItemSpoil) obj).getItem());
@@ -58,8 +59,10 @@ public class UseItem implements Listener {
 								}
 								for (int i = items; i <= spoil.getDropCount(); i++) {
 									Object obj = spoil.getDrops().get(Random.random(0, spoil.getDrops().size() - 1));
+									// SPOIL - ITEMSTACK
 									if (obj instanceof ItemStack) {
 										inv.setItem(BSpoilbag.getSlot(inv), (@Nullable ItemStack) obj);
+										// SPOIL - SPOIL
 									} else if (obj instanceof Spoil) {
 										Spoil object = (Spoil) obj;
 										if (!object.isEnchantable()) {
@@ -99,10 +102,13 @@ public class UseItem implements Listener {
 											}
 											inv.setItem(BSpoilbag.getSlot(inv), item);
 										}
+										// SPOIL - ITEMSPOIL
 									} else if (obj instanceof ItemSpoil) {
 										ItemSpoil object = (ItemSpoil) obj;
 										if (!object.isGuaranteed()) {
 											inv.setItem(BSpoilbag.getSlot(inv), object.getItem());
+										} else {
+											i--;
 										}
 									}
 								}

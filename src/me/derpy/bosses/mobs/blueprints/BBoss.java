@@ -184,11 +184,8 @@ public class BBoss implements IBoss {
 		name = name.replaceAll("[^a-zA-Z0-9]", "_");
 		name = name.replace(' ', '-');
 		titleName = titleName.replace(' ', '-');
-		NamespacedKey key = NamespacedKey.minecraft(name.toLowerCase() + "." + titleName.toLowerCase()
-				+ Integer.toString(this.getBossId()) + Integer.toString(this.getMinions())
-				+ Double.toString(this.getArmorMultiplier()) + Double.toString(this.getArmorStrengthMultiplier())
-				+ Double.toString(this.getHealthMultiplier()) + Double.toString(this.getKnockbackResistance())
-				+ Double.toString(this.getSpeedMultiplier()) + UUID.randomUUID().toString());
+		NamespacedKey key = NamespacedKey.minecraft("morebosses-bosskey." + name.toLowerCase() + "."
+				+ titleName.toLowerCase() + Integer.toString(this.getBossId()) + "." + UUID.randomUUID().toString());
 		return key;
 	}
 

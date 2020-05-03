@@ -18,7 +18,8 @@ public class ItemSpoil {
 	}
 
 	public ItemStack getItem() {
-		this.item.setAmount(Random.random(min, max));
+		int amount = this.min == this.max ? this.max : Random.random(this.min, this.max);
+		this.item.setAmount(amount);
 		return this.item;
 	}
 

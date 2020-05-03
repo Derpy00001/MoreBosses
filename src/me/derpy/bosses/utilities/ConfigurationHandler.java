@@ -23,13 +23,6 @@ public class ConfigurationHandler {
 	private Morebosses plugin = Morebosses.getPlugin(Morebosses.class);
 	private File nameFile;
 	private String jarPath = "src/me/derpy/bosses/resources/";
-	private final List<String> WORLDS = Arrays.asList("Colosseum", "Ghast");
-	private final List<String> BOSS_CONFIGS = Arrays.asList("Tier1/Bee.yml", "Tier1/Drowned.yml", "Tier1/Skeleton.yml",
-			"Tier1/Zombie.yml", "Tier2/Blaze.yml", "Tier2/Creeper.yml", "Tier2/Stray.yml", "Tier2/Guardian.yml",
-			"Tier2/Phantom.yml", "Tier3/Slime.yml", "Tier3/WitherSkeleton.yml", "Tier4/Pigman.yml",
-			"Tier4/MagmaCube.yml", "Tier4/Ravager.yml");
-	private final List<String> ENCHANT_CONFIGS = Arrays.asList("bleed.yml", "ember.yml", "fleet.yml", "lifesteal.yml",
-			"replenish.yml");
 
 	public ConfigurationHandler() {
 		this.checkFiles();
@@ -49,6 +42,14 @@ public class ConfigurationHandler {
 	}
 
 	public void checkFiles() {
+		final List<String> WORLDS = Arrays.asList("Colosseum", "Ghast");
+		final List<String> BOSS_CONFIGS = Arrays.asList("Tier1/Bee.yml", "Tier1/Drowned.yml", "Tier1/Skeleton.yml",
+				"Tier1/Zombie.yml", "Tier2/Blaze.yml", "Tier2/Creeper.yml", "Tier2/Stray.yml", "Tier2/Guardian.yml",
+				"Tier2/Phantom.yml", "Tier3/Slime.yml", "Tier3/WitherSkeleton.yml", "Tier4/Pigman.yml",
+				"Tier4/MagmaCube.yml", "Tier4/Ravager.yml");
+		final List<String> ENCHANT_CONFIGS = Arrays.asList("bleed.yml", "ember.yml", "fleet.yml", "lifesteal.yml",
+				"replenish.yml");
+		final List<String> RAID_CONFIGS = Arrays.asList("GladiatorRaid.yml", "GhastRaid.yml");
 		if (!(plugin.getDataFolder().exists())) {
 			plugin.getDataFolder().mkdir();
 		}
@@ -64,7 +65,7 @@ public class ConfigurationHandler {
 				e.printStackTrace();
 			}
 		}
-		for (String configs : this.BOSS_CONFIGS) {
+		for (String configs : BOSS_CONFIGS) {
 			File configFile = new File(plugin.getDataFolder().getAbsolutePath() + "\\Bosses\\" + configs);
 			if (!configFile.exists()) {
 				try {
@@ -91,7 +92,7 @@ public class ConfigurationHandler {
 				}
 			}
 		}
-		for (String worldName : this.WORLDS) {
+		for (String worldName : WORLDS) {
 			File worldFile = new File(
 					Bukkit.getServer().getWorldContainer().getAbsolutePath() + "\\Morebosses-" + worldName);
 			if (!worldFile.exists()) {
@@ -120,17 +121,24 @@ public class ConfigurationHandler {
 				}
 			}
 		}
+		for (String raidName : RAID_CONFIGS) {
+			File raidFile = new File(plugin.getDataFolder().getAbsolutePath() + "\\Raids\\" + raidName);
+			if (!raidFile.exists()) {
+				raidFile = new File(plugin.getDataFolder().getAbsolutePath() + "\\" + raidName);
+				try {
+					this.copyFile(raidFile, true);
+				} catch (IOException | URISyntaxException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	public @Nonnull YamlConfiguration openConfiguration(String name, String path) {
 		File configFile = new File(path + "\\" + name);
 		if (!configFile.exists()) {
-			try {
-				this.copyFile(configFile, false);
-			} catch (IOException | URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			this.checkFiles();
 		}
 		return YamlConfiguration.loadConfiguration(configFile);
 	}
@@ -138,12 +146,7 @@ public class ConfigurationHandler {
 	public YamlConfiguration openBossConfiguration(String name) {
 		File configFile = new File(plugin.getDataFolder().getAbsolutePath() + "\\Bosses\\" + name);
 		if (!configFile.exists()) {
-			try {
-				this.copyFile(configFile, false);
-			} catch (IOException | URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			this.checkFiles();
 		}
 		return YamlConfiguration.loadConfiguration(configFile);
 	}
@@ -151,14 +154,17 @@ public class ConfigurationHandler {
 	public YamlConfiguration openEnchantmentConfiguration(String name) {
 		File configFile = new File(plugin.getDataFolder().getAbsolutePath() + "\\Enchantments\\" + name);
 		if (!configFile.exists()) {
-			try {
-				this.copyFile(configFile, false);
-			} catch (IOException | URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			this.checkFiles();
 		}
 		return YamlConfiguration.loadConfiguration(configFile);
+	}
+
+	public YamlConfiguration openRaidConfiguration(String name) {
+		File raidFile = new File(plugin.getDataFolder().getAbsolutePath() + "\\Raids\\" + name);
+		if (raidFile.exists()) {
+			this.checkFiles();
+		}
+		return YamlConfiguration.loadConfiguration(raidFile);
 	}
 
 	private void copyFile(File file, boolean isArena) throws IOException, URISyntaxException {

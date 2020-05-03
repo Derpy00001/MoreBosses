@@ -13,3 +13,6 @@ commands:
   barena:
     description: Arena commands
     usage: barena <teleport/save> <arena>
+  bdebug:
+    description: 
+    usage: 

@@ -1,12 +1,12 @@
 // MoreBosses Recode
 // Derpy00001 | Derpy#5247
+// Discord.gg/bQxBB89
 package me.derpy.bosses;
 
 import java.io.IOException;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -24,7 +24,6 @@ import me.derpy.bosses.listeners.Pickup;
 import me.derpy.bosses.listeners.UseItem;
 import me.derpy.bosses.mobs.BarHandler;
 import me.derpy.bosses.mobs.MobHandler;
-import me.derpy.bosses.mobs.TitleHandler;
 import me.derpy.bosses.mobs.tier1.abilities.AbilityBee;
 import me.derpy.bosses.mobs.tier2.abilities.AbilityBlaze;
 import me.derpy.bosses.mobs.tier2.abilities.AbilityCreeper;
@@ -32,6 +31,8 @@ import me.derpy.bosses.mobs.tier2.abilities.AbilityStray;
 import me.derpy.bosses.mobs.tier3.abilities.AbilitySlime;
 import me.derpy.bosses.mobs.tier3.abilities.AbilityWitherSkeleton;
 import me.derpy.bosses.mobs.tier4.abilities.AbilityMagma;
+import me.derpy.bosses.raids.GhastRaid;
+import me.derpy.bosses.raids.GladiatorRaid;
 import me.derpy.bosses.raids.WorldHandler;
 import me.derpy.bosses.utilities.ConfigurationHandler;
 import me.derpy.bosses.utilities.Console;
@@ -39,7 +40,6 @@ import me.derpy.bosses.utilities.UpdateChecker;
 import net.md_5.bungee.api.ChatColor;
 
 public class Morebosses extends JavaPlugin {
-	private static TitleHandler titleHandler;
 	private static BarHandler barHandler;
 	private static ConfigurationHandler configHandler;
 	private static EnchantmentHandler enchantmentHandler;
@@ -55,7 +55,6 @@ public class Morebosses extends JavaPlugin {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		titleHandler = new TitleHandler();
 		barHandler = new BarHandler();
 		worldHandler = new WorldHandler();
 		// Events
@@ -66,6 +65,8 @@ public class Morebosses extends JavaPlugin {
 		pm.registerEvents(new UseItem(), this);
 		pm.registerEvents(new OnSpawn(), this);
 		pm.registerEvents(new Pickup(), this);
+		pm.registerEvents(GhastRaid.getInstance(), this);
+		pm.registerEvents(GladiatorRaid.getInstance(), this);
 		// Boss abilities
 		pm.registerEvents(new AbilityBee(), this);
 		pm.registerEvents(new AbilityBlaze(), this);
@@ -100,41 +101,49 @@ public class Morebosses extends JavaPlugin {
 
 	}
 
-	@SuppressWarnings("deprecation")
-	@Override
+	@Override()
 	public void onDisable() {
-		getWorldHandler().unregisterAllArenas();
-		getBarHandler().removeAllBars();
-		if (getEnchantmentHandler().getEnchantments().size() > 0) {
-			for (Enchantment enchantment : getEnchantmentHandler().getEnchantments().values()) {
-				getEnchantmentHandler().unregisterEnchantment(enchantment);
-				Console.print("Unregistered Enchantment: " + enchantment.getName().toUpperCase());
-			}
-		}
-		if (getEnchantmentHandler().getCustomEnchantments().size() > 0) {
-			for (Enchantment enchantment : getEnchantmentHandler().getCustomEnchantments().values()) {
-				getEnchantmentHandler().unregisterEnchantment(enchantment);
-				Console.print("Unregistered Enchantment: " + enchantment.getName().toUpperCase());
-			}
-		}
 		// Clear bosses
-		for (World world : Bukkit.getWorlds()) {
-			for (Entity entity : world.getEntities()) {
-				if (entity.hasMetadata("MoreBosses-BossId")) {
-					entity.remove();
-				}
-			}
-		}
-		// Close illegal inventories
-		if (Bukkit.getOnlinePlayers().size() > 0) {
-			for (Player player : Bukkit.getOnlinePlayers()) {
-				if (player.getOpenInventory() != null) {
-					if (player.getOpenInventory().getTopInventory().getHolder() instanceof Holder) {
-						player.closeInventory();
+		try {
+			for (World world : Bukkit.getWorlds()) {
+				for (Entity entity : world.getEntities()) {
+					if (entity.hasMetadata("MoreBosses-BossId")) {
+						entity.remove();
 					}
 				}
 			}
+		} catch (Exception e) {
+			Console.print(ChatColor.RED + "Failed to remove bosses");
 		}
+		// Close illegal inventories
+		try {
+			if (Bukkit.getOnlinePlayers().size() > 0) {
+				for (Player player : Bukkit.getOnlinePlayers()) {
+					if (player.getOpenInventory() != null) {
+						if (player.getOpenInventory().getTopInventory().getHolder() instanceof Holder) {
+							player.closeInventory();
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			Console.print(ChatColor.RED + "Failed to close inventories");
+		}
+		getBarHandler().removeAllBars();
+//		getWorldHandler().unregisterAllArenas();
+//		if (getEnchantmentHandler().getEnchantments().size() > 0) {
+//			for (Enchantment enchantment : getEnchantmentHandler().getEnchantments().values()) {
+//				getEnchantmentHandler().unregisterEnchantment(enchantment);
+//				Console.print("Unregistered Enchantment: " + enchantment.getName().toUpperCase());
+//			}
+//		}
+//		if (getEnchantmentHandler().getCustomEnchantments().size() > 0) {
+//			for (Enchantment enchantment : getEnchantmentHandler().getCustomEnchantments().values()) {
+//				getEnchantmentHandler().unregisterEnchantment(enchantment);
+//				Console.print("Unregistered Enchantment: " + enchantment.getName().toUpperCase());
+//			}
+//		}
+
 	}
 
 	public static EnchantmentHandler getEnchantmentHandler() {
@@ -149,15 +158,15 @@ public class Morebosses extends JavaPlugin {
 		return configHandler;
 	}
 
-	public static TitleHandler getTitleHandler() {
-		return titleHandler;
-	}
-
 	public static BarHandler getBarHandler() {
 		return barHandler;
 	}
 
 	public static WorldHandler getWorldHandler() {
 		return worldHandler;
+	}
+
+	public static GhastRaid getGhastRaid() {
+		return GhastRaid.getInstance();
 	}
 }

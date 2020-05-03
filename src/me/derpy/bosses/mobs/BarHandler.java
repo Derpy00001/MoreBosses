@@ -26,6 +26,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import me.derpy.bosses.Morebosses;
 import me.derpy.bosses.mobs.interfaces.IBoss;
 import me.derpy.bosses.mobs.interfaces.IHostile;
+import me.derpy.bosses.mobs.interfaces.IRaid;
 import me.derpy.bosses.mobs.interfaces.ITitle;
 import me.derpy.bosses.utilities.Console;
 import me.derpy.bosses.utilities.Random;
@@ -48,18 +49,22 @@ public class BarHandler {
 							for (NamespacedKey key : Morebosses.getBarHandler().getBars().keySet()) {
 								BossBar bar = Bukkit.getServer().getBossBar(key);
 								LivingEntity entity = Morebosses.getBarHandler().getBars().get(key);
+								double trueDistance = bar.getTitle().toLowerCase().contains("the overlord") ? 500.0
+										: distance;
 								if (!entity.isValid()) {
 									Morebosses.getBarHandler().removeBar(key);
 								} else {
 									bar.setProgress(entity.getHealth()
 											/ entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-									for (Entity nearbyEntity : entity.getNearbyEntities(distance, distance, distance)) {
+									for (Entity nearbyEntity : entity.getNearbyEntities(trueDistance, trueDistance,
+											trueDistance)) {
 										if (nearbyEntity instanceof Player) {
 											bar.addPlayer((Player) nearbyEntity);
 										}
 									}
 									for (Player player : bar.getPlayers()) {
-										if (!entity.getNearbyEntities(distance, distance, distance).contains(player)) {
+										if (!entity.getNearbyEntities(trueDistance, trueDistance, trueDistance)
+												.contains(player)) {
 											bar.removePlayer(player);
 										}
 									}
@@ -97,7 +102,12 @@ public class BarHandler {
 			Console.error("Failed to find names.txt, creating file");
 			Morebosses.getConfigurationHandler().checkFiles();
 		}
-		ITitle title = Morebosses.getTitleHandler().getRandomTitle();
+		ITitle title;
+		if (boss instanceof IRaid) {
+			title = TitleType.OVERLORD.getTitle();
+		} else {
+			title = TitleType.getRandomTitle().getTitle();
+		}
 		String name = names.get(Random.random(0, names.size() - 1));
 		boss.setMinions(boss.getMinions() + title.getMinions());
 		boss.setSpeedMultiplier(boss.getSpeedMultiplier() * title.getSpeedMultiplier());
@@ -106,8 +116,15 @@ public class BarHandler {
 			((IHostile) boss)
 					.setDamageMultiplier(((IHostile) boss).getDamageMultiplier() * title.getDamageMultiplier());
 		}
+		boolean override = false;
 		LivingEntity mob = MobHandler.spawnBoss(location, boss);
-		if (bossbarEnabled) {
+		mob.setCustomNameVisible(false);
+		mob.setCustomName(name);
+		if (title == TitleType.OVERLORD.getTitle()) {
+			mob.setRemoveWhenFarAway(false);
+			override = true;
+		}
+		if (bossbarEnabled || override) {
 			if (mob != null) {
 				NamespacedKey key = boss.generateRandomKey(name, title.getTitleName());
 				Bukkit.getServer().createBossBar(key, name + " the " + title.getTitleName(), this.color, BarStyle.SOLID,

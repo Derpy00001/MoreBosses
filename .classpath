@@ -6,7 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry excluding="me/derpy/bosses/resources/" kind="src" path="src"/>
-	<classpathentry kind="lib" path="D:/Languages/Java JDK/Minecraft Jar/spigot-1.15.2.jar"/>
-	<classpathentry kind="lib" path="D:/Languages/Java JDK/Minecraft Jar/annotations-16.0.2.jar"/>
+	<classpathentry kind="lib" path="D:/Languages/Java JDK/Minecraft/Server Jar/spigot-1.15.2.jar"/>
+	<classpathentry kind="lib" path="D:/Languages/Java JDK/Minecraft/Server Jar/annotations-16.0.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

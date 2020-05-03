@@ -7,8 +7,8 @@ import me.derpy.bosses.items.ItemType;
 
 public class SpoilTier5 extends SpoilTier4 {
 	public SpoilTier5() {
-		this.addItem(ItemType.GHAST_TISSUE.getInterface().getFinalizedItem(), true, 5, 9);
-		this.addItem(ItemType.BANNER_OVERLORD.getInterface().getFinalizedItem(), true, 1, 1);
+		this.addItemGuarantee(ItemType.GHAST_TISSUE.getInterface().getFinalizedItem(), true, 5, 9);
+		this.addItemGuarantee(ItemType.BANNER_OVERLORD.getInterface().getFinalizedItem(), true, 1, 1);
 	}
 
 	@Override
