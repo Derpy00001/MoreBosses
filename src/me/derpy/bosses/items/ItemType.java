@@ -19,7 +19,6 @@ import me.derpy.bosses.items.blueprints.armor.GhastBoots;
 import me.derpy.bosses.items.blueprints.armor.GhastChestplate;
 import me.derpy.bosses.items.blueprints.armor.GhastHelmet;
 import me.derpy.bosses.items.blueprints.armor.GhastLeggings;
-import me.derpy.bosses.items.blueprints.misc.TutorialBook;
 import me.derpy.bosses.items.blueprints.misc.banner.BannerGlobe;
 import me.derpy.bosses.items.blueprints.misc.banner.BannerSkull;
 import me.derpy.bosses.items.blueprints.misc.ghast.GhastTissue;
@@ -35,7 +34,7 @@ import me.derpy.bosses.items.spoils.SpoilTier5;
 import me.derpy.bosses.utilities.Console;
 
 public enum ItemType {
-	BOOK_GUIDE(new TutorialBook()), BANNER_DEATH(new BannerSkull()), BANNER_OVERLORD(new BannerGlobe()),
+	BANNER_DEATH(new BannerSkull()), BANNER_OVERLORD(new BannerGlobe()),
 	GHAST_TISSUE(new GhastTissue()), CHALLENGER_TOKEN(new ChallengerToken()), GHAST_TOTEM(new GhastTotem()),
 	GHAST_HELMET(new GhastHelmet()), GHAST_CHESTPLATE(new GhastChestplate()), GHAST_LEGGINGS(new GhastLeggings()),
 	GHAST_BOOTS(new GhastBoots()), SPOILS_GENERIC(new BSpoilbag()), SPOILS_TIER1(new SpoilTier1()),
