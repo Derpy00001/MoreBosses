@@ -76,7 +76,9 @@ public class BArena implements Listener {
 						startWorld = world;
 						for (Player player : playerList) {
 							player.setGameMode(GameMode.ADVENTURE);
-							player.teleport(getBossArenaWorld().getSpawnLocation());
+							Location spawnLocation = getBossArenaWorld().getSpawnLocation();
+							spawnLocation.setY(spawnLocation.getY() + 1);
+							player.teleport(spawnLocation);
 							player.addPotionEffect(
 									new PotionEffect(PotionEffectType.CONFUSION, 20 * confusionSeconds, 255));
 						}
@@ -143,7 +145,7 @@ public class BArena implements Listener {
 				if (!(entity instanceof Player)) {
 					entity.remove();
 				} else {
-					entity.sendMessage(ChatColor.GOLD + "Returning in 1 minute");
+					entity.sendMessage(ChatColor.GOLD + "Returning in 30 seconds");
 				}
 			}
 		}
@@ -180,7 +182,7 @@ public class BArena implements Listener {
 				}
 			}
 
-		}, 60 * 20);
+		}, 30 * 20);
 	}
 
 	public World getBossArenaWorld() {
@@ -216,7 +218,7 @@ public class BArena implements Listener {
 		} else {
 			secondsString = Integer.toString(seconds);
 		}
-		return Integer.toString(minutes) + ":" + secondsString;
+		return minutes == 0 ? secondsString : Integer.toString(minutes) + ":" + secondsString;
 	}
 
 	private final void updateDisplay() {

@@ -1,5 +1,5 @@
 Magma:
-  rate: 0.1
+  rate: 0.18
   size: 10
   ability:
     enabled: true

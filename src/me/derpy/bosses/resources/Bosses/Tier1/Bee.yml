@@ -1,5 +1,5 @@
 Bee:
-  rate: 0.45
+  rate: 0.1
   ability:
     enabled: true
     bee_count: 3

@@ -45,14 +45,15 @@ public class UseItem implements Listener {
 							if (size < 27) {
 								size = 27;
 							}
-							Inventory inv = Bukkit.createInventory(new Holder(), size, "Spoils");
+							Inventory inventory = Bukkit.createInventory(new Holder(), size, "Spoils");
 							if (spoil.getDrops().size() > 0) {
 								int items = 1;
 								for (Object obj : spoil.getDrops()) {
 									// SPOIL ITEMSPOIL
 									if (obj instanceof ItemSpoil) {
 										if (((ItemSpoil) obj).isGuaranteed()) {
-											inv.setItem(BSpoilbag.getSlot(inv), ((ItemSpoil) obj).getItem());
+											inventory.setItem(BSpoilbag.getSlot(inventory),
+													((ItemSpoil) obj).getItem());
 											items++;
 										}
 									}
@@ -61,13 +62,14 @@ public class UseItem implements Listener {
 									Object obj = spoil.getDrops().get(Random.random(0, spoil.getDrops().size() - 1));
 									// SPOIL - ITEMSTACK
 									if (obj instanceof ItemStack) {
-										inv.setItem(BSpoilbag.getSlot(inv), (@Nullable ItemStack) obj);
+										inventory.setItem(BSpoilbag.getSlot(inventory), (@Nullable ItemStack) obj);
 										// SPOIL - SPOIL
 									} else if (obj instanceof Spoil) {
 										Spoil object = (Spoil) obj;
 										if (!object.isEnchantable()) {
-											inv.setItem(BSpoilbag.getSlot(inv), new ItemStack(object.getMaterial(),
-													Random.random(object.getMin(), object.getMax())));
+											inventory.setItem(BSpoilbag.getSlot(inventory),
+													new ItemStack(object.getMaterial(),
+															Random.random(object.getMin(), object.getMax())));
 										} else {
 											boolean canEnchant = false;
 											if (object.isForcedEnchant()) {
@@ -100,20 +102,20 @@ public class UseItem implements Listener {
 												}
 												item.setItemMeta(meta);
 											}
-											inv.setItem(BSpoilbag.getSlot(inv), item);
+											inventory.setItem(BSpoilbag.getSlot(inventory), item);
 										}
 										// SPOIL - ITEMSPOIL
 									} else if (obj instanceof ItemSpoil) {
 										ItemSpoil object = (ItemSpoil) obj;
 										if (!object.isGuaranteed()) {
-											inv.setItem(BSpoilbag.getSlot(inv), object.getItem());
+											inventory.setItem(BSpoilbag.getSlot(inventory), object.getItem());
 										} else {
 											i--;
 										}
 									}
 								}
 							}
-							e.getPlayer().openInventory(inv);
+							e.getPlayer().openInventory(inventory);
 						}
 					}
 				}

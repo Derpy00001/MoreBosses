@@ -1,5 +1,5 @@
 Creeper:
-  rate: 0.3
+  rate: 0.01
   ability:
     enabled: true
     explosion_yield: 0.0

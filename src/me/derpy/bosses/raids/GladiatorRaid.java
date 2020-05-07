@@ -61,7 +61,8 @@ public class GladiatorRaid extends BArena {
 
 	public GladiatorRaid() {
 		this.minionLocations = new ArrayList<Location>();
-		YamlConfiguration configuration = Morebosses.getConfigurationHandler().openRaidConfiguration("GladiatorRaid");
+		YamlConfiguration configuration = Morebosses.getConfigurationHandler()
+				.openRaidConfiguration("GladiatorRaid.yml");
 		this.bossLocation = this.getLocation("locations.king", configuration);
 		this.powerUpLocation = this.getLocation("locations.powerup", configuration);
 		for (Object key : Arrays
@@ -125,11 +126,12 @@ public class GladiatorRaid extends BArena {
 	protected final void beginWave() {
 		if (!this.waveActive) {
 			this.waveActive = true;
-			this.getBossArenaWorld().playSound(this.bossLocation, Sound.EVENT_RAID_HORN, 1, 1);
+			this.getBossArenaWorld().playSound(this.bossLocation, Sound.EVENT_RAID_HORN, 100, 1);
 			if (this.waveInt < 1 || this.waveInt > 6) {
 				this.waveInt = 1;
 			}
 			this.bossBar.setTitle("Wave " + Integer.toString(this.waveInt));
+			this.updateBar(1, 1);
 			switch (this.waveInt) {
 			case 1:
 				Random.addWeight(EntityType.PILLAGER, this.availableMinionTypes, 3);
@@ -189,7 +191,7 @@ public class GladiatorRaid extends BArena {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				if (Random.random(0.8)) {
+				if (Random.random(0.5)) {
 					for (Player player : getPlayers()) {
 						player.playSound(player.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 1, 0.5F);
 						player.sendTitle(ChatColor.GOLD + "The Emperor", ChatColor.GOLD + "has sent a gift");
@@ -203,24 +205,40 @@ public class GladiatorRaid extends BArena {
 						powerUp.setBasePotionData(new PotionData(potionType, false, potionType.isUpgradeable()));
 					}
 				}
+				List<Entity> minions = new ArrayList<Entity>();
+				if (activeMinions.size() > 0) {
+					minions.addAll(activeMinions);
+					for (Entity entity : minions) {
+						if (!entity.isValid()) {
+							activeMinions.remove(entity);
+							updateBar(activeMinions.size(), minionSpawnAmount);
+						}
+					}
+					if (activeMinions.size() == 0) {
+						endWave();
+					}
+					minions.clear();
+				} else {
+					endWave();
+				}
 			}
 
 		}, 0, 40 * 20));
 	}
 
 	private void createBossbar() {
-		this.bossBar = Bukkit.createBossBar(
-				NamespacedKey
-						.minecraft(this.getBossArenaWorld().getName().replaceAll("[^a-zA-Z0-9]", "_").replace(' ', '-')
-								+ UUID.randomUUID()),
-				"Gladiator", BarColor.YELLOW, BarStyle.SOLID, BarFlag.PLAY_BOSS_MUSIC);
+		this.bossBar = Bukkit
+				.createBossBar(
+						NamespacedKey.minecraft(this.getBossArenaWorld().getName().toLowerCase()
+								.replaceAll("[^a-z0-9]", "_").replace(' ', '-') + UUID.randomUUID()),
+						"Gladiator", BarColor.YELLOW, BarStyle.SOLID, BarFlag.PLAY_BOSS_MUSIC);
 		for (Player player : this.getPlayers()) {
 			this.bossBar.addPlayer(player);
 		}
 		this.bossBar.setVisible(true);
 	}
 
-	private void updateBar(int newAmount, int defaultAmount) {
+	private void updateBar(double newAmount, double defaultAmount) {
 		double calculatedAmount = newAmount / defaultAmount;
 		this.bossBar.setProgress(calculatedAmount);
 		if (calculatedAmount >= 0.7) {
@@ -295,6 +313,7 @@ public class GladiatorRaid extends BArena {
 		if (this.getHandItem(ItemType.CHALLENGER_TOKEN.getInterface().getFinalizedItem(), e.getPlayer()) != null) {
 			if (e.getRightClicked() != null) {
 				if (e.getRightClicked().getType() == EntityType.WANDERING_TRADER) {
+					e.setCancelled(true);
 					if (e.getPlayer().hasPotionEffect(PotionEffectType.HERO_OF_THE_VILLAGE)) {
 						if (!this.isActive()) {
 							ItemStack token = this.getHandItem(

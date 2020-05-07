@@ -19,6 +19,7 @@ import me.derpy.bosses.inventory.objects.Holder;
 import me.derpy.bosses.listeners.Anvil;
 import me.derpy.bosses.listeners.Damaged;
 import me.derpy.bosses.listeners.Death;
+import me.derpy.bosses.listeners.OnJoin;
 import me.derpy.bosses.listeners.OnSpawn;
 import me.derpy.bosses.listeners.Pickup;
 import me.derpy.bosses.listeners.UseItem;
@@ -65,6 +66,7 @@ public class Morebosses extends JavaPlugin {
 		pm.registerEvents(new UseItem(), this);
 		pm.registerEvents(new OnSpawn(), this);
 		pm.registerEvents(new Pickup(), this);
+		pm.registerEvents(new OnJoin(), this);
 		pm.registerEvents(GhastRaid.getInstance(), this);
 		pm.registerEvents(GladiatorRaid.getInstance(), this);
 		// Boss abilities

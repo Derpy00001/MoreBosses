@@ -1,6 +1,9 @@
 
 plugin:
   check_version: true
+  JoinMessage:
+    enabled: true
+    onlyFirstJoin: false
 
 bosses:
   glowing: true

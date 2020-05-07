@@ -21,7 +21,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import me.derpy.bosses.Morebosses;
 import me.derpy.bosses.mobs.interfaces.IBoss;
@@ -37,49 +36,54 @@ public class BarHandler {
 
 	public BarHandler() {
 		if (JavaPlugin.getPlugin(Morebosses.class).getConfig().getBoolean("bosses.bossbar.enabled")) {
-			new BukkitRunnable() {
+			Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(JavaPlugin.getPlugin(Morebosses.class),
+					new Runnable() {
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							try {
+								double distance = JavaPlugin.getPlugin(Morebosses.class).getConfig()
+										.getDouble("bosses.bossbar.distance");
+								try {
+									List<NamespacedKey> barSet = new ArrayList<NamespacedKey>(
+											Morebosses.getBarHandler().getBars().size());
+									barSet.addAll(Morebosses.getBarHandler().getBars().keySet());
+									for (NamespacedKey key : barSet) {
+										BossBar bar = Bukkit.getServer().getBossBar(key);
+										LivingEntity entity = Morebosses.getBarHandler().getBars().get(key);
 
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					try {
-						double distance = JavaPlugin.getPlugin(Morebosses.class).getConfig()
-								.getDouble("bosses.bossbar.distance");
-						try {
-							for (NamespacedKey key : Morebosses.getBarHandler().getBars().keySet()) {
-								BossBar bar = Bukkit.getServer().getBossBar(key);
-								LivingEntity entity = Morebosses.getBarHandler().getBars().get(key);
-								double trueDistance = bar.getTitle().toLowerCase().contains("the overlord") ? 500.0
-										: distance;
-								if (!entity.isValid()) {
-									Morebosses.getBarHandler().removeBar(key);
-								} else {
-									bar.setProgress(entity.getHealth()
-											/ entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-									for (Entity nearbyEntity : entity.getNearbyEntities(trueDistance, trueDistance,
-											trueDistance)) {
-										if (nearbyEntity instanceof Player) {
-											bar.addPlayer((Player) nearbyEntity);
+										if (!entity.isValid() || bar == null) {
+											Morebosses.getBarHandler().removeBar(key);
+										} else {
+											double trueDistance = bar.getTitle().toLowerCase().contains("the overlord")
+													? 500.0
+													: distance;
+											bar.setProgress(entity.getHealth()
+													/ entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+											for (Entity nearbyEntity : entity.getNearbyEntities(trueDistance,
+													trueDistance, trueDistance)) {
+												if (nearbyEntity instanceof Player) {
+													bar.addPlayer((Player) nearbyEntity);
+												}
+											}
+											for (Player player : bar.getPlayers()) {
+												if (!entity.getNearbyEntities(trueDistance, trueDistance, trueDistance)
+														.contains(player)) {
+													bar.removePlayer(player);
+												}
+											}
 										}
 									}
-									for (Player player : bar.getPlayers()) {
-										if (!entity.getNearbyEntities(trueDistance, trueDistance, trueDistance)
-												.contains(player)) {
-											bar.removePlayer(player);
-										}
-									}
+								} catch (Exception e) {
+									e.printStackTrace();
 								}
+								;
+							} catch (Exception e) {
+								e.printStackTrace();
 							}
-						} catch (Exception e) {
+							;
 						}
-						;
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					;
-				}
-
-			}.runTaskTimer(JavaPlugin.getPlugin(Morebosses.class), 10L, 10L);
+					}, 10L, 10L);
 		}
 	}
 

@@ -1,4 +1,4 @@
-package me.derpy.bosses.items.blueprints.misc;
+package me.derpy.bosses.items.blueprints.misc.ghast;
 
 import java.util.ArrayList;
 import java.util.Arrays;

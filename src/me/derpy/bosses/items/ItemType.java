@@ -19,10 +19,11 @@ import me.derpy.bosses.items.blueprints.armor.GhastBoots;
 import me.derpy.bosses.items.blueprints.armor.GhastChestplate;
 import me.derpy.bosses.items.blueprints.armor.GhastHelmet;
 import me.derpy.bosses.items.blueprints.armor.GhastLeggings;
-import me.derpy.bosses.items.blueprints.misc.BannerGlobe;
-import me.derpy.bosses.items.blueprints.misc.BannerSkull;
-import me.derpy.bosses.items.blueprints.misc.GhastTissue;
-import me.derpy.bosses.items.blueprints.misc.GhastTotem;
+import me.derpy.bosses.items.blueprints.misc.TutorialBook;
+import me.derpy.bosses.items.blueprints.misc.banner.BannerGlobe;
+import me.derpy.bosses.items.blueprints.misc.banner.BannerSkull;
+import me.derpy.bosses.items.blueprints.misc.ghast.GhastTissue;
+import me.derpy.bosses.items.blueprints.misc.ghast.GhastTotem;
 import me.derpy.bosses.items.blueprints.misc.raid.ChallengerToken;
 import me.derpy.bosses.items.interfaces.ICraftable;
 import me.derpy.bosses.items.interfaces.ILootable;
@@ -34,11 +35,12 @@ import me.derpy.bosses.items.spoils.SpoilTier5;
 import me.derpy.bosses.utilities.Console;
 
 public enum ItemType {
-	BANNER_DEATH(new BannerSkull()), BANNER_OVERLORD(new BannerGlobe()), GHAST_TISSUE(new GhastTissue()),
-	CHALLENGER_TOKEN(new ChallengerToken()), GHAST_TOTEM(new GhastTotem()), GHAST_HELMET(new GhastHelmet()),
-	GHAST_CHESTPLATE(new GhastChestplate()), GHAST_LEGGINGS(new GhastLeggings()), GHAST_BOOTS(new GhastBoots()),
-	SPOILS_GENERIC(new BSpoilbag()), SPOILS_TIER1(new SpoilTier1()), SPOILS_TIER2(new SpoilTier2()),
-	SPOILS_TIER3(new SpoilTier3()), SPOILS_TIER4(new SpoilTier4()), SPOILS_TIER5(new SpoilTier5());
+	BOOK_GUIDE(new TutorialBook()), BANNER_DEATH(new BannerSkull()), BANNER_OVERLORD(new BannerGlobe()),
+	GHAST_TISSUE(new GhastTissue()), CHALLENGER_TOKEN(new ChallengerToken()), GHAST_TOTEM(new GhastTotem()),
+	GHAST_HELMET(new GhastHelmet()), GHAST_CHESTPLATE(new GhastChestplate()), GHAST_LEGGINGS(new GhastLeggings()),
+	GHAST_BOOTS(new GhastBoots()), SPOILS_GENERIC(new BSpoilbag()), SPOILS_TIER1(new SpoilTier1()),
+	SPOILS_TIER2(new SpoilTier2()), SPOILS_TIER3(new SpoilTier3()), SPOILS_TIER4(new SpoilTier4()),
+	SPOILS_TIER5(new SpoilTier5());
 
 	private ILootable ilootable;
 

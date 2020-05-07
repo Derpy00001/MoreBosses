@@ -1,4 +1,4 @@
 Pigman:
-  rate: 0.1
+  rate: 0.05
   minion_min: 7
   minion_max: 18

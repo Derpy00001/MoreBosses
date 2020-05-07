@@ -1,4 +1,4 @@
-package me.derpy.bosses.items.blueprints.misc;
+package me.derpy.bosses.items.blueprints.misc.banner;
 
 import java.util.ArrayList;
 import java.util.List;

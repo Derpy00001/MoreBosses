@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 
 import me.derpy.bosses.events.BossDeathEvent;
 import me.derpy.bosses.items.ItemType;
-import me.derpy.bosses.items.blueprints.misc.BannerSkull;
+import me.derpy.bosses.items.blueprints.misc.banner.BannerSkull;
 import me.derpy.bosses.items.interfaces.ILootable;
 import me.derpy.bosses.utilities.Console;
 import me.derpy.bosses.utilities.Random;

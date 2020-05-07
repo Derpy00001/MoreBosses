@@ -1,4 +1,4 @@
-package me.derpy.bosses.items.blueprints.misc;
+package me.derpy.bosses.items.blueprints.misc.ghast;
 
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

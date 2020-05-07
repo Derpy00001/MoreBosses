@@ -11,7 +11,6 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import me.derpy.bosses.Morebosses;
 import me.derpy.bosses.mobs.BossType;
 import me.derpy.bosses.mobs.MobHandler;
-import me.derpy.bosses.utilities.Console;
 import me.derpy.bosses.utilities.Random;
 
 public class OnSpawn implements Listener {
@@ -29,7 +28,6 @@ public class OnSpawn implements Listener {
 			if (BossType.getFromEntityType(e.getEntityType()).length >= 1) {
 				BossType type = Arrays.asList(BossType.getFromEntityType(e.getEntityType()))
 						.get(Random.random(0, BossType.getFromEntityType(e.getEntityType()).length - 1));
-				Console.print(Double.toString(type.getInterface().getSpawnChance()));
 				if (!Arrays.asList(this.INVALID_REASON).contains(e.getSpawnReason())) {
 
 					if (!Arrays.asList(this.NO_RANDOM_SPAWNS).contains(type)) {
