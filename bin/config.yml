@@ -6,7 +6,7 @@ plugin:
     onlyFirstJoin: false
 
 bosses:
-  glowing: true
+  glowing: false
   bossbar:
     enabled: true
     distance: 10.0

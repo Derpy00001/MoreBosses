@@ -17,13 +17,13 @@ import org.jetbrains.annotations.Nullable;
 
 import me.derpy.bosses.Morebosses;
 import me.derpy.bosses.enchantments.EnchantmentHandler;
-import me.derpy.bosses.inventory.InvUtils;
-import me.derpy.bosses.inventory.objects.Holder;
+import me.derpy.bosses.inventory.Holder;
 import me.derpy.bosses.items.ItemType;
 import me.derpy.bosses.items.blueprints.BSpoilbag;
 import me.derpy.bosses.items.data.ItemSpoil;
 import me.derpy.bosses.items.data.Spoil;
 import me.derpy.bosses.items.interfaces.ISpoilbag;
+import me.derpy.bosses.utilities.ExtraUtilities;
 import me.derpy.bosses.utilities.Random;
 import me.derpy.bosses.utilities.Tagger;
 
@@ -41,7 +41,7 @@ public class UseItem implements Listener {
 						if (type.getInterface() instanceof ISpoilbag) {
 							ISpoilbag spoil = (ISpoilbag) type.getInterface();
 							e.getItem().setAmount(e.getItem().getAmount() - 1);
-							int size = InvUtils.getDynamicSize(spoil.getDropCount());
+							int size = ExtraUtilities.getDynamicSize(spoil.getDropCount());
 							if (size < 27) {
 								size = 27;
 							}

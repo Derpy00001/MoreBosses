@@ -33,4 +33,10 @@ public class TiInvincible implements ITitle {
 		// TODO Auto-generated method stub
 		return "Invincible";
 	}
+
+	@Override
+	public boolean isBossTitle() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

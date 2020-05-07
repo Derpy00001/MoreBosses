@@ -15,7 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import me.derpy.bosses.commands.CommandArena;
 import me.derpy.bosses.commands.CommandSpawn;
 import me.derpy.bosses.enchantments.EnchantmentHandler;
-import me.derpy.bosses.inventory.objects.Holder;
+import me.derpy.bosses.inventory.Holder;
 import me.derpy.bosses.listeners.Anvil;
 import me.derpy.bosses.listeners.Damaged;
 import me.derpy.bosses.listeners.Death;

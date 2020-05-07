@@ -1,5 +1,5 @@
 Blaze:
-  rate: 0.3
+  rate: 0.1
   ability:
     fire-seconds: 10.0
     distance: 10.0

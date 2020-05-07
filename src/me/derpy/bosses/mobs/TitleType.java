@@ -1,6 +1,7 @@
 package me.derpy.bosses.mobs;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import me.derpy.bosses.mobs.interfaces.ITitle;
 import me.derpy.bosses.mobs.titles.TiAgile;
@@ -27,6 +28,12 @@ public enum TitleType {
 	}
 
 	public static TitleType getRandomTitle() {
-		return Arrays.asList(TitleType.values()).get(Random.random(0, TitleType.values().length - 1));
+		List<TitleType> availableTypes = new ArrayList<TitleType>();
+		for(TitleType type : TitleType.values()) {
+			if(!type.getTitle().isBossTitle()) {
+				availableTypes.add(type);
+			}
+		}
+		return availableTypes.get(Random.random(0, availableTypes.size()-1));
 	}
 }

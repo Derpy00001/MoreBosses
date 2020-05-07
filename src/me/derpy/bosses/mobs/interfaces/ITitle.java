@@ -10,4 +10,6 @@ public interface ITitle {
 	int getMinions();
 
 	String getTitleName();
+	
+	boolean isBossTitle();
 }

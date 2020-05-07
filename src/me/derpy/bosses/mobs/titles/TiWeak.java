@@ -33,4 +33,10 @@ public class TiWeak implements ITitle {
 		// TODO Auto-generated method stub
 		return "Strong";
 	}
+
+	@Override
+	public boolean isBossTitle() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

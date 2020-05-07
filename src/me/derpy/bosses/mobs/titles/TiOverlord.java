@@ -33,4 +33,10 @@ public class TiOverlord implements ITitle {
 		// TODO Auto-generated method stub
 		return "Overlord";
 	}
+
+	@Override
+	public boolean isBossTitle() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }

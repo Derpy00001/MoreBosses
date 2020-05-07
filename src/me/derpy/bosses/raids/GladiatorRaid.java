@@ -109,6 +109,7 @@ public class GladiatorRaid extends BArena {
 	protected void deinitalize(boolean completed) {
 		this.activeMinions = null;
 		this.bossEntity = null;
+		this.availableMinionTypes = null;
 		if (this.bossBar != null) {
 			this.bossBar.removeAll();
 			Bukkit.getServer().removeBossBar(this.bossBar.getKey());
@@ -155,9 +156,12 @@ public class GladiatorRaid extends BArena {
 				spawnMinions(25, 25);
 				break;
 			case 6:
+				this.waveActive=false;
 				this.endArena(true);
+				break;
 			default:
 				spawnMinions(8, 16);
+				break;
 			}
 			this.bossBar.setProgress(1);
 		}
@@ -275,7 +279,7 @@ public class GladiatorRaid extends BArena {
 	protected void onDeathGladiator(EntityDeathEvent e) {
 		if (e.getEntity().getWorld() == this.getBossArenaWorld()) {
 			if (this.waveActive) {
-				if (this.activeMinions.size() > 0) {
+				if(this.activeMinions!=null) {
 					if (this.activeMinions.contains(e.getEntity())) {
 						e.getDrops().clear();
 						e.setDroppedExp(0);

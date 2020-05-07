@@ -33,4 +33,10 @@ public class TiAngra implements ITitle {
 		// TODO Auto-generated method stub
 		return "Angra Mainyu";
 	}
+
+	@Override
+	public boolean isBossTitle() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

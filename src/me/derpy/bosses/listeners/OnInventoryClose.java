@@ -5,7 +5,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
-import me.derpy.bosses.inventory.objects.Holder;
+import me.derpy.bosses.inventory.Holder;
 
 public class OnInventoryClose implements Listener {
 	@EventHandler

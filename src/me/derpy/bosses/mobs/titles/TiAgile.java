@@ -34,4 +34,10 @@ public class TiAgile implements ITitle {
 		return "Agile";
 	}
 
+	@Override
+	public boolean isBossTitle() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

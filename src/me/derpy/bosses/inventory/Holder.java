@@ -1,4 +1,4 @@
-package me.derpy.bosses.inventory.objects;
+package me.derpy.bosses.inventory;
 
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
