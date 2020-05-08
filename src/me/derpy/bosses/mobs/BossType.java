@@ -18,7 +18,7 @@ import me.derpy.bosses.mobs.tier3.BWitherSkeleton;
 import me.derpy.bosses.mobs.tier4.BMagma;
 import me.derpy.bosses.mobs.tier4.BPigman;
 import me.derpy.bosses.mobs.tier4.BRavager;
-import me.derpy.bosses.mobs.tierraids.BGhast;
+import me.derpy.bosses.mobs.tier5.BGhast;
 
 public enum BossType {
 	BEE(new BBee()), DROWNED(new BDrowned()), ZOMBIE(new BZombie()), SKELETON(new BSkeleton()), BLAZE(new BBlaze()),
