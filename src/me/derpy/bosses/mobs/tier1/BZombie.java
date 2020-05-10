@@ -12,6 +12,9 @@ import me.derpy.bosses.mobs.blueprints.BEquipable;
 import me.derpy.bosses.utilities.Random;
 
 public class BZombie extends BEquipable {
+	private final double RATE = Morebosses.getConfigurationHandler().openBossConfiguration("Tier1\\Zombie.yml") != null
+			? Morebosses.getConfigurationHandler().openBossConfiguration("Tier1\\Zombie.yml").getDouble("Zombie.rate")
+			: 0.052;
 
 	public BZombie() {
 		// TODO Auto-generated constructor stub
@@ -71,7 +74,7 @@ public class BZombie extends BEquipable {
 
 	@Override
 	public double getSpawnChance() {
-		return Morebosses.getConfigurationHandler().openBossConfiguration("Tier1\\Zombie.yml").getDouble("Zombie.rate");
+		return this.RATE;
 
 	}
 

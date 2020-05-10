@@ -11,6 +11,11 @@ import me.derpy.bosses.items.ItemType;
 import me.derpy.bosses.mobs.blueprints.BEquipable;
 
 public class BSkeleton extends BEquipable {
+	private final double RATE = Morebosses.getConfigurationHandler()
+			.openBossConfiguration("Tier1\\Skeleton.yml") != null
+					? Morebosses.getConfigurationHandler().openBossConfiguration("Tier1\\Skeleton.yml")
+							.getDouble("Skeleton.rate")
+					: 0.052;
 
 	public BSkeleton() {
 		// TODO Auto-generated constructor stub
@@ -70,8 +75,7 @@ public class BSkeleton extends BEquipable {
 
 	@Override
 	public double getSpawnChance() {
-		return Morebosses.getConfigurationHandler().openBossConfiguration("Tier1\\Skeleton.yml")
-				.getDouble("Skeleton.rate");
+		return this.RATE;
 
 	}
 

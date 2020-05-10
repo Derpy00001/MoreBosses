@@ -45,12 +45,17 @@ public class Morebosses extends JavaPlugin {
 	private static BarHandler barHandler;
 	private static ConfigurationHandler configHandler;
 	private static EnchantmentHandler enchantmentHandler;
+	@SuppressWarnings("unused")
 	private static WorldHandler worldHandler;
 
 	@Override
 	public void onEnable() {
 		this.saveDefaultConfig();
-		configHandler = new ConfigurationHandler();
+		try {
+			configHandler = new ConfigurationHandler();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		try {
 			enchantmentHandler = new EnchantmentHandler();
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
@@ -69,8 +74,11 @@ public class Morebosses extends JavaPlugin {
 		pm.registerEvents(new Pickup(), this);
 		pm.registerEvents(new OnJoin(), this);
 		pm.registerEvents(new OnInventoryClose(), this);
+
+		// Raids
 		pm.registerEvents(GhastRaid.getInstance(), this);
 		pm.registerEvents(GladiatorRaid.getInstance(), this);
+
 		// Boss abilities
 		pm.registerEvents(new AbilityBee(), this);
 		pm.registerEvents(new AbilityBlaze(), this);
@@ -82,8 +90,7 @@ public class Morebosses extends JavaPlugin {
 		// Commands
 		new CommandSpawn();
 		new CommandArena();
-		// Arenas
-		Console.print("MoreBosses-recode Loaded!");
+		Console.print("Morebosses-recode Loaded!");
 		Console.print(ChatColor.RED + "Plugin DOES NOT support server reloads!");
 		Console.print("Version " + this.getDescription().getVersion());
 		if (this.getConfig().getBoolean("plugin.check_version")) {
@@ -133,22 +140,9 @@ public class Morebosses extends JavaPlugin {
 			Console.print(ChatColor.RED + "Failed to close inventories");
 		}
 		getBarHandler().removeAllBars();
-//		getWorldHandler().unregisterAllArenas();
-//		if (getEnchantmentHandler().getEnchantments().size() > 0) {
-//			for (Enchantment enchantment : getEnchantmentHandler().getEnchantments().values()) {
-//				getEnchantmentHandler().unregisterEnchantment(enchantment);
-//				Console.print("Unregistered Enchantment: " + enchantment.getName().toUpperCase());
-//			}
-//		}
-//		if (getEnchantmentHandler().getCustomEnchantments().size() > 0) {
-//			for (Enchantment enchantment : getEnchantmentHandler().getCustomEnchantments().values()) {
-//				getEnchantmentHandler().unregisterEnchantment(enchantment);
-//				Console.print("Unregistered Enchantment: " + enchantment.getName().toUpperCase());
-//			}
-//		}
 
 	}
-	
+
 	public static EnchantmentHandler getEnchantmentHandler() {
 		return enchantmentHandler;
 	}
@@ -167,9 +161,5 @@ public class Morebosses extends JavaPlugin {
 
 	public static WorldHandler getWorldHandler() {
 		return worldHandler;
-	}
-
-	public static GhastRaid getGhastRaid() {
-		return GhastRaid.getInstance();
 	}
 }

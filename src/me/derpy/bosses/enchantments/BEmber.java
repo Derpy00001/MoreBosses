@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.Entity;
@@ -18,10 +19,9 @@ import org.jetbrains.annotations.NotNull;
 import me.derpy.bosses.Morebosses;
 
 public class BEmber extends Enchantment implements Listener {
-	final int DURATION = Morebosses.getConfigurationHandler().openEnchantmentConfiguration("ember.yml")
-			.getInt("ember.duration");
-	final int LEVEL_CAP = Morebosses.getConfigurationHandler().openEnchantmentConfiguration("ember.yml")
-			.getInt("ember.level_cap");
+	final YamlConfiguration CONFIG = Morebosses.getConfigurationHandler().openEnchantmentConfiguration("ember.yml");
+	final int DURATION = this.CONFIG != null ? this.CONFIG.getInt("ember.duration") : 5;
+	final int LEVEL_CAP = this.CONFIG != null ? this.CONFIG.getInt("ember.level_cap") : 4;
 
 	public BEmber(NamespacedKey key) {
 		super(key);

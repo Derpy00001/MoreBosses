@@ -9,15 +9,15 @@ import net.md_5.bungee.api.chat.HoverEvent;
 public class ExtraUtilities {
 	public static BaseComponent[] createLink(String text, String link, String hoverText) {
 		ComponentBuilder builder = new ComponentBuilder(text);
-		if(link!=null) {
+		if (link != null) {
 			builder.event(new ClickEvent(Action.OPEN_URL, link));
 		}
-		if(hoverText!=null) {
+		if (hoverText != null) {
 			builder.event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(hoverText).create()));
 		}
 		return builder.create();
 	}
-	
+
 	public static int getDynamicSize(int size) {
 		if (size == 0) {
 			size = 1;

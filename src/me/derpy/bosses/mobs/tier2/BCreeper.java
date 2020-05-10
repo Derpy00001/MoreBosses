@@ -8,6 +8,10 @@ import me.derpy.bosses.mobs.blueprints.BHostile;
 import me.derpy.bosses.mobs.interfaces.IAbility;
 
 public class BCreeper extends BHostile implements IAbility {
+	private final double RATE = Morebosses.getConfigurationHandler().openBossConfiguration("Tier2\\Creeper.yml") != null
+			? Morebosses.getConfigurationHandler().openBossConfiguration("Tier2\\Creeper.yml").getDouble("Creeper.rate")
+			: 0.01;
+
 	public BCreeper() {
 		this.setExperience(17);
 		this.addSpoil(ItemType.SPOILS_TIER2.getInterface());
@@ -67,8 +71,7 @@ public class BCreeper extends BHostile implements IAbility {
 
 	@Override
 	public double getSpawnChance() {
-		return Morebosses.getConfigurationHandler().openBossConfiguration("Tier2\\Creeper.yml")
-				.getDouble("Creeper.rate");
+		return this.RATE;
 
 	}
 }

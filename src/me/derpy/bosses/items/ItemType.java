@@ -31,15 +31,13 @@ import me.derpy.bosses.items.spoils.SpoilTier2;
 import me.derpy.bosses.items.spoils.SpoilTier3;
 import me.derpy.bosses.items.spoils.SpoilTier4;
 import me.derpy.bosses.items.spoils.SpoilTier5;
-import me.derpy.bosses.utilities.Console;
 
 public enum ItemType {
-	BANNER_DEATH(new BannerSkull()), BANNER_OVERLORD(new BannerGlobe()),
-	GHAST_TISSUE(new GhastTissue()), CHALLENGER_TOKEN(new ChallengerToken()), GHAST_TOTEM(new GhastTotem()),
-	GHAST_HELMET(new GhastHelmet()), GHAST_CHESTPLATE(new GhastChestplate()), GHAST_LEGGINGS(new GhastLeggings()),
-	GHAST_BOOTS(new GhastBoots()), SPOILS_GENERIC(new BSpoilbag()), SPOILS_TIER1(new SpoilTier1()),
-	SPOILS_TIER2(new SpoilTier2()), SPOILS_TIER3(new SpoilTier3()), SPOILS_TIER4(new SpoilTier4()),
-	SPOILS_TIER5(new SpoilTier5());
+	BANNER_DEATH(new BannerSkull()), BANNER_OVERLORD(new BannerGlobe()), GHAST_TISSUE(new GhastTissue()),
+	CHALLENGER_TOKEN(new ChallengerToken()), GHAST_TOTEM(new GhastTotem()), GHAST_HELMET(new GhastHelmet()),
+	GHAST_CHESTPLATE(new GhastChestplate()), GHAST_LEGGINGS(new GhastLeggings()), GHAST_BOOTS(new GhastBoots()),
+	SPOILS_GENERIC(new BSpoilbag()), SPOILS_TIER1(new SpoilTier1()), SPOILS_TIER2(new SpoilTier2()),
+	SPOILS_TIER3(new SpoilTier3()), SPOILS_TIER4(new SpoilTier4()), SPOILS_TIER5(new SpoilTier5());
 
 	private ILootable ilootable;
 
@@ -111,8 +109,6 @@ public enum ItemType {
 							}
 						}
 					}
-				} else {
-					Console.error(craftable.toString());
 				}
 			}
 		}

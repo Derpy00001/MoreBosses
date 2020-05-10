@@ -12,6 +12,10 @@ import me.derpy.bosses.mobs.blueprints.BEquipable;
 import me.derpy.bosses.mobs.interfaces.IAbility;
 
 public class BStray extends BEquipable implements IAbility {
+	private final double RATE = Morebosses.getConfigurationHandler().openBossConfiguration("Tier2\\Stray.yml") != null
+			? Morebosses.getConfigurationHandler().openBossConfiguration("Tier2\\Stray.yml").getDouble("Stray.rate")
+			: 0.01;
+
 	public BStray() {
 		this.setExperience(17);
 		this.addSpoil(ItemType.SPOILS_TIER2.getInterface());
@@ -71,7 +75,7 @@ public class BStray extends BEquipable implements IAbility {
 
 	@Override
 	public double getSpawnChance() {
-		return Morebosses.getConfigurationHandler().openBossConfiguration("Tier2\\Stray.yml").getDouble("Stray.rate");
+		return this.RATE;
 
 	}
 

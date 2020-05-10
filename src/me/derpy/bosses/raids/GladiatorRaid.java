@@ -156,7 +156,7 @@ public class GladiatorRaid extends BArena {
 				spawnMinions(25, 25);
 				break;
 			case 6:
-				this.waveActive=false;
+				this.waveActive = false;
 				this.endArena(true);
 				break;
 			default:
@@ -279,7 +279,7 @@ public class GladiatorRaid extends BArena {
 	protected void onDeathGladiator(EntityDeathEvent e) {
 		if (e.getEntity().getWorld() == this.getBossArenaWorld()) {
 			if (this.waveActive) {
-				if(this.activeMinions!=null) {
+				if (this.activeMinions != null) {
 					if (this.activeMinions.contains(e.getEntity())) {
 						e.getDrops().clear();
 						e.setDroppedExp(0);

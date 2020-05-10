@@ -1,5 +1,6 @@
 package me.derpy.bosses.mobs.tier1.abilities;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Location;
@@ -23,11 +24,12 @@ import me.derpy.bosses.utilities.Console;
 public class AbilityBee implements Listener {
 	private final YamlConfiguration CONFIG = Morebosses.getConfigurationHandler()
 			.openBossConfiguration("Tier1\\Bee.yml");
-	private final boolean ENABLED = this.CONFIG.getBoolean("Bee.ability.enabled");
-	private final int BEE_COUNT = this.CONFIG.getInt("Bee.ability.bee_count");
-	private final int EFFECT_SECONDS = this.CONFIG.getInt("Bee.ability.effect_seconds");
-	private final int EFFECT_LEVEL = this.CONFIG.getInt("Bee.ability.effect_level");
-	private final List<?> EFFECTS = this.CONFIG.getList("Bee.ability.effects");
+	private final boolean ENABLED = this.CONFIG != null ? this.CONFIG.getBoolean("Bee.ability.enabled") : true;
+	private final int BEE_COUNT = this.CONFIG != null ? this.CONFIG.getInt("Bee.ability.bee_count") : 3;
+	private final int EFFECT_SECONDS = this.CONFIG != null ? this.CONFIG.getInt("Bee.ability.effect_seconds") : 4;
+	private final int EFFECT_LEVEL = this.CONFIG != null ? this.CONFIG.getInt("Bee.ability.effect_level") : 1;
+	private final List<?> EFFECTS = this.CONFIG != null ? this.CONFIG.getList("Bee.ability.effects")
+			: Arrays.asList("BLINDNESS", "SLOW", "WEAKNESS");
 
 	@EventHandler
 	public void onEnter(EntityEnterBlockEvent e) {
@@ -70,7 +72,7 @@ public class AbilityBee implements Listener {
 								entity.addPotionEffect(new PotionEffect(PotionEffectType.getByName((String) obj),
 										20 * this.EFFECT_SECONDS, this.EFFECT_LEVEL, false, false));
 							} else {
-								Console.error("Bee Ability: Could not find effect: " + obj);
+								Console.print("Bee Ability: Could not find effect: " + obj);
 							}
 						}
 					}

@@ -1,5 +1,6 @@
 package me.derpy.bosses.mobs.tier3.abilities;
 
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Slime;
 import org.bukkit.event.EventHandler;
@@ -10,12 +11,11 @@ import me.derpy.bosses.events.BossDamageByEntityEvent;
 import me.derpy.bosses.mobs.tier3.BSlime;
 
 public class AbilitySlime implements Listener {
-	private final boolean ENABLED = Morebosses.getConfigurationHandler().openBossConfiguration("Tier3\\Slime.yml")
-			.getBoolean("Slime.ability.enabled");
-	private final int SLIME_COUNT = Morebosses.getConfigurationHandler().openBossConfiguration("Tier3\\Slime.yml")
-			.getInt("Slime.ability.slime_count");
-	private final int SLIME_SIZE = Morebosses.getConfigurationHandler().openBossConfiguration("Tier3\\Slime.yml")
-			.getInt("Slime.size");
+	private final YamlConfiguration CONFIG = Morebosses.getConfigurationHandler()
+			.openBossConfiguration("Tier3\\Slime.yml");
+	private final boolean ENABLED = this.CONFIG != null ? this.CONFIG.getBoolean("Slime.ability.enabled") : true;
+	private final int SLIME_COUNT = this.CONFIG != null ? this.CONFIG.getInt("Slime.ability.slime_count") : 2;
+	private final int SLIME_SIZE = this.CONFIG != null ? this.CONFIG.getInt("Slime.size") : 8;
 
 	@EventHandler
 	public void onDamage(BossDamageByEntityEvent e) {

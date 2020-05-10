@@ -1,5 +1,6 @@
 package me.derpy.bosses.mobs.tier4.abilities;
 
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -8,10 +9,10 @@ import me.derpy.bosses.events.EntityDamageByBossEvent;
 import me.derpy.bosses.mobs.tier4.BMagma;
 
 public class AbilityMagma implements Listener {
-	private final boolean ENABLED = Morebosses.getConfigurationHandler().openBossConfiguration("Tier4\\MagmaCube.yml")
-			.getBoolean("Magma.ability.enabled");
-	private final int FIRE_SECONDS = Morebosses.getConfigurationHandler().openBossConfiguration("Tier4\\MagmaCube.yml")
-			.getInt("Magma.ability.fire_seconds");
+	private final YamlConfiguration CONFIG = Morebosses.getConfigurationHandler()
+			.openBossConfiguration("Tier4\\MagmaCube.yml");
+	private final boolean ENABLED = this.CONFIG != null ? this.CONFIG.getBoolean("Magma.ability.enabled") : true;
+	private final int FIRE_SECONDS = this.CONFIG != null ? this.CONFIG.getInt("Magma.ability.fire_seconds") : 6;
 
 	@EventHandler
 	public void OnDamage(EntityDamageByBossEvent e) {

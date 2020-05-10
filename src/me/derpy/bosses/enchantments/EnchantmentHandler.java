@@ -17,7 +17,6 @@ import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
 import me.derpy.bosses.Morebosses;
 import me.derpy.bosses.utilities.Console;
@@ -144,7 +143,7 @@ public class EnchantmentHandler {
 	private Enchantment registerEnchantment(Enchantment enchantment, boolean isBosses)
 			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		if (enchantment instanceof Listener) {
-			Bukkit.getServer().getPluginManager().registerEvents((@NotNull Listener) enchantment,
+			Bukkit.getServer().getPluginManager().registerEvents((Listener) enchantment,
 					JavaPlugin.getPlugin(Morebosses.class));
 		}
 		if (Enchantment.isAcceptingRegistrations()) {

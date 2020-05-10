@@ -2,6 +2,7 @@ package me.derpy.bosses.enchantments;
 
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.LivingEntity;
@@ -15,10 +16,9 @@ import org.bukkit.potion.PotionEffectType;
 import me.derpy.bosses.Morebosses;
 
 public class BFleet extends Enchantment implements Listener {
-	final int DURATION = Morebosses.getConfigurationHandler().openEnchantmentConfiguration("fleet.yml")
-			.getInt("fleet.duration");
-	final int LEVEL_CAP = Morebosses.getConfigurationHandler().openEnchantmentConfiguration("fleet.yml")
-			.getInt("fleet.level_cap");
+	final YamlConfiguration CONFIG = Morebosses.getConfigurationHandler().openEnchantmentConfiguration("fleet.yml");
+	final int DURATION = this.CONFIG != null ? this.CONFIG.getInt("fleet.duration") : 5;
+	final int LEVEL_CAP = this.CONFIG != null ? this.CONFIG.getInt("fleet.level_cap") : 5;
 
 	public BFleet(NamespacedKey key) {
 		super(key);

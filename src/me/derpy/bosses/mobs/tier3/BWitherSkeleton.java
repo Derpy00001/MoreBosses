@@ -13,6 +13,12 @@ import me.derpy.bosses.mobs.interfaces.IAbility;
 import me.derpy.bosses.utilities.Random;
 
 public class BWitherSkeleton extends BEquipable implements IAbility {
+	private final double RATE = Morebosses.getConfigurationHandler()
+			.openBossConfiguration("Tier3\\WitherSkeleton.yml") != null
+					? Morebosses.getConfigurationHandler().openBossConfiguration("Tier3\\WitherSkeleton.yml").getDouble(
+							"WitherSkeleton.rate")
+					: 0.07;
+
 	public BWitherSkeleton() {
 		this.setExperience(Random.random(18, 27));
 		this.addSpoil(ItemType.SPOILS_TIER3.getInterface());
@@ -72,8 +78,7 @@ public class BWitherSkeleton extends BEquipable implements IAbility {
 
 	@Override
 	public double getSpawnChance() {
-		return Morebosses.getConfigurationHandler().openBossConfiguration("Tier3\\WitherSkeleton.yml")
-				.getDouble("WitherSkeleton.rate");
+		return this.RATE;
 
 	}
 

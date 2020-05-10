@@ -12,8 +12,11 @@ import me.derpy.bosses.events.EntityDamageByBossEvent;
 import me.derpy.bosses.mobs.tier2.BStray;
 
 public class AbilityStray implements Listener {
-	private final boolean ENABLED = Morebosses.getConfigurationHandler().openBossConfiguration("Tier2\\Stray.yml")
-			.getBoolean("Stray.ability.enabled");
+	private final boolean ENABLED = Morebosses.getConfigurationHandler()
+			.openBossConfiguration("Tier2\\Stray.yml") != null
+					? Morebosses.getConfigurationHandler().openBossConfiguration("Tier2\\Stray.yml").getBoolean(
+							"Stray.ability.enabled")
+					: true;
 
 	@EventHandler
 	public void onDamage(EntityDamageByBossEvent e) {

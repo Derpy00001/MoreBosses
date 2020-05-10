@@ -13,7 +13,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.jetbrains.annotations.Nullable;
 
 import me.derpy.bosses.Morebosses;
 import me.derpy.bosses.enchantments.EnchantmentHandler;
@@ -62,7 +61,7 @@ public class UseItem implements Listener {
 									Object obj = spoil.getDrops().get(Random.random(0, spoil.getDrops().size() - 1));
 									// SPOIL - ITEMSTACK
 									if (obj instanceof ItemStack) {
-										inventory.setItem(BSpoilbag.getSlot(inventory), (@Nullable ItemStack) obj);
+										inventory.setItem(BSpoilbag.getSlot(inventory), (ItemStack) obj);
 										// SPOIL - SPOIL
 									} else if (obj instanceof Spoil) {
 										Spoil object = (Spoil) obj;

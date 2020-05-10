@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.LivingEntity;
@@ -18,14 +19,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 import me.derpy.bosses.Morebosses;
 
 public class BBleed extends Enchantment implements Listener {
-	final double DAMAGE = Morebosses.getConfigurationHandler().openEnchantmentConfiguration("bleed.yml")
-			.getDouble("bleed.damage");
-	final int DURATION = Morebosses.getConfigurationHandler().openEnchantmentConfiguration("bleed.yml")
-			.getInt("bleed.bleed_ticks");
-	final int FREQUENCY = Morebosses.getConfigurationHandler().openEnchantmentConfiguration("bleed.yml")
-			.getInt("bleed.seconds_frequency");
-	final int LEVEL_CAP = Morebosses.getConfigurationHandler().openEnchantmentConfiguration("bleed.yml")
-			.getInt("bleed.level_cap");
+	final YamlConfiguration CONFIG = Morebosses.getConfigurationHandler().openEnchantmentConfiguration("bleed.yml");
+	final double DAMAGE = this.CONFIG != null ? this.CONFIG.getDouble("bleed.damage") : 0.5;
+	final int DURATION = this.CONFIG != null ? this.CONFIG.getInt("bleed.bleed_ticks") : 10;
+	final int FREQUENCY = this.CONFIG != null ? this.CONFIG.getInt("bleed.seconds_frequency") : 1;
+	final int LEVEL_CAP = this.CONFIG != null ? this.CONFIG.getInt("bleed.level_cap") : 3;
 	List<LivingEntity> bleedingEntites = new ArrayList<LivingEntity>();
 
 	public BBleed(NamespacedKey key) {

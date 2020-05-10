@@ -9,8 +9,14 @@ import me.derpy.bosses.mobs.interfaces.ISizeable;
 import me.derpy.bosses.utilities.Random;
 
 public class BMagma extends BHostile implements ISizeable {
-	private final int SIZE = Morebosses.getConfigurationHandler().openBossConfiguration("Tier4\\MagmaCube.yml")
-			.getInt("Magma.size");
+	private final double RATE = Morebosses.getConfigurationHandler()
+			.openBossConfiguration("Tier4\\MagmaCube.yml") != null
+					? Morebosses.getConfigurationHandler().openBossConfiguration("Tier4\\MagmaCube.yml")
+							.getDouble("Magma.rate")
+					: 0.0027;
+	private final int SIZE = Morebosses.getConfigurationHandler().openBossConfiguration("Tier4\\MagmaCube.yml") != null
+			? Morebosses.getConfigurationHandler().openBossConfiguration("Tier4\\MagmaCube.yml").getInt("Magma.size")
+			: 8;
 
 	public BMagma() {
 		this.setExperience(Random.random(27, 35));
@@ -36,8 +42,7 @@ public class BMagma extends BHostile implements ISizeable {
 
 	@Override
 	public double getSpawnChance() {
-		return Morebosses.getConfigurationHandler().openBossConfiguration("Tier4\\MagmaCube.yml")
-				.getDouble("Magma.rate");
+		return this.RATE;
 
 	}
 

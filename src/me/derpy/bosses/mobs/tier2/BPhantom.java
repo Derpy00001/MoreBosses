@@ -9,6 +9,15 @@ import me.derpy.bosses.mobs.interfaces.IAbility;
 import me.derpy.bosses.mobs.interfaces.IAvian;
 
 public class BPhantom extends BHostile implements IAbility, IAvian {
+	private final double RATE = Morebosses.getConfigurationHandler().openBossConfiguration("Tier2\\Phantom.yml") != null
+			? Morebosses.getConfigurationHandler().openBossConfiguration("Tier2\\Phantom.yml").getDouble("Phantom.rate")
+			: 0.005;
+	private final int MINION_COUNT = Morebosses.getConfigurationHandler()
+			.openBossConfiguration("Tier2\\Phantom.yml") != null
+					? Morebosses.getConfigurationHandler().openBossConfiguration("Tier2\\Phantom.yml")
+							.getInt("Phantom.minions")
+					: 8;
+
 	public BPhantom() {
 		this.setExperience(5);
 		this.addSpoil(ItemType.SPOILS_TIER2.getInterface());
@@ -80,14 +89,12 @@ public class BPhantom extends BHostile implements IAbility, IAvian {
 
 	@Override
 	public int getMinions() {
-		return Morebosses.getConfigurationHandler().openBossConfiguration("Tier2\\Phantom.yml")
-				.getInt("Phantom.minions");
+		return this.MINION_COUNT;
 	}
 
 	@Override
 	public double getSpawnChance() {
-		return Morebosses.getConfigurationHandler().openBossConfiguration("Tier2\\Phantom.yml")
-				.getDouble("Phantom.rate");
+		return this.RATE;
 
 	}
 }

@@ -12,6 +12,9 @@ import me.derpy.bosses.mobs.interfaces.IMount;
 
 public class BRavager extends BHostile implements IMount {
 	private List<EntityType> mounts = new ArrayList<EntityType>();
+	private final double RATE = Morebosses.getConfigurationHandler().openBossConfiguration("Tier4\\Ravager.yml") != null
+			? Morebosses.getConfigurationHandler().openBossConfiguration("Tier4\\Ravager.yml").getDouble("Magma.rate")
+			: 0.015;
 
 	public BRavager() {
 		// TODO Auto-generated constructor stub
@@ -77,8 +80,7 @@ public class BRavager extends BHostile implements IMount {
 
 	@Override
 	public double getSpawnChance() {
-		return Morebosses.getConfigurationHandler().openBossConfiguration("Tier4\\Ravager.yml")
-				.getDouble("Ravager.rate");
+		return this.RATE;
 
 	}
 

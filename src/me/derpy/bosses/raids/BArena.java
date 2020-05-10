@@ -2,6 +2,7 @@ package me.derpy.bosses.raids;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -54,8 +55,8 @@ public class BArena implements Listener {
 	private boolean arenaActive = false;
 	private int timerDisplaySeconds = 0;
 
-	public final boolean startArena(Location location, int[] xyzRange, World world, int confusionSeconds,
-			int teleportDelay) {
+	public final boolean startArena(final Location location, final int[] xyzRange, final World world,
+			final int confusionSeconds, int teleportDelay) {
 		// TODO Auto-generated method stub
 		// startArena(players, e.getClickedBlock().getWorld(), 5);
 		if (!this.arenaActive) {
@@ -67,7 +68,12 @@ public class BArena implements Listener {
 					// TODO Auto-generated method stub
 					playerList = new ArrayList<Player>();
 					for (Entity entityPlayer : world.getNearbyEntities(location, xyzRange[0], xyzRange[1], xyzRange[2],
-							(Entity e) -> e.getType() == EntityType.PLAYER)) {
+							new Predicate<Entity>() {
+								@Override
+								public boolean test(Entity e) {
+									return e.getType() == EntityType.PLAYER;
+								}
+							})) {
 						if (!entityPlayer.isDead()) {
 							playerList.add((Player) entityPlayer);
 						}
@@ -266,12 +272,12 @@ public class BArena implements Listener {
 		cloud.setDuration(20 * 10);
 	}
 
-	protected final void createCloud(Location location, long delay, int Duration) {
+	protected final void createCloud(final Location location, long delay, final int duration) {
 		PLUGIN.getServer().getScheduler().scheduleSyncDelayedTask(PLUGIN, new Runnable() {
 			public void run() {
 				AreaEffectCloud cloud = (AreaEffectCloud) location.getWorld().spawnEntity(location,
 						EntityType.AREA_EFFECT_CLOUD);
-				cloud.setDuration(Duration);
+				cloud.setDuration(duration);
 				cloud.setParticle(Particle.TOTEM);
 				cloud.setRadius(10);
 				cloud.setBasePotionData(new PotionData(PotionType.INSTANT_HEAL));

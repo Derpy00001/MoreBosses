@@ -3,6 +3,7 @@ package me.derpy.bosses.enchantments;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.Player;
@@ -14,10 +15,9 @@ import org.bukkit.inventory.ItemStack;
 import me.derpy.bosses.Morebosses;
 
 public class BLifesteal extends Enchantment implements Listener {
-	final double HEAL_PERCENT = Morebosses.getConfigurationHandler().openEnchantmentConfiguration("lifesteal.yml")
-			.getDouble("lifesteal.heal_back");
-	final int LEVEL_CAP = Morebosses.getConfigurationHandler().openEnchantmentConfiguration("lifesteal.yml")
-			.getInt("lifesteal.level_cap");
+	final YamlConfiguration CONFIG = Morebosses.getConfigurationHandler().openEnchantmentConfiguration("lifesteal.yml");
+	final double HEAL_PERCENT = this.CONFIG != null ? this.CONFIG.getDouble("lifesteal.heal_back") : 0.1;
+	final int LEVEL_CAP = this.CONFIG != null ? this.CONFIG.getInt("lifesteal.level_cap") : 5;
 
 	public BLifesteal(NamespacedKey key) {
 		super(key);

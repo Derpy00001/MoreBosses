@@ -9,6 +9,10 @@ import me.derpy.bosses.mobs.interfaces.IAbility;
 import me.derpy.bosses.mobs.interfaces.IAvian;
 
 public class BBee extends BHostile implements IAbility, IAvian {
+	private final double RATE = Morebosses.getConfigurationHandler().openBossConfiguration("Tier1\\Bee.yml") != null
+			? Morebosses.getConfigurationHandler().openBossConfiguration("Tier1\\Bee.yml").getDouble("Bee.rate")
+			: 0.1;
+
 	public BBee() {
 		this.setExperience(3);
 		this.addSpoil(ItemType.SPOILS_TIER1.getInterface());
@@ -85,7 +89,6 @@ public class BBee extends BHostile implements IAbility, IAvian {
 
 	@Override
 	public double getSpawnChance() {
-		return Morebosses.getConfigurationHandler().openBossConfiguration("Tier1\\Bee.yml").getDouble("Bee.rate");
-
+		return this.RATE;
 	}
 }

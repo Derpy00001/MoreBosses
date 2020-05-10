@@ -12,10 +12,19 @@ import me.derpy.bosses.mobs.blueprints.BEquipable;
 import me.derpy.bosses.utilities.Random;
 
 public class BPigman extends BEquipable {
-	private final int MINION_MIN = Morebosses.getConfigurationHandler().openBossConfiguration("Tier4\\Pigman.yml")
-			.getInt("Pigman.minion_min");
-	private final int MINION_MAX = Morebosses.getConfigurationHandler().openBossConfiguration("Tier4\\Pigman.yml")
-			.getInt("Pigman.minion_max");
+	private final double RATE = Morebosses.getConfigurationHandler().openBossConfiguration("Tier4\\Pigman.yml") != null
+			? Morebosses.getConfigurationHandler().openBossConfiguration("Tier4\\Pigman.yml").getDouble("Magma.rate")
+			: 0.0027;
+	private final int MINION_MIN = Morebosses.getConfigurationHandler()
+			.openBossConfiguration("Tier4\\Pigman.yml") != null
+					? Morebosses.getConfigurationHandler().openBossConfiguration("Tier4\\Pigman.yml")
+							.getInt("Pigman.minion_min")
+					: 7;
+	private final int MINION_MAX = Morebosses.getConfigurationHandler()
+			.openBossConfiguration("Tier4\\Pigman.yml") != null
+					? Morebosses.getConfigurationHandler().openBossConfiguration("Tier4\\Pigman.yml")
+							.getInt("Pigman.minion_max")
+					: 18;
 
 	public BPigman() {
 		// TODO Auto-generated constructor stub
@@ -75,7 +84,7 @@ public class BPigman extends BEquipable {
 
 	@Override
 	public double getSpawnChance() {
-		return Morebosses.getConfigurationHandler().openBossConfiguration("Tier4\\Pigman.yml").getDouble("Pigman.rate");
+		return this.RATE;
 
 	}
 

@@ -29,11 +29,11 @@ public enum TitleType {
 
 	public static TitleType getRandomTitle() {
 		List<TitleType> availableTypes = new ArrayList<TitleType>();
-		for(TitleType type : TitleType.values()) {
-			if(!type.getTitle().isBossTitle()) {
+		for (TitleType type : TitleType.values()) {
+			if (!type.getTitle().isBossTitle()) {
 				availableTypes.add(type);
 			}
 		}
-		return availableTypes.get(Random.random(0, availableTypes.size()-1));
+		return availableTypes.get(Random.random(0, availableTypes.size() - 1));
 	}
 }

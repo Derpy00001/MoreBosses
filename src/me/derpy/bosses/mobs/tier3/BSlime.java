@@ -9,8 +9,12 @@ import me.derpy.bosses.mobs.interfaces.ISizeable;
 import me.derpy.bosses.utilities.Random;
 
 public class BSlime extends BHostile implements ISizeable {
-	private final int SIZE = Morebosses.getConfigurationHandler().openBossConfiguration("Tier3\\Slime.yml")
-			.getInt("Slime.size");
+	private final double RATE = Morebosses.getConfigurationHandler().openBossConfiguration("Tier3\\Slime.yml") != null
+			? Morebosses.getConfigurationHandler().openBossConfiguration("Tier3\\Slime.yml").getDouble("Slime.rate")
+			: 0.01;
+	private final int SIZE = Morebosses.getConfigurationHandler().openBossConfiguration("Tier3\\Slime.yml") != null
+			? Morebosses.getConfigurationHandler().openBossConfiguration("Tier3\\Slime.yml").getInt("Slime.size")
+			: 8;
 
 	public BSlime() {
 		this.setExperience(Random.random(18, 27));
@@ -35,7 +39,7 @@ public class BSlime extends BHostile implements ISizeable {
 
 	@Override
 	public double getSpawnChance() {
-		return Morebosses.getConfigurationHandler().openBossConfiguration("Tier3\\Slime.yml").getDouble("Slime.rate");
+		return this.RATE;
 
 	}
 

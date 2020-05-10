@@ -9,6 +9,10 @@ import me.derpy.bosses.mobs.interfaces.IAbility;
 import me.derpy.bosses.mobs.interfaces.IAvian;
 
 public class BBlaze extends BHostile implements IAbility, IAvian {
+	private final double RATE = Morebosses.getConfigurationHandler().openBossConfiguration("Tier2\\Blaze.yml") != null
+			? Morebosses.getConfigurationHandler().openBossConfiguration("Tier2\\Blaze.yml").getDouble("Blaze.rate")
+			: 0.1;
+
 	public BBlaze() {
 		this.setExperience(17);
 		this.addSpoil(ItemType.SPOILS_TIER2.getInterface());
@@ -80,7 +84,7 @@ public class BBlaze extends BHostile implements IAbility, IAvian {
 
 	@Override
 	public double getSpawnChance() {
-		return Morebosses.getConfigurationHandler().openBossConfiguration("Tier2\\Blaze.yml").getDouble("Blaze.rate");
+		return this.RATE;
 
 	}
 }

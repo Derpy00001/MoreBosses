@@ -103,7 +103,7 @@ public class BarHandler {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			names.add("Amun");
-			Console.error("Failed to find names.txt, creating file");
+			Console.print("Failed to find names.txt, creating new file");
 			Morebosses.getConfigurationHandler().checkFiles();
 		}
 		ITitle title;
@@ -112,7 +112,10 @@ public class BarHandler {
 		} else {
 			title = TitleType.getRandomTitle().getTitle();
 		}
-		String name = names.get(Random.random(0, names.size() - 1));
+		String name = "Amun";
+		if (names.size() > 0) {
+			names.get(Random.random(0, names.size() - 1));
+		}
 		boss.setMinions(boss.getMinions() + title.getMinions());
 		boss.setSpeedMultiplier(boss.getSpeedMultiplier() * title.getSpeedMultiplier());
 		boss.setHealthMultiplier(boss.getHealthMultiplier() * title.getHealthMultiplier());

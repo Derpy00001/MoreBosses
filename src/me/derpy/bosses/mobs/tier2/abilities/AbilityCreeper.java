@@ -1,5 +1,6 @@
 package me.derpy.bosses.mobs.tier2.abilities;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -15,11 +16,13 @@ import me.derpy.bosses.utilities.Random;
 public class AbilityCreeper implements Listener {
 	private final YamlConfiguration CONFIG = Morebosses.getConfigurationHandler()
 			.openBossConfiguration("Tier2\\Creeper.yml");
-	private final double YIELD = this.CONFIG.getDouble("Creeper.ability.explosion_yield");
-	private final int MOB_COUNT = this.CONFIG.getInt("Creeper.ability.mob_count");
-	private final boolean ENABLED = this.CONFIG.getBoolean("Creeper.ability.enabled");
-	private final boolean DESTROY = this.CONFIG.getBoolean("Creeper.ability.destroy_blocks");
-	private final List<?> MOBS = this.CONFIG.getList("Creeper.ability.mobs");
+	private final double YIELD = this.CONFIG != null ? this.CONFIG.getDouble("Creeper.ability.explosion_yield") : 0;
+	private final int MOB_COUNT = this.CONFIG != null ? this.CONFIG.getInt("Creeper.ability.mob_count") : 7;
+	private final boolean ENABLED = this.CONFIG != null ? this.CONFIG.getBoolean("Creeper.ability.enabled") : true;
+	private final boolean DESTROY = this.CONFIG != null ? this.CONFIG.getBoolean("Creeper.ability.destroy_blocks")
+			: false;
+	private final List<?> MOBS = this.CONFIG != null ? this.CONFIG.getList("Creeper.ability.mobs")
+			: Arrays.asList("ZOMBIE", "SKELETON", "CREEPER", "DROWNED", "STRAY", "PILLAGER", "WITCH", "SILVERFISH");
 
 	@SuppressWarnings("deprecation")
 	@EventHandler

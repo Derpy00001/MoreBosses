@@ -11,6 +11,9 @@ import me.derpy.bosses.items.ItemType;
 import me.derpy.bosses.mobs.blueprints.BEquipable;
 
 public class BDrowned extends BEquipable {
+	private final double RATE = Morebosses.getConfigurationHandler().openBossConfiguration("Tier1\\Drowned.yml") != null
+			? Morebosses.getConfigurationHandler().openBossConfiguration("Tier1\\Drowned.yml").getDouble("Drowned.rate")
+			: 0.052;
 
 	public BDrowned() {
 		// TODO Auto-generated constructor stub
@@ -70,8 +73,7 @@ public class BDrowned extends BEquipable {
 
 	@Override
 	public double getSpawnChance() {
-		return Morebosses.getConfigurationHandler().openBossConfiguration("Tier1\\Drowned.yml")
-				.getDouble("Drowned.rate");
+		return this.RATE;
 
 	}
 

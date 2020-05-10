@@ -12,7 +12,10 @@ import me.derpy.bosses.mobs.tier3.BWitherSkeleton;
 
 public class AbilityWitherSkeleton implements Listener {
 	private final boolean ENABLED = Morebosses.getConfigurationHandler()
-			.openBossConfiguration("Tier3\\WitherSkeleton.yml").getBoolean("WitherSkeleton.ability.enabled");
+			.openBossConfiguration("Tier3\\WitherSkeleton.yml") != null
+					? Morebosses.getConfigurationHandler().openBossConfiguration("Tier3\\WitherSkeleton.yml")
+							.getBoolean("WitherSkeleton.ability.enabled")
+					: true;
 
 	@EventHandler
 	public void OnDamage(EntityDamageByBossEvent e) {
