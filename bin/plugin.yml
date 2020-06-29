@@ -1,0 +1,15 @@
+name: Morebosses
+version: 1.0.0
+author: Derpy
+main: me.derpy.bosses.Morebosses
+description: Adds more bosses to your game!
+api-version: 1.15
+
+
+commands:
+  bspawn:
+    description: Spawn items from the plugin
+    usage: bspawn <boss/item> <key>
+  barena:
+    description: Arena commands
+    usage: barena <teleport/save> <arena>

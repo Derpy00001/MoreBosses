@@ -1,0 +1,6 @@
+type: GHAST_ARENA
+time: 12700
+border:
+  enabled: true
+  size: 500
+  warning-distance: 100000000

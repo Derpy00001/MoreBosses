@@ -1,0 +1,4 @@
+Pigman:
+  rate: 0.0027
+  minion_min: 7
+  minion_max: 18

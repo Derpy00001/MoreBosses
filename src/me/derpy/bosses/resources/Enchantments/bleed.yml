@@ -1,0 +1,5 @@
+bleed:
+  damage: 0.5
+  seconds_frequency: 1
+  bleed_ticks: 10
+  level_cap: 3

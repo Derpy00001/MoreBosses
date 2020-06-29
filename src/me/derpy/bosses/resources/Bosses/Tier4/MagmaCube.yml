@@ -1,0 +1,6 @@
+Magma:
+  rate: 0.0027
+  size: 10
+  ability:
+    enabled: true
+    fire_seconds: 6

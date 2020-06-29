@@ -1,0 +1,12 @@
+
+plugin:
+  check_version: true
+  JoinMessage:
+    enabled: true
+    onlyFirstJoin: false
+
+bosses:
+  glowing: false
+  bossbar:
+    enabled: true
+    distance: 10.0
